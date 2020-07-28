@@ -45,5 +45,50 @@ Add the following dependency to your pom.xml file:
 - If you want to discuss Reedelk OpenAPI, suggest new features or just say 'Hi', let us know in the [Reedelk Slack Developers Community](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug) [![Join Reedelk Slack Developers Community](https://img.shields.io/badge/Slack-Join%20the%20chat%20room-blue)](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug).
 
 ## Usage
+### Serialize
+To JSON:
+```java
+OpenApiSerializableContext context = new OpenApiSerializableContext();
 
+OpenApiObject openApiModel = new OpenApiObject();
+openApiModel.setBasePath("/api/v3");
+...
+Schema schema = new Schema("mySchemaId", "{ \"type\": \"string\"}");
+MediaTypeObject mediaTypeObject = new MediaTypeObject();
+mediaTypeObject.setSchema(schema, context);
+...
+String openApiAsJson = OpenApiSerializer.toJson(openApiModel, context);
+```
 
+To YAML:
+```java
+OpenApiSerializableContext context = new OpenApiSerializableContext();
+
+OpenApiObject openApiModel = new OpenApiObject();
+openApiModel.setBasePath("/api/v3");
+...
+Schema schema = new Schema("mySchemaId", "{ \"type\": \"string\"}");
+MediaTypeObject mediaTypeObject = new MediaTypeObject();
+mediaTypeObject.setSchema(schema, context);
+...
+String openApiAsYaml = OpenApiSerializer.toYaml(openApiModel, context);
+```
+
+### Deserialize
+From JSON:
+```java
+String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
+OpenApiObject openApiModel = OpenApiDeserializer.from(input);
+InfoObject infoModel = actual.getInfo();
+...
+```
+From YAML:
+```java
+String openApiAsYaml = "openapi: 3.0.0
+                        info:
+                          description: \"My description\"
+                          version: 1.0.2";
+OpenApiObject openApiModel = OpenApiDeserializer.from(input);
+InfoObject infoModel = actual.getInfo();
+...
+```

@@ -48,6 +48,7 @@ public class OpenApiSerializationTest {
         openApiObject = new OpenApiObject();
         openApiObject.setBasePath("/api/v3");
         openApiObject.setPaths(pathsObject);
+
     }
 
     // TODO: Fixme

@@ -15,6 +15,7 @@ class OpenApiDeserializerTest {
         // When
         OpenApiObject actual = OpenApiDeserializer.from(input);
 
+        InfoObject info = actual.getInfo();
         // Then
 
         assertThat(actual).isNotNull();
