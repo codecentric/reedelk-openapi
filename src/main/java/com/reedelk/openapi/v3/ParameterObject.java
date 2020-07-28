@@ -134,6 +134,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
         name = getString(serialized, "name");
@@ -145,8 +146,12 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         String styleValue = getString(serialized, "style");
         if (styleValue != null) this.style = ParameterStyle.valueOf(styleValue);
 
-        // TODO: Schema
-        // TODO: Example can it be a reference?
+        if (serialized.containsKey("schema")) {
+            Map<String, Object> schemaMap = (Map<String, Object>) serialized.get("schema");
+            schema = new Schema();
+            schema.deserialize(schemaMap);
+        }
+
         example = getString(serialized, "example");
         explode = getBoolean(serialized, "explode");
         deprecated = getBoolean(serialized, "deprecated");

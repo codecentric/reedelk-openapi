@@ -21,11 +21,12 @@ public class Example extends OpenApiSerializableAbstract {
 
     @Override
     public Map<String, Object> serialize() {
+        // TODO: Here
         return null;
     }
 
     @Override
     public void deserialize(Map<String, Object> serialized) {
-
+        // TODO: Here
     }
 }

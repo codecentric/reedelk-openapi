@@ -26,6 +26,7 @@ public class SchemaObject extends OpenApiSerializableAbstract {
 
     @Override
     public void deserialize(Map<String, Object> serialized) {
-        // TODO: Here
+        schema = new Schema();
+        schema.deserialize(serialized);
     }
 }
