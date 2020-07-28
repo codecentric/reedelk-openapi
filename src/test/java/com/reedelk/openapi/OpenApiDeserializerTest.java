@@ -4,7 +4,9 @@ import com.reedelk.openapi.v3.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,9 +44,13 @@ class OpenApiDeserializerTest {
         List<ServerObject> expectedServers = expected.getServers();
         List<ServerObject> actualServers = actual.getServers();
         assertThat(expectedServers).isEqualTo(actualServers);
+
+        PathsObject expectedPaths = expected.getPaths();
+        PathsObject actualPaths = actual.getPaths();
+        assertThat(expectedPaths).isEqualTo(actualPaths);
     }
 
-    private static final OpenApiObject expectedOpenApi = new OpenApiObject();
+    private static OpenApiObject expectedOpenApi;
     static {
         // Contact Object
         ContactObject expectedContact = new ContactObject();
@@ -68,9 +74,29 @@ class OpenApiDeserializerTest {
         ServerObject expectedServer = new ServerObject();
         expectedServer.setUrl("https://petstore.swagger.io/v2");
 
+        RequestBodyObject putPetRequestBody = new RequestBodyObject();
+        putPetRequestBody.set$ref("#/components/requestBodies/Pet");
+
+        OperationObject putPetOperation = new OperationObject();
+        putPetOperation.setSummary("Update an existing pet");
+        putPetOperation.setOperationId("updatePet");
+        putPetOperation.setRequestBody(putPetRequestBody);
+
+        Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
+        petOperationMap.put(RestMethod.PUT, putPetOperation);
+
+        Map<String, Map<RestMethod, OperationObject>> paths = new HashMap<>();
+        paths.put("/pet", petOperationMap);
+
+        PathsObject expectedPaths = new PathsObject();
+        expectedPaths.setPaths(paths);
+
+        // Paths
+        expectedOpenApi = new OpenApiObject();
         expectedOpenApi.setOpenapi("3.0.0");
         expectedOpenApi.setBasePath("/");
         expectedOpenApi.setInfo(expectedInfo);
         expectedOpenApi.setServers(Collections.singletonList(expectedServer));
+        expectedOpenApi.setPaths(expectedPaths);
     }
 }

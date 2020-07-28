@@ -140,4 +140,40 @@ public class OperationObject extends OpenApiSerializableAbstract {
 
         tags = (List<String>) serialized.get("tags");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OperationObject that = (OperationObject) o;
+        return Objects.equals(exclude, that.exclude) &&
+                Objects.equals(deprecated, that.deprecated) &&
+                Objects.equals(summary, that.summary) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(operationId, that.operationId) &&
+                Objects.equals(requestBody, that.requestBody) &&
+                Objects.equals(responses, that.responses) &&
+                Objects.equals(parameters, that.parameters) &&
+                Objects.equals(tags, that.tags);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exclude, deprecated, summary, description, operationId, requestBody, responses, parameters, tags);
+    }
+
+    @Override
+    public String toString() {
+        return "OperationObject{" +
+                "exclude=" + exclude +
+                ", deprecated=" + deprecated +
+                ", summary='" + summary + '\'' +
+                ", description='" + description + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", requestBody=" + requestBody +
+                ", responses=" + responses +
+                ", parameters=" + parameters +
+                ", tags=" + tags +
+                '}';
+    }
 }

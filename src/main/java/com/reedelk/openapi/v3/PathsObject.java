@@ -2,10 +2,7 @@ package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PathsObject extends OpenApiSerializableAbstract {
 
@@ -47,5 +44,25 @@ public class PathsObject extends OpenApiSerializableAbstract {
                 paths.put(pathEntry, methodAndOperationMap);
             });
         });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PathsObject that = (PathsObject) o;
+        return Objects.equals(paths, that.paths);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paths);
+    }
+
+    @Override
+    public String toString() {
+        return "PathsObject{" +
+                "paths=" + paths +
+                '}';
     }
 }

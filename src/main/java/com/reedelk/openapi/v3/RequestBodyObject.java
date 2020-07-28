@@ -5,6 +5,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RequestBodyObject extends OpenApiSerializableAbstract {
 
@@ -80,5 +81,31 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
                 content.put(contentType, mediaTypeObject);
             });
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RequestBodyObject that = (RequestBodyObject) o;
+        return Objects.equals($ref, that.$ref) &&
+                Objects.equals(required, that.required) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash($ref, required, description, content);
+    }
+
+    @Override
+    public String toString() {
+        return "RequestBodyObject{" +
+                "$ref='" + $ref + '\'' +
+                ", required=" + required +
+                ", description='" + description + '\'' +
+                ", content=" + content +
+                '}';
     }
 }
