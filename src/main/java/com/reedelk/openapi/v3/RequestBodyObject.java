@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class RequestBodyObject extends OpenApiSerializableAbstract {
 
+    private String $ref;
     private Boolean required;
     private String description;
     private Map<String, MediaTypeObject> content = new HashMap<>();
@@ -37,6 +38,14 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
         this.content = content;
     }
 
+    public String get$ref() {
+        return $ref;
+    }
+
+    public void set$ref(String $ref) {
+        this.$ref = $ref;
+    }
+
     @Override
     public Map<String,Object> serialize(OpenApiSerializableContext context) {
         Map<String, Object> map = new LinkedHashMap<>();
@@ -51,12 +60,21 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
-        required = getBoolean(serialized, "required");
-        description = getString(serialized, "description");
-
-        // TODO: Content
+        boolean isReference = serialized.containsKey("$ref");
+        if (isReference) {
+            $ref = getString(serialized, "$ref");
+        } else {
+            required = getBoolean(serialized, "required");
+            description = getString(serialized, "description");
+            Map<String, Map<String,Object>> contentMap = (Map<String, Map<String, Object>>) serialized.get("content");
+            contentMap.forEach((contentType, mediaTypeMap) -> {
+                MediaTypeObject mediaTypeObject = new MediaTypeObject();
+                mediaTypeObject.deserialize(mediaTypeMap);
+                content.put(contentType, mediaTypeObject);
+            });
+        }
     }
-
 }
