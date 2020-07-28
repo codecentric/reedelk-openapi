@@ -5,6 +5,7 @@ import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ServerObject extends OpenApiSerializableAbstract {
 
@@ -60,6 +61,30 @@ public class ServerObject extends OpenApiSerializableAbstract {
                 variables.put(serverVariableKey, serverVariableObject);
             });
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServerObject that = (ServerObject) o;
+        return Objects.equals(url, that.url) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(variables, that.variables);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, description, variables);
+    }
+
+    @Override
+    public String toString() {
+        return "ServerObject{" +
+                "url='" + url + '\'' +
+                ", description='" + description + '\'' +
+                ", variables=" + variables +
+                '}';
     }
 }
 

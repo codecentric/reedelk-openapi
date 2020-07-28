@@ -1,11 +1,10 @@
 package com.reedelk.openapi;
 
-import com.reedelk.openapi.v3.ContactObject;
-import com.reedelk.openapi.v3.InfoObject;
-import com.reedelk.openapi.v3.LicenseObject;
-import com.reedelk.openapi.v3.OpenApiObject;
-import org.assertj.core.api.Assertions;
+import com.reedelk.openapi.v3.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,16 +28,20 @@ class OpenApiDeserializerTest {
         String yaml = Fixture.EndToEnd.SAMPLE_YAML.string();
 
         // When
-        OpenApiObject model = OpenApiDeserializer.from(yaml);
+        OpenApiObject actualOpenApi = OpenApiDeserializer.from(yaml);
 
         // Then
-        assertThat(model).isNotNull();
+        assertEquals(expectedOpenApi, actualOpenApi);
     }
 
     private void assertEquals(OpenApiObject expected, OpenApiObject actual) {
         InfoObject expectedInfo = expected.getInfo();
         InfoObject actualInfo = actual.getInfo();
-        Assertions.assertThat(expectedInfo).isEqualTo(actualInfo);
+        assertThat(expectedInfo).isEqualTo(actualInfo);
+
+        List<ServerObject> expectedServers = expected.getServers();
+        List<ServerObject> actualServers = actual.getServers();
+        assertThat(expectedServers).isEqualTo(actualServers);
     }
 
     private static final OpenApiObject expectedOpenApi = new OpenApiObject();
@@ -61,9 +64,13 @@ class OpenApiDeserializerTest {
         expectedInfo.setContact(expectedContact);
         expectedInfo.setLicense(expectedLicense);
 
+        // Server
+        ServerObject expectedServer = new ServerObject();
+        expectedServer.setUrl("https://petstore.swagger.io/v2");
 
         expectedOpenApi.setOpenapi("3.0.0");
         expectedOpenApi.setBasePath("/");
         expectedOpenApi.setInfo(expectedInfo);
+        expectedOpenApi.setServers(Collections.singletonList(expectedServer));
     }
 }
