@@ -85,6 +85,9 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
 
     @Override
     public void deserialize(Map<String, Object> serialized) {
+        if (serialized.containsKey("openapi")) {
+            openapi = getString(serialized, "openapi");
+        }
         if (serialized.containsKey("info")) {
             info.deserialize(getMap(serialized, "info"));
         }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +20,7 @@ class OpenApiDeserializerTest {
         OpenApiObject actualOpenApi = OpenApiDeserializer.from(json);
 
         // Then
-        assertEquals(expectedOpenApi, actualOpenApi);
+        assertThat(expectedOpenApi).isEqualTo(actualOpenApi);
     }
 
     @Test
@@ -33,21 +32,7 @@ class OpenApiDeserializerTest {
         OpenApiObject actualOpenApi = OpenApiDeserializer.from(yaml);
 
         // Then
-        assertEquals(expectedOpenApi, actualOpenApi);
-    }
-
-    private void assertEquals(OpenApiObject expected, OpenApiObject actual) {
-        InfoObject expectedInfo = expected.getInfo();
-        InfoObject actualInfo = actual.getInfo();
-        assertThat(expectedInfo).isEqualTo(actualInfo);
-
-        List<ServerObject> expectedServers = expected.getServers();
-        List<ServerObject> actualServers = actual.getServers();
-        assertThat(expectedServers).isEqualTo(actualServers);
-
-        PathsObject expectedPaths = expected.getPaths();
-        PathsObject actualPaths = actual.getPaths();
-        assertThat(expectedPaths).isEqualTo(actualPaths);
+        assertThat(expectedOpenApi).isEqualTo(actualOpenApi);
     }
 
     private static OpenApiObject expectedOpenApi;
@@ -138,7 +123,6 @@ class OpenApiDeserializerTest {
 
         expectedOpenApi = new OpenApiObject();
         expectedOpenApi.setOpenapi("3.0.0");
-        expectedOpenApi.setBasePath("/");
         expectedOpenApi.setInfo(expectedInfo);
         expectedOpenApi.setServers(Collections.singletonList(expectedServer));
         expectedOpenApi.setPaths(expectedPaths);

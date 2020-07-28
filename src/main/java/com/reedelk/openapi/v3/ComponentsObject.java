@@ -29,12 +29,15 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
     @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
-        serialized.forEach((schemaId, schemaData) -> {
-            Map<String, Object> schemaMap = (Map<String, Object>) schemaData;
-            SchemaObject schemaObject = new SchemaObject();
-            schemaObject.deserialize(schemaMap);
-            schemas.put(schemaId, schemaObject);
-        });
+        if (serialized.containsKey("schemas")) {
+            Map<String,Object> schemasMap = (Map<String, Object>) serialized.get("schemas");
+            schemasMap.forEach((schemaId, schemaData) -> {
+                Map<String, Object> schemaMap = (Map<String, Object>) schemaData;
+                SchemaObject schemaObject = new SchemaObject();
+                schemaObject.deserialize(schemaMap);
+                schemas.put(schemaId, schemaObject);
+            });
+        }
     }
 
     @Override
