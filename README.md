@@ -40,10 +40,6 @@ Add the following dependency to your pom.xml file:
 </dependency>
 ```
 
-## Contribute
-- If you find a bug in Reedelk OpenAPI, please [file a bug report](https://github.com/reedelk/reedelk-openapi/issues).
-- If you want to discuss Reedelk OpenAPI, suggest new features or just say 'Hi', let us know in the [Reedelk Slack Developers Community](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug) [![Join Reedelk Slack Developers Community](https://img.shields.io/badge/Slack-Join%20the%20chat%20room-blue)](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug).
-
 ## Usage
 ### Serialize
 To JSON:
@@ -80,7 +76,6 @@ From JSON:
 String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
 OpenApiObject openApiModel = OpenApiDeserializer.from(input);
 InfoObject infoModel = actual.getInfo();
-...
 ```
 From YAML:
 ```java
@@ -90,5 +85,8 @@ String openApiAsYaml = "openapi: 3.0.0
                           version: 1.0.2";
 OpenApiObject openApiModel = OpenApiDeserializer.from(input);
 InfoObject infoModel = actual.getInfo();
-...
 ```
+
+## Contribute
+- If you find a bug in Reedelk OpenAPI, please [file a bug report](https://github.com/reedelk/reedelk-openapi/issues).
+- If you want to discuss Reedelk OpenAPI, suggest new features or just say 'Hi', let us know in the [Reedelk Slack Developers Community](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug) [![Join Reedelk Slack Developers Community](https://img.shields.io/badge/Slack-Join%20the%20chat%20room-blue)](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug).
