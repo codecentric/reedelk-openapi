@@ -49,14 +49,19 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
     @Override
     public Map<String,Object> serialize(OpenApiSerializableContext context) {
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "description", description);
-        // By specification, the content object must be present, even if it is empty.
-        // Therefore we add an empty object instead.
-        if (content.isEmpty()) {
-            map.put("content", new LinkedHashMap<>());
+        if ($ref != null && $ref.length() > 0) {
+            // It is a reference.
+            set(map, "$ref", $ref);
+        } else {
+            set(map, "description", description);
+            // By specification, the content object must be present, even if it is empty.
+            // Therefore we add an empty object instead.
+            if (content.isEmpty()) {
+                map.put("content", new LinkedHashMap<>());
+            }
+            set(map, "content", content, context);
+            set(map, "required", required);
         }
-        set(map, "content", content, context);
-        set(map, "required", required);
         return map;
     }
 
