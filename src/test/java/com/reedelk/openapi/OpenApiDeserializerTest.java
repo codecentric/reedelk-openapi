@@ -60,11 +60,8 @@ class OpenApiDeserializerTest {
         RequestBodyObject postPetRequestBody = new RequestBodyObject();
         postPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        ResponseObject postResponseObject405 = new ResponseObject();
-        postResponseObject405.setDescription("Invalid input");
-
         Map<String, ResponseObject> postStatusResponseMap = new HashMap<>();
-        postStatusResponseMap.put("405", postResponseObject405);
+        postStatusResponseMap.put("405", createResponseObject("Invalid input"));
 
         OperationObject postPetOperation = new OperationObject();
         postPetOperation.setSummary("Add a new pet to the store");
