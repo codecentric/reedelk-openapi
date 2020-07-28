@@ -121,10 +121,29 @@ class OpenApiDeserializerTest {
         expectedPaths.setPaths(paths);
         // ------------------------------------------------------
 
+        MediaTypeObject petMediaType = new MediaTypeObject();
+        petMediaType.setSchema(new Schema("#/components/schemas/Pet"));
+
+        Map<String, MediaTypeObject> contentTypeMediaTypeMap = new HashMap<>();
+        contentTypeMediaTypeMap.put("application/xml", petMediaType);
+        contentTypeMediaTypeMap.put("application/json", petMediaType);
+
+        RequestBodyObject petRequestBody = new RequestBodyObject();
+        petRequestBody.setContent(contentTypeMediaTypeMap);
+        petRequestBody.setRequired(true);
+        petRequestBody.setDescription("Pet object that needs to be added to the store");
+        Map<String, RequestBodyObject> idAndRequestBody = new HashMap<>();
+        idAndRequestBody.put("Pet", petRequestBody);
+
+        // Components Object
+        ComponentsObject componentsObject = new ComponentsObject();
+        componentsObject.setRequestBodies(idAndRequestBody);
+
         expectedOpenApi = new OpenApiObject();
         expectedOpenApi.setOpenapi("3.0.0");
         expectedOpenApi.setInfo(expectedInfo);
         expectedOpenApi.setServers(Collections.singletonList(expectedServer));
         expectedOpenApi.setPaths(expectedPaths);
+        expectedOpenApi.setComponents(componentsObject);
     }
 }

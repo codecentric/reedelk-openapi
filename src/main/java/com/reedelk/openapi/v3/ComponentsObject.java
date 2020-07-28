@@ -20,6 +20,14 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
         this.schemas = schemas;
     }
 
+    public Map<String, RequestBodyObject> getRequestBodies() {
+        return requestBodies;
+    }
+
+    public void setRequestBodies(Map<String, RequestBodyObject> requestBodies) {
+        this.requestBodies = requestBodies;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
