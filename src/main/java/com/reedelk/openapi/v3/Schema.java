@@ -19,6 +19,9 @@ public class Schema extends OpenApiSerializableAbstract {
     private String schemaId;
     private String schemaData;
 
+    public Schema() {
+    }
+
     public Schema(String schemaId, String schemaData) {
         this.schemaId = schemaId;
         this.schemaData = schemaData;
