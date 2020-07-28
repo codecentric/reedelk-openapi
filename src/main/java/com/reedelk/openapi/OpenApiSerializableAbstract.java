@@ -14,7 +14,7 @@ public abstract class OpenApiSerializableAbstract implements OpenApiSerializable
     private static final String JSON_PROPERTY_EXAMPLE = "example";
 
     protected void set(Map<String, Object> parent, Schema schema, OpenApiSerializableContext context) {
-        //set(parent, "schema", schema.serialize(context));
+        set(parent, "schema", schema.serialize(context));
     }
 
     protected void set(Map<String, Object> parent, Example example) {
@@ -32,14 +32,14 @@ public abstract class OpenApiSerializableAbstract implements OpenApiSerializable
     protected void set(Map<String,Object> object, String propertyName, List<? extends OpenApiSerializable> serializableList, OpenApiSerializableContext context) {
         if (serializableList != null && !serializableList.isEmpty()) {
             List<Map<String,Object>> listOfItems = new ArrayList<>();
-           // serializableList.forEach(serializable -> listOfItems.add(serializable.serialize(context)));
+            serializableList.forEach(serializable -> listOfItems.add(serializable.serialize(context)));
             object.put(propertyName, listOfItems);
         }
     }
 
     protected void set(Map<String,Object> object, String propertyName, OpenApiSerializable serializable, OpenApiSerializableContext context) {
         if (serializable != null) {
-           // object.put(propertyName, serializable.serialize(context));
+            object.put(propertyName, serializable.serialize(context));
         }
     }
 
