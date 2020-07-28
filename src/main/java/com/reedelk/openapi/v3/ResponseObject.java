@@ -5,6 +5,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ResponseObject extends OpenApiSerializableAbstract {
 
@@ -65,5 +66,29 @@ public class ResponseObject extends OpenApiSerializableAbstract {
                 headers.put(headerName, headerObject);
             });
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseObject that = (ResponseObject) o;
+        return Objects.equals(description, that.description) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(headers, that.headers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, content, headers);
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseObject{" +
+                "description='" + description + '\'' +
+                ", content=" + content +
+                ", headers=" + headers +
+                '}';
     }
 }

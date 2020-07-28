@@ -77,10 +77,27 @@ class OpenApiDeserializerTest {
         RequestBodyObject putPetRequestBody = new RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
+        ResponseObject responseObject400 = new ResponseObject();
+        responseObject400.setDescription("Invalid ID supplied");
+
+        ResponseObject responseObject404 = new ResponseObject();
+        responseObject404.setDescription("Pet not found");
+
+        ResponseObject responseObject405 = new ResponseObject();
+        responseObject405.setDescription("Validation exception");
+
+        Map<String, ResponseObject> statusResponseMap = new HashMap<>();
+        statusResponseMap.put("400", responseObject400);
+        statusResponseMap.put("404", responseObject404);
+        statusResponseMap.put("405", responseObject405);
+
         OperationObject putPetOperation = new OperationObject();
         putPetOperation.setSummary("Update an existing pet");
         putPetOperation.setOperationId("updatePet");
         putPetOperation.setRequestBody(putPetRequestBody);
+        putPetOperation.setResponses(statusResponseMap);
+        putPetOperation.setDescription("");
+        putPetOperation.setTags(Collections.singletonList("pet"));
 
         Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
         petOperationMap.put(RestMethod.PUT, putPetOperation);
