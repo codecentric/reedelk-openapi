@@ -142,6 +142,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         description = getString(serialized, "description");
         in = ParameterLocation.valueOf(getString(serialized, "in"));
         style = ParameterStyle.valueOf(getString(serialized, "style"));
+
         // TODO: Schema
         // TODO: Example can it be a reference?
         example = getString(serialized, "example");

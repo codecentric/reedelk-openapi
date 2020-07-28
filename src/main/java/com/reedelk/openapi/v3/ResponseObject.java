@@ -67,7 +67,4 @@ public class ResponseObject extends OpenApiSerializableAbstract {
             });
         }
     }
-
-
-
 }

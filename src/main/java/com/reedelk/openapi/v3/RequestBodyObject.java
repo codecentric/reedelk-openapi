@@ -55,6 +55,7 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
     public void deserialize(Map<String, Object> serialized) {
         required = getBoolean(serialized, "required");
         description = getString(serialized, "description");
+
         // TODO: Content
     }
 

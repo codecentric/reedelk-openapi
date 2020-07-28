@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class ServerObject extends OpenApiSerializableAbstract {
 
-    // @Mandatory (https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#serverObject)
     private String url;
     private String description;
     private Map<String, ServerVariableObject> variables;
@@ -40,7 +39,7 @@ public class ServerObject extends OpenApiSerializableAbstract {
 
     @Override
     public Map<String,Object> serialize(OpenApiSerializableContext context) {
-        Precondition.checkNotNull("url", url);
+        Precondition.checkNotNull(url, "url");
 
         Map<String, Object> serverObject = new LinkedHashMap<>();
         set(serverObject, "url", url);
