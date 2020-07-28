@@ -4,6 +4,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HeaderObject extends OpenApiSerializableAbstract {
 
@@ -100,5 +101,37 @@ public class HeaderObject extends OpenApiSerializableAbstract {
         explode = getBoolean(serialized, "explode");
         deprecated = getBoolean(serialized, "deprecated");
         allowReserved = getBoolean(serialized, "allowReserved");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HeaderObject that = (HeaderObject) o;
+        return Objects.equals(description, that.description) &&
+                style == that.style &&
+                Objects.equals(schema, that.schema) &&
+                Objects.equals(example, that.example) &&
+                Objects.equals(explode, that.explode) &&
+                Objects.equals(deprecated, that.deprecated) &&
+                Objects.equals(allowReserved, that.allowReserved);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, style, schema, example, explode, deprecated, allowReserved);
+    }
+
+    @Override
+    public String toString() {
+        return "HeaderObject{" +
+                "description='" + description + '\'' +
+                ", style=" + style +
+                ", schema=" + schema +
+                ", example='" + example + '\'' +
+                ", explode=" + explode +
+                ", deprecated=" + deprecated +
+                ", allowReserved=" + allowReserved +
+                '}';
     }
 }
