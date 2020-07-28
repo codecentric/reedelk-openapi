@@ -47,29 +47,15 @@ Add the following dependency to your pom.xml file:
 ### Serialize
 #### To JSON:
 ```java
-OpenApiSerializableContext context = new OpenApiSerializableContext();
-
 OpenApiObject openApiModel = new OpenApiObject();
 openApiModel.setBasePath("/api/v3");
-...
-Schema schema = new Schema("mySchemaId", "{ \"type\": \"string\"}");
-MediaTypeObject mediaTypeObject = new MediaTypeObject();
-mediaTypeObject.setSchema(schema, context);
-...
-String openApiAsJson = OpenApiSerializer.toJson(openApiModel, context);
+String openApiAsJson = OpenApiSerializer.toJson(openApiModel);
 ```
 
 #### To YAML:
 ```java
-OpenApiSerializableContext context = new OpenApiSerializableContext();
-
 OpenApiObject openApiModel = new OpenApiObject();
 openApiModel.setBasePath("/api/v3");
-...
-Schema schema = new Schema("mySchemaId", "{ \"type\": \"string\"}");
-MediaTypeObject mediaTypeObject = new MediaTypeObject();
-mediaTypeObject.setSchema(schema, context);
-...
 String openApiAsYaml = OpenApiSerializer.toYaml(openApiModel, context);
 ```
 
@@ -77,7 +63,7 @@ String openApiAsYaml = OpenApiSerializer.toYaml(openApiModel, context);
 #### From JSON:
 ```java
 String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
-OpenApiObject openApiModel = OpenApiDeserializer.from(input);
+OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsJson);
 InfoObject infoModel = actual.getInfo();
 ```
 #### From YAML:
@@ -86,7 +72,7 @@ String openApiAsYaml = "openapi: 3.0.0
                         info:
                           description: \"My description\"
                           version: 1.0.2";
-OpenApiObject openApiModel = OpenApiDeserializer.from(input);
+OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsYaml);
 InfoObject infoModel = actual.getInfo();
 ```
 
