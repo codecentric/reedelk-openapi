@@ -1,6 +1,7 @@
 package com.reedelk.openapi;
 
 import com.reedelk.openapi.v3.*;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ public class OpenApiSerializationTest {
     @BeforeEach
     void setUp() {
 
-        Schema schema = new Schema("mySchemaId", Fixture.Schemas.Pet.string());
+        Schema schema = new Schema("mySchemaId", new JSONObject(Fixture.Schemas.Pet.string()).toMap());
 
         MediaTypeObject mediaTypeObject = new MediaTypeObject();
         mediaTypeObject.setSchema(schema);
