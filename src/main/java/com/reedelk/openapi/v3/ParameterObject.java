@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,8 +59,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         return schema;
     }
 
-    public void setSchema(Schema schema, OpenApiSerializableContext context) {
-        context.setSchema(schema);
+    public void setSchema(Schema schema) {
         this.schema = schema;
     }
 
@@ -114,7 +112,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "name", Optional.ofNullable(name).orElse(""));
         set(map, "description", description);
@@ -123,7 +121,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         set(map, "example", example);
         set(map, "explode", explode);
         set(map, "deprecated", deprecated);
-        set(map, schema, context);
+        set(map, schema);
         // If the parameter location is "path", this property is REQUIRED and its value MUST be true.
         // Otherwise, the property MAY be included and its default value is false.
         if (ParameterLocation.path.equals(in)) {

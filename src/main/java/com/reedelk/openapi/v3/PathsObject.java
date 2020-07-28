@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -21,13 +20,13 @@ public class PathsObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Map<String, Object> pathsObject = new LinkedHashMap<>();
         paths.forEach((path, pathItemObject) -> {
             Map<String, Object> operationsByPathJsonObject = new LinkedHashMap<>();
             pathItemObject.forEach((restMethod, operationObject) ->
                     operationsByPathJsonObject.put(restMethod.name().toLowerCase(),
-                            operationObject.serialize(context)));
+                            operationObject.serialize()));
             pathsObject.put(path, operationsByPathJsonObject);
         });
         return pathsObject;

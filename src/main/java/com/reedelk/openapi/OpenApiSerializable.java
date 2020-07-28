@@ -7,11 +7,11 @@ public interface OpenApiSerializable {
     /**
      * Open API serialize.
      */
-    Map<String,Object> serialize(OpenApiSerializableContext context);
+    Map<String, Object> serialize();
 
     /**
      * Open API deserialize.
      */
-    void deserialize(Map<String,Object> serialized);
+    void deserialize(Map<String, Object> serialized);
 
 }

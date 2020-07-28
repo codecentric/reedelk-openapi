@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class LicenseObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "name", name);
         set(map, "url", url);

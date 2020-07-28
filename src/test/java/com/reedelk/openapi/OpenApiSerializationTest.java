@@ -9,16 +9,14 @@ import java.util.Map;
 public class OpenApiSerializationTest {
 
     private OpenApiObject openApiObject;
-    private OpenApiSerializableContext context;
 
     @BeforeEach
     void setUp() {
-        context = new OpenApiSerializableContext();
 
         Schema schema = new Schema("mySchemaId", Fixture.Schemas.Pet.string());
 
         MediaTypeObject mediaTypeObject = new MediaTypeObject();
-        mediaTypeObject.setSchema(schema, context);
+        mediaTypeObject.setSchema(schema);
 
         Map<String, MediaTypeObject> contentTypeMediaTypeObject = new HashMap<>();
         contentTypeMediaTypeObject.put("application/json", mediaTypeObject);

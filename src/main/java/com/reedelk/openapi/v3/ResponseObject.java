@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -38,11 +37,11 @@ public class ResponseObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Map<String, Object> responseObject = new LinkedHashMap<>();
         set(responseObject, "description", description);
-        set(responseObject, "content", content, context);
-        set(responseObject, "headers", headers, context);
+        this.setMapSerializable(responseObject, "content", content);
+        this.setMapSerializable(responseObject, "headers", headers);
         return responseObject;
     }
 

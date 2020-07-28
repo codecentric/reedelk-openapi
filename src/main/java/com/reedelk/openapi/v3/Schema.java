@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -44,7 +43,7 @@ public class Schema extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         if (isReference()) {
             Map<String, Object> schemaReferenceObject = new LinkedHashMap<>();
             schemaReferenceObject.put(JSON_PROPERTY_REF, String.format(COMPONENTS_SCHEMA_REF_TEMPLATE, schemaId));

@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.Map;
 
@@ -21,7 +20,7 @@ public class Example extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         return null;
     }
 

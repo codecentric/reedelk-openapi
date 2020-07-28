@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
@@ -38,16 +37,17 @@ public class ServerObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Precondition.checkNotNull(url, "url");
 
         Map<String, Object> serverObject = new LinkedHashMap<>();
         set(serverObject, "url", url);
         set(serverObject, "description", description);
-        set(serverObject, "variables", variables, context);
+        this.setMapSerializable(serverObject, "variables", variables);
         return serverObject;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
         url = getString(serialized, "url");

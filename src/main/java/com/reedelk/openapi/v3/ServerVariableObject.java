@@ -1,13 +1,11 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
+import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Optional.ofNullable;
 
 public class ServerVariableObject extends OpenApiSerializableAbstract {
 
@@ -40,9 +38,11 @@ public class ServerVariableObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
+        Precondition.checkNotNull("default", defaultValue);
+
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "default", ofNullable(defaultValue).orElse("default")); // REQUIRED
+        set(map, "default", defaultValue);
         set(map, "description", description);
         setList(map, "enum", enumValues);
         return map;

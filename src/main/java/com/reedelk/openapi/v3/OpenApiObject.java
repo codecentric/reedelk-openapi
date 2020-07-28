@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.*;
 
@@ -64,10 +63,10 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "openapi", OPEN_API_VERSION); // REQUIRED
-        set(map, "info", info, context); // REQUIRED
+        set(map, "info", info); // REQUIRED
 
         if (servers == null || servers.isEmpty()) {
             // From OpenAPI spec 3.0.3:
@@ -78,9 +77,9 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
             servers = Collections.singletonList(serverObject);
         }
 
-        set(map, "servers", servers, context);
-        set(map, "paths", paths, context); // REQUIRED
-        set(map, "components", components, context);
+        set(map, "servers", servers);
+        set(map, "paths", paths); // REQUIRED
+        set(map, "components", components);
         return map;
     }
 

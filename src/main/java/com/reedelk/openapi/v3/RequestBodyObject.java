@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -47,7 +46,7 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         if ($ref != null && $ref.length() > 0) {
             // It is a reference.
@@ -59,7 +58,7 @@ public class RequestBodyObject extends OpenApiSerializableAbstract {
             if (content.isEmpty()) {
                 map.put("content", new LinkedHashMap<>());
             }
-            set(map, "content", content, context);
+            setMapSerializable(map, "content", content);
             set(map, "required", required);
         }
         return map;

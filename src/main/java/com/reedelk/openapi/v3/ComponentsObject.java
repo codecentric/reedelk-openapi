@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -20,21 +19,9 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
-        Map<String, Object> schemasMap = new LinkedHashMap<>();
-        schemas.forEach((schemaId, schemaObject) ->
-                set(schemasMap, schemaId, schemaObject.serialize(context)));
-
-        Map<String,Schema> collectedSchemas = context.getSchemas();
-
-        collectedSchemas.forEach((schemaId, schema) -> {
-            if (!schemas.containsKey(schemaId)) {
-                // Add the schema only if it does not exists.
-                set(schemasMap, schema, context);
-            }
-        });
-        set(map,"schemas", schemasMap);
+        setMapSerializable(map,"schemas", schemas);
         return map;
     }
 

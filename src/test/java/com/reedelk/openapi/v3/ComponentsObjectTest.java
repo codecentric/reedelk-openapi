@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
-import com.reedelk.openapi.OpenApiSerializableContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,9 +40,8 @@ class ComponentsObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeWhenNoSchemas() {
         // Given
         ComponentsObject componentsObject = new ComponentsObject();
-        OpenApiSerializableContext context = new OpenApiSerializableContext();
 
         // Expect
-        assertSerializeJSON(context, componentsObject, Fixture.ComponentsObject.WithNoSchemas);
+        assertSerializeJSON(componentsObject, Fixture.ComponentsObject.WithNoSchemas);
     }
 }

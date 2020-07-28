@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
@@ -65,7 +64,7 @@ public class InfoObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String, Object> serialize(OpenApiSerializableContext context) {
+    public Map<String, Object> serialize() {
         Precondition.checkNotNull("title", title);
         Precondition.checkNotNull("version", version);
 
@@ -73,8 +72,8 @@ public class InfoObject extends OpenApiSerializableAbstract {
         set(map, "title", title);
         set(map, "description", description);
         set(map, "termsOfService", termsOfService);
-        set(map, "contact", contact, context);
-        set(map, "license", license, context);
+        set(map, "contact", contact);
+        set(map, "license", license);
         set(map, "version", version);
         return map;
     }

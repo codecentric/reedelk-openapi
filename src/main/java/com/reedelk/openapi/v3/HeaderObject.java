@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,8 +36,7 @@ public class HeaderObject extends OpenApiSerializableAbstract {
         return schema;
     }
 
-    public void setSchema(Schema schema, OpenApiSerializableContext context) {
-        context.setSchema(schema);
+    public void setSchema(Schema schema) {
         this.schema = schema;
     }
 
@@ -75,11 +73,11 @@ public class HeaderObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "description", description);
         set(map, "style", style.name());
-        set(map, schema, context);
+        set(map, schema);
         set(map, "example", example);
         set(map, "explode", explode);
         set(map, "deprecated", deprecated);
@@ -87,13 +85,17 @@ public class HeaderObject extends OpenApiSerializableAbstract {
         return map;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
         description = getString(serialized, "description");
-
         String styleValue = getString(serialized, "style");
-        if (styleValue != null) this.style = ParameterStyle.valueOf(styleValue);
-        // TODO: Deserialize schema
+        if (styleValue != null) style = ParameterStyle.valueOf(styleValue);
+        if (serialized.containsKey("schema")) {
+            Map<String, Object> schemaMap = (Map<String, Object>) serialized.get("schema");
+            schema = new Schema();
+            schema.deserialize(schemaMap);
+        }
         example = getString(serialized, "example");
         explode = getBoolean(serialized, "explode");
         deprecated = getBoolean(serialized, "deprecated");

@@ -1,8 +1,6 @@
 package com.reedelk.openapi.v3;
 
-
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import com.reedelk.openapi.OpenApiSerializableContext;
 
 import java.util.*;
 
@@ -91,21 +89,21 @@ public class OperationObject extends OpenApiSerializableAbstract {
     }
 
     @Override
-    public Map<String,Object> serialize(OpenApiSerializableContext context) {
+    public Map<String,Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "exclude", exclude);
         set(map, "deprecated", deprecated);
         set(map, "summary", summary);
         set(map, "description", description);
         set(map, "operationId", operationId);
-        if (requestBody != null) set(map, "requestBody", requestBody, context);
+        if (requestBody != null) set(map, "requestBody", requestBody);
         if (responses.isEmpty()) {
             // make sure at least one default response is present if there are
             // no user defined responses.
             responses.put("default", new ResponseObject());
         }
-        set(map, "responses", responses, context);
-        set(map, "parameters", parameters, context);
+        setMapSerializable(map, "responses", responses);
+        set(map, "parameters", parameters);
         setList(map, "tags", tags);
         return map;
     }
