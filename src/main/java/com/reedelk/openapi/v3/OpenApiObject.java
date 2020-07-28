@@ -104,4 +104,34 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         }
         basePath = getString(serialized, "basePath");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpenApiObject that = (OpenApiObject) o;
+        return Objects.equals(openapi, that.openapi) &&
+                Objects.equals(info, that.info) &&
+                Objects.equals(components, that.components) &&
+                Objects.equals(servers, that.servers) &&
+                Objects.equals(paths, that.paths) &&
+                Objects.equals(basePath, that.basePath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(openapi, info, components, servers, paths, basePath);
+    }
+
+    @Override
+    public String toString() {
+        return "OpenApiObject{" +
+                "openapi='" + openapi + '\'' +
+                ", info=" + info +
+                ", components=" + components +
+                ", servers=" + servers +
+                ", paths=" + paths +
+                ", basePath='" + basePath + '\'' +
+                '}';
+    }
 }

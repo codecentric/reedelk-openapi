@@ -5,6 +5,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ComponentsObject extends OpenApiSerializableAbstract {
 
@@ -34,5 +35,25 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
             schemaObject.deserialize(schemaMap);
             schemas.put(schemaId, schemaObject);
         });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ComponentsObject that = (ComponentsObject) o;
+        return Objects.equals(schemas, that.schemas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(schemas);
+    }
+
+    @Override
+    public String toString() {
+        return "ComponentsObject{" +
+                "schemas=" + schemas +
+                '}';
     }
 }

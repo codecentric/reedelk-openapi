@@ -4,6 +4,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 
 import java.util.Map;
 
+// TODO:
 public class Example extends OpenApiSerializableAbstract {
 
     private String data;

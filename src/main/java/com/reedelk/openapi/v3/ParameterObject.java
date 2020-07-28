@@ -4,6 +4,7 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.reedelk.openapi.v3.ParameterLocation.query;
@@ -158,5 +159,45 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         required = getBoolean(serialized, "required");
         allowEmptyValue = getBoolean(serialized, "allowEmptyValue");
         allowReserved = getBoolean(serialized, "allowReserved");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ParameterObject that = (ParameterObject) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description) &&
+                in == that.in &&
+                style == that.style &&
+                Objects.equals(schema, that.schema) &&
+                Objects.equals(example, that.example) &&
+                Objects.equals(explode, that.explode) &&
+                Objects.equals(deprecated, that.deprecated) &&
+                Objects.equals(required, that.required) &&
+                Objects.equals(allowEmptyValue, that.allowEmptyValue) &&
+                Objects.equals(allowReserved, that.allowReserved);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, in, style, schema, example, explode, deprecated, required, allowEmptyValue, allowReserved);
+    }
+
+    @Override
+    public String toString() {
+        return "ParameterObject{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", in=" + in +
+                ", style=" + style +
+                ", schema=" + schema +
+                ", example='" + example + '\'' +
+                ", explode=" + explode +
+                ", deprecated=" + deprecated +
+                ", required=" + required +
+                ", allowEmptyValue=" + allowEmptyValue +
+                ", allowReserved=" + allowReserved +
+                '}';
     }
 }

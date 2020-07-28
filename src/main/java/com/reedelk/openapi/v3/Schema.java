@@ -2,14 +2,11 @@ package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Schema extends OpenApiSerializableAbstract {
-
-    private static final List<String> PROPERTIES_TO_EXCLUDE_FROM_SCHEMA = Arrays.asList("$id", "$schema", "name");
 
     private static final String COMPONENTS_SCHEMA_REF_TEMPLATE = "#/components/schemas/%s";
     private static final String JSON_PROPERTY_REF = "$ref";
@@ -67,5 +64,27 @@ public class Schema extends OpenApiSerializableAbstract {
         } else {
             this.schemaData = serialized;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Schema schema = (Schema) o;
+        return Objects.equals(schemaId, schema.schemaId) &&
+                Objects.equals(schemaData, schema.schemaData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(schemaId, schemaData);
+    }
+
+    @Override
+    public String toString() {
+        return "Schema{" +
+                "schemaId='" + schemaId + '\'' +
+                ", schemaData=" + schemaData +
+                '}';
     }
 }
