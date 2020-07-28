@@ -1,5 +1,4 @@
 {
-  "name": "Pet",
   "type": "object",
   "required": [
     "name",
@@ -10,6 +9,9 @@
       "type": "integer",
       "format": "int64"
     },
+    "category": {
+      "$ref": "#/components/schemas/Category"
+    },
     "name": {
       "type": "string",
       "example": "doggie"
@@ -17,24 +19,21 @@
     "photoUrls": {
       "type": "array",
       "xml": {
+        "name": "photoUrl",
         "wrapped": true
       },
       "items": {
-        "type": "string",
-        "xml": {
-          "name": "photoUrl"
-        }
+        "type": "string"
       }
     },
     "tags": {
       "type": "array",
       "xml": {
+        "name": "tag",
         "wrapped": true
       },
       "items": {
-        "xml": {
-          "name": "tag"
-        }
+        "$ref": "#/components/schemas/Tag"
       }
     },
     "status": {
@@ -46,5 +45,8 @@
         "sold"
       ]
     }
+  },
+  "xml": {
+    "name": "Pet"
   }
 }

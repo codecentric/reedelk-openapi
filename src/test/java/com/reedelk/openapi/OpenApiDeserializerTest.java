@@ -1,6 +1,7 @@
 package com.reedelk.openapi;
 
 import com.reedelk.openapi.v3.*;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -37,55 +38,20 @@ class OpenApiDeserializerTest {
 
     private static OpenApiObject expectedOpenApi;
     static {
-        // Contact Object
-        ContactObject expectedContact = new ContactObject();
-        expectedContact.setEmail("apiteam@swagger.io");
-        // ------------------------------------------------------
-
-        // License Object
-        LicenseObject expectedLicense = new LicenseObject();
-        expectedLicense.setName("Apache 2.0");
-        expectedLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
-        // ------------------------------------------------------
-
-        // Info Object
-        InfoObject expectedInfo = new InfoObject();
-        expectedInfo.setDescription("This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.");
-        expectedInfo.setVersion("1.0.2");
-        expectedInfo.setTitle("Swagger Petstore");
-        expectedInfo.setTermsOfService("http://swagger.io/terms/");
-        expectedInfo.setContact(expectedContact);
-        expectedInfo.setLicense(expectedLicense);
-        // ------------------------------------------------------
-
-        // Server Object
-        ServerObject expectedServer = new ServerObject();
-        expectedServer.setUrl("https://petstore.swagger.io/v2");
-        // ------------------------------------------------------
-
         // PUT Operation Object
         RequestBodyObject putPetRequestBody = new RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        ResponseObject responseObject400 = new ResponseObject();
-        responseObject400.setDescription("Invalid ID supplied");
-
-        ResponseObject responseObject404 = new ResponseObject();
-        responseObject404.setDescription("Pet not found");
-
-        ResponseObject responseObject405 = new ResponseObject();
-        responseObject405.setDescription("Validation exception");
-
-        Map<String, ResponseObject> statusResponseMap = new HashMap<>();
-        statusResponseMap.put("400", responseObject400);
-        statusResponseMap.put("404", responseObject404);
-        statusResponseMap.put("405", responseObject405);
+        Map<String, ResponseObject> statusCodeResponseMap = new HashMap<>();
+        statusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
+        statusCodeResponseMap.put("404", createResponseObject("Pet not found"));
+        statusCodeResponseMap.put("405", createResponseObject("Validation exception"));
 
         OperationObject putPetOperation = new OperationObject();
         putPetOperation.setSummary("Update an existing pet");
         putPetOperation.setOperationId("updatePet");
         putPetOperation.setRequestBody(putPetRequestBody);
-        putPetOperation.setResponses(statusResponseMap);
+        putPetOperation.setResponses(statusCodeResponseMap);
         putPetOperation.setDescription("");
         putPetOperation.setTags(Collections.singletonList("pet"));
         // ------------------------------------------------------
@@ -121,6 +87,7 @@ class OpenApiDeserializerTest {
         expectedPaths.setPaths(paths);
         // ------------------------------------------------------
 
+        // Components Object
         MediaTypeObject petMediaType = new MediaTypeObject();
         petMediaType.setSchema(new Schema("#/components/schemas/Pet"));
 
@@ -132,18 +99,72 @@ class OpenApiDeserializerTest {
         petRequestBody.setContent(contentTypeMediaTypeMap);
         petRequestBody.setRequired(true);
         petRequestBody.setDescription("Pet object that needs to be added to the store");
+
         Map<String, RequestBodyObject> idAndRequestBody = new HashMap<>();
         idAndRequestBody.put("Pet", petRequestBody);
 
-        // Components Object
+        Schema petSchema = new Schema(new JSONObject(Fixture.Schemas.Pet.string()).toMap());
+        SchemaObject petSchemaObject = new SchemaObject();
+        petSchemaObject.setSchema(petSchema);
+
+        Schema categorySchema = new Schema(new JSONObject(Fixture.Schemas.Category.string()).toMap());
+        SchemaObject categorySchemaObject = new SchemaObject();
+        categorySchemaObject.setSchema(categorySchema);
+
+        Schema tagSchema = new Schema(new JSONObject(Fixture.Schemas.Tag.string()).toMap());
+        SchemaObject tagSchemaObject = new SchemaObject();
+        tagSchemaObject.setSchema(tagSchema);
+
+        Map<String, SchemaObject> idAndSchema = new HashMap<>();
+        idAndSchema.put("Pet", petSchemaObject);
+        idAndSchema.put("Category", categorySchemaObject);
+        idAndSchema.put("Tag", tagSchemaObject);
+
         ComponentsObject componentsObject = new ComponentsObject();
         componentsObject.setRequestBodies(idAndRequestBody);
+        componentsObject.setSchemas(idAndSchema);
 
         expectedOpenApi = new OpenApiObject();
         expectedOpenApi.setOpenapi("3.0.0");
-        expectedOpenApi.setInfo(expectedInfo);
-        expectedOpenApi.setServers(Collections.singletonList(expectedServer));
+        expectedOpenApi.setInfo(createInfo());
+        expectedOpenApi.setServers(Collections.singletonList(createServer()));
         expectedOpenApi.setPaths(expectedPaths);
         expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static ContactObject createContact() {
+        ContactObject expectedContact = new ContactObject();
+        expectedContact.setEmail("apiteam@swagger.io");
+        return expectedContact;
+    }
+
+    private static LicenseObject createLicense() {
+        LicenseObject expectedLicense = new LicenseObject();
+        expectedLicense.setName("Apache 2.0");
+        expectedLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+        return expectedLicense;
+    }
+
+    private static InfoObject createInfo() {
+        InfoObject expectedInfo = new InfoObject();
+        expectedInfo.setDescription("This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.");
+        expectedInfo.setVersion("1.0.2");
+        expectedInfo.setTitle("Swagger Petstore");
+        expectedInfo.setTermsOfService("http://swagger.io/terms/");
+        expectedInfo.setContact(createContact());
+        expectedInfo.setLicense(createLicense());
+        return expectedInfo;
+    }
+
+    private static ServerObject createServer() {
+        ServerObject expectedServer = new ServerObject();
+        expectedServer.setUrl("https://petstore.swagger.io/v2");
+        return expectedServer;
+    }
+
+    private static ResponseObject createResponseObject(String description) {
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setDescription(description);
+        return responseObject;
     }
 }

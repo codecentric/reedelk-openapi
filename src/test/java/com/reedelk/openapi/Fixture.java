@@ -343,14 +343,21 @@ public class Fixture {
         Pet() {
             @Override
             public String path() {
-                return "pet.schema.json";
+                return "schema/pet.schema.json";
             }
         },
 
-        Coordinates() {
+        Category() {
             @Override
             public String path() {
-                return "coordinates.schema.json";
+                return "schema/category.schema.json";
+            }
+        },
+
+        Tag() {
+            @Override
+            public String path() {
+                return "schema/tag.schema.json";
             }
         }
     }
