@@ -10,6 +10,7 @@ import java.util.Objects;
 public class ComponentsObject extends OpenApiSerializableAbstract {
 
     private Map<String, SchemaObject> schemas = new HashMap<>();
+    private Map<String, RequestBodyObject> requestBodies = new HashMap<>();
 
     public Map<String, SchemaObject> getSchemas() {
         return schemas;
@@ -23,6 +24,7 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         setMapSerializable(map,"schemas", schemas);
+        setMapSerializable(map, "requestBodies", requestBodies);
         return map;
     }
 
@@ -38,6 +40,15 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
                 schemas.put(schemaId, schemaObject);
             });
         }
+        if (serialized.containsKey("requestBodies")) {
+            Map<String,Object> requestBodiesMap = (Map<String, Object>) serialized.get("requestBodies");
+            requestBodiesMap.forEach((requestBodyId, requestBodyDataMap) -> {
+                Map<String, Object> requestBodyMap = (Map<String, Object>) requestBodyDataMap;
+                RequestBodyObject requestBody = new RequestBodyObject();
+                requestBody.deserialize(requestBodyMap);
+                requestBodies.put(requestBodyId, requestBody);
+            });
+        }
     }
 
     @Override
@@ -45,18 +56,20 @@ public class ComponentsObject extends OpenApiSerializableAbstract {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ComponentsObject that = (ComponentsObject) o;
-        return Objects.equals(schemas, that.schemas);
+        return Objects.equals(schemas, that.schemas) &&
+                Objects.equals(requestBodies, that.requestBodies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(schemas);
+        return Objects.hash(schemas, requestBodies);
     }
 
     @Override
     public String toString() {
         return "ComponentsObject{" +
                 "schemas=" + schemas +
+                ", requestBodies=" + requestBodies +
                 '}';
     }
 }
