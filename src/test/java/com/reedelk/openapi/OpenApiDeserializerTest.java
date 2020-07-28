@@ -88,12 +88,20 @@ class OpenApiDeserializerTest {
         // ------------------------------------------------------
 
         // Components Object
-        MediaTypeObject petMediaType = new MediaTypeObject();
-        petMediaType.setSchema(new Schema("#/components/schemas/Pet"));
+        ComponentsObject componentsObject = createComponents();
 
+        expectedOpenApi = new OpenApiObject();
+        expectedOpenApi.setOpenapi("3.0.0");
+        expectedOpenApi.setInfo(createInfo());
+        expectedOpenApi.setServers(Collections.singletonList(createServer()));
+        expectedOpenApi.setPaths(expectedPaths);
+        expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static ComponentsObject createComponents() {
         Map<String, MediaTypeObject> contentTypeMediaTypeMap = new HashMap<>();
-        contentTypeMediaTypeMap.put("application/xml", petMediaType);
-        contentTypeMediaTypeMap.put("application/json", petMediaType);
+        contentTypeMediaTypeMap.put("application/xml", createMediaType("#/components/schemas/Pet"));
+        contentTypeMediaTypeMap.put("application/json", createMediaType("#/components/schemas/Pet"));
 
         RequestBodyObject petRequestBody = new RequestBodyObject();
         petRequestBody.setContent(contentTypeMediaTypeMap);
@@ -103,33 +111,28 @@ class OpenApiDeserializerTest {
         Map<String, RequestBodyObject> idAndRequestBody = new HashMap<>();
         idAndRequestBody.put("Pet", petRequestBody);
 
-        Schema petSchema = new Schema(new JSONObject(Fixture.Schemas.Pet.string()).toMap());
-        SchemaObject petSchemaObject = new SchemaObject();
-        petSchemaObject.setSchema(petSchema);
-
-        Schema categorySchema = new Schema(new JSONObject(Fixture.Schemas.Category.string()).toMap());
-        SchemaObject categorySchemaObject = new SchemaObject();
-        categorySchemaObject.setSchema(categorySchema);
-
-        Schema tagSchema = new Schema(new JSONObject(Fixture.Schemas.Tag.string()).toMap());
-        SchemaObject tagSchemaObject = new SchemaObject();
-        tagSchemaObject.setSchema(tagSchema);
-
         Map<String, SchemaObject> idAndSchema = new HashMap<>();
-        idAndSchema.put("Pet", petSchemaObject);
-        idAndSchema.put("Category", categorySchemaObject);
-        idAndSchema.put("Tag", tagSchemaObject);
+        idAndSchema.put("Pet", createSchema(Fixture.Schemas.Pet));
+        idAndSchema.put("Tag", createSchema(Fixture.Schemas.Tag));
+        idAndSchema.put("Category", createSchema(Fixture.Schemas.Category));
 
         ComponentsObject componentsObject = new ComponentsObject();
         componentsObject.setRequestBodies(idAndRequestBody);
         componentsObject.setSchemas(idAndSchema);
+        return componentsObject;
+    }
 
-        expectedOpenApi = new OpenApiObject();
-        expectedOpenApi.setOpenapi("3.0.0");
-        expectedOpenApi.setInfo(createInfo());
-        expectedOpenApi.setServers(Collections.singletonList(createServer()));
-        expectedOpenApi.setPaths(expectedPaths);
-        expectedOpenApi.setComponents(componentsObject);
+    private static MediaTypeObject createMediaType(String schemaId) {
+        MediaTypeObject mediaType = new MediaTypeObject();
+        mediaType.setSchema(new Schema(schemaId));
+        return mediaType;
+    }
+
+    private static SchemaObject createSchema(Fixture.Schemas schemaData) {
+        Schema schema = new Schema(new JSONObject(schemaData.string()).toMap());
+        SchemaObject schemaObject = new SchemaObject();
+        schemaObject.setSchema(schema);
+        return schemaObject;
     }
 
     private static ContactObject createContact() {
