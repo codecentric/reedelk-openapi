@@ -10,13 +10,24 @@ class OpenApiDeserializerTest {
     @Test
     void shouldDeserializeFromJSON() {
         // Given
-        String input = Fixture.EndToEnd.SAMPLE_JSON.string();
+        String json = Fixture.EndToEnd.SAMPLE_JSON.string();
 
         // When
-        OpenApiObject actual = OpenApiDeserializer.from(input);
+        OpenApiObject model = OpenApiDeserializer.from(json);
 
         // Then
+        assertThat(model).isNotNull();
+    }
 
-        assertThat(actual).isNotNull();
+    @Test
+    void shouldDeserializeFromYAML() {
+        // Given
+        String yaml = Fixture.EndToEnd.SAMPLE_YAML.string();
+
+        // When
+        OpenApiObject model = OpenApiDeserializer.from(yaml);
+
+        // Then
+        assertThat(model).isNotNull();
     }
 }
