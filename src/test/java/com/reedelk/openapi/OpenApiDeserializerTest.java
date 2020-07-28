@@ -55,11 +55,13 @@ class OpenApiDeserializerTest {
         // Contact Object
         ContactObject expectedContact = new ContactObject();
         expectedContact.setEmail("apiteam@swagger.io");
+        // ------------------------------------------------------
 
         // License Object
         LicenseObject expectedLicense = new LicenseObject();
         expectedLicense.setName("Apache 2.0");
         expectedLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+        // ------------------------------------------------------
 
         // Info Object
         InfoObject expectedInfo = new InfoObject();
@@ -69,11 +71,14 @@ class OpenApiDeserializerTest {
         expectedInfo.setTermsOfService("http://swagger.io/terms/");
         expectedInfo.setContact(expectedContact);
         expectedInfo.setLicense(expectedLicense);
+        // ------------------------------------------------------
 
-        // Server
+        // Server Object
         ServerObject expectedServer = new ServerObject();
         expectedServer.setUrl("https://petstore.swagger.io/v2");
+        // ------------------------------------------------------
 
+        // PUT Operation Object
         RequestBodyObject putPetRequestBody = new RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
@@ -98,17 +103,39 @@ class OpenApiDeserializerTest {
         putPetOperation.setResponses(statusResponseMap);
         putPetOperation.setDescription("");
         putPetOperation.setTags(Collections.singletonList("pet"));
+        // ------------------------------------------------------
+
+        // POST Operation Object
+        RequestBodyObject postPetRequestBody = new RequestBodyObject();
+        postPetRequestBody.set$ref("#/components/requestBodies/Pet");
+
+        ResponseObject postResponseObject405 = new ResponseObject();
+        postResponseObject405.setDescription("Invalid input");
+
+        Map<String, ResponseObject> postStatusResponseMap = new HashMap<>();
+        postStatusResponseMap.put("405", postResponseObject405);
+
+        OperationObject postPetOperation = new OperationObject();
+        postPetOperation.setSummary("Add a new pet to the store");
+        postPetOperation.setOperationId("addPet");
+        postPetOperation.setRequestBody(postPetRequestBody);
+        postPetOperation.setResponses(postStatusResponseMap);
+        postPetOperation.setDescription("");
+        postPetOperation.setTags(Collections.singletonList("pet"));
+        // ------------------------------------------------------
 
         Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
         petOperationMap.put(RestMethod.PUT, putPetOperation);
+        petOperationMap.put(RestMethod.POST, postPetOperation);
 
         Map<String, Map<RestMethod, OperationObject>> paths = new HashMap<>();
         paths.put("/pet", petOperationMap);
 
+        // Paths Object
         PathsObject expectedPaths = new PathsObject();
         expectedPaths.setPaths(paths);
+        // ------------------------------------------------------
 
-        // Paths
         expectedOpenApi = new OpenApiObject();
         expectedOpenApi.setOpenapi("3.0.0");
         expectedOpenApi.setBasePath("/");

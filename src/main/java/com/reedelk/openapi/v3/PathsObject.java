@@ -32,14 +32,13 @@ public class PathsObject extends OpenApiSerializableAbstract {
     @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
+        Map<RestMethod, OperationObject> methodAndOperationMap = new HashMap<>();
         serialized.forEach((pathEntry, pathDefinition) -> {
             Map<String,Object> pathDefinitionMap = (Map<String, Object>) pathDefinition;
-            // TODO: This is wrong multiple for same method.
             pathDefinitionMap.forEach((method, operationObjectMap) -> {
                 RestMethod restMethod = RestMethod.valueOf(method.toUpperCase());
                 OperationObject operationObject = new OperationObject();
                 operationObject.deserialize((Map<String,Object>) operationObjectMap);
-                Map<RestMethod, OperationObject> methodAndOperationMap = new HashMap<>();
                 methodAndOperationMap.put(restMethod, operationObject);
                 paths.put(pathEntry, methodAndOperationMap);
             });

@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -16,17 +15,21 @@ public class Schema extends OpenApiSerializableAbstract {
     private static final String JSON_PROPERTY_REF = "$ref";
 
     private String schemaId;
-    private String schemaData;
+    private Map<String,Object> schemaData;
 
     public Schema() {
     }
 
-    public Schema(String schemaId, String schemaData) {
+    public Schema(String schemaId, Map<String,Object> schemaData) {
         this.schemaId = schemaId;
         this.schemaData = schemaData;
     }
 
-    public Schema(String schemaData) {
+    public Map<String, Object> getSchemaData() {
+        return schemaData;
+    }
+
+    public void setSchemaData(Map<String, Object> schemaData) {
         this.schemaData = schemaData;
     }
 
@@ -34,14 +37,14 @@ public class Schema extends OpenApiSerializableAbstract {
         return schemaId;
     }
 
-    public String getSchemaData() {
-        return schemaData;
-    }
-
     public boolean isReference() {
         return schemaId != null && schemaId.length() > 0;
     }
 
+    // Creates the following structure if it is a reference:
+    // {
+    //      "$ref": "#/components/schemas/mySchema"
+    // }
     @Override
     public Map<String, Object> serialize() {
         if (isReference()) {
@@ -49,34 +52,16 @@ public class Schema extends OpenApiSerializableAbstract {
             schemaReferenceObject.put(JSON_PROPERTY_REF, String.format(COMPONENTS_SCHEMA_REF_TEMPLATE, schemaId));
             return schemaReferenceObject;
         } else {
-            return serialize(schemaData);
+            return schemaData;
         }
     }
 
-    // Sets the following structure in the parent:
-    // schema {
-    //      "$ref": "#/components/schemas/mySchema"
-    // }
     @Override
     public void deserialize(Map<String, Object> serialized) {
         if (serialized.containsKey(JSON_PROPERTY_REF)) {
             this.schemaId = getString(serialized, JSON_PROPERTY_REF);
         } else {
-            // TODO: What if it is YAML?
-            this.schemaData = new JSONObject(serialized).toString();
-        }
-    }
-
-    private static Map<String, Object> serialize(String jsonSchema) {
-        JSONObject schemaAsJsonObject = new JSONObject(jsonSchema);
-        PROPERTIES_TO_EXCLUDE_FROM_SCHEMA.forEach(propertyName ->
-                removePropertyIfExists(schemaAsJsonObject, propertyName));
-        return schemaAsJsonObject.toMap();
-    }
-
-    private static void removePropertyIfExists(JSONObject jsonObject, String propertyName) {
-        if (jsonObject.has(propertyName)) {
-            jsonObject.remove(propertyName);
+            this.schemaData = serialized;
         }
     }
 }
