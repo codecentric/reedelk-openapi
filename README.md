@@ -89,4 +89,4 @@ InfoObject infoModel = actual.getInfo();
 
 ## Contribute
 - If you find a bug in Reedelk OpenAPI, please [file a bug report](https://github.com/reedelk/reedelk-openapi/issues).
-- If you want to discuss Reedelk OpenAPI, suggest new features or just say 'Hi', let us know in the [Reedelk Slack Developers Community](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug) [![Join Reedelk Slack Developers Community](https://img.shields.io/badge/Slack-Join%20the%20chat%20room-blue)](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug).
+- If you want to discuss Reedelk OpenAPI, suggest new features, you have issues getting started with the library or just say 'Hi', let us know in the [Reedelk Slack Developers Community](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug) [![Join Reedelk Slack Developers Community](https://img.shields.io/badge/Slack-Join%20the%20chat%20room-blue)](https://join.slack.com/t/reedelk/shared_invite/zt-fz3wx56f-XDylXpqXERooKeOtrhdZug).
