@@ -1,6 +1,10 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.v3.ContactObject;
+import com.reedelk.openapi.v3.InfoObject;
+import com.reedelk.openapi.v3.LicenseObject;
 import com.reedelk.openapi.v3.OpenApiObject;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,10 +17,10 @@ class OpenApiDeserializerTest {
         String json = Fixture.EndToEnd.SAMPLE_JSON.string();
 
         // When
-        OpenApiObject model = OpenApiDeserializer.from(json);
+        OpenApiObject actualOpenApi = OpenApiDeserializer.from(json);
 
         // Then
-        assertThat(model).isNotNull();
+        assertEquals(expectedOpenApi, actualOpenApi);
     }
 
     @Test
@@ -29,5 +33,37 @@ class OpenApiDeserializerTest {
 
         // Then
         assertThat(model).isNotNull();
+    }
+
+    private void assertEquals(OpenApiObject expected, OpenApiObject actual) {
+        InfoObject expectedInfo = expected.getInfo();
+        InfoObject actualInfo = actual.getInfo();
+        Assertions.assertThat(expectedInfo).isEqualTo(actualInfo);
+    }
+
+    private static final OpenApiObject expectedOpenApi = new OpenApiObject();
+    static {
+        // Contact Object
+        ContactObject expectedContact = new ContactObject();
+        expectedContact.setEmail("apiteam@swagger.io");
+
+        // License Object
+        LicenseObject expectedLicense = new LicenseObject();
+        expectedLicense.setName("Apache 2.0");
+        expectedLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+
+        // Info Object
+        InfoObject expectedInfo = new InfoObject();
+        expectedInfo.setDescription("This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.");
+        expectedInfo.setVersion("1.0.2");
+        expectedInfo.setTitle("Swagger Petstore");
+        expectedInfo.setTermsOfService("http://swagger.io/terms/");
+        expectedInfo.setContact(expectedContact);
+        expectedInfo.setLicense(expectedLicense);
+
+
+        expectedOpenApi.setOpenapi("3.0.0");
+        expectedOpenApi.setBasePath("/");
+        expectedOpenApi.setInfo(expectedInfo);
     }
 }

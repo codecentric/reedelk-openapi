@@ -5,6 +5,7 @@ import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class InfoObject extends OpenApiSerializableAbstract {
 
@@ -92,5 +93,35 @@ public class InfoObject extends OpenApiSerializableAbstract {
             license = new LicenseObject();
             license.deserialize(getMap(serialized, "license"));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InfoObject that = (InfoObject) o;
+        return Objects.equals(title, that.title) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(termsOfService, that.termsOfService) &&
+                Objects.equals(version, that.version) &&
+                Objects.equals(contact, that.contact) &&
+                Objects.equals(license, that.license);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, termsOfService, version, contact, license);
+    }
+
+    @Override
+    public String toString() {
+        return "InfoObject{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", termsOfService='" + termsOfService + '\'' +
+                ", version='" + version + '\'' +
+                ", contact=" + contact +
+                ", license=" + license +
+                '}';
     }
 }
