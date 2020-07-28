@@ -42,7 +42,7 @@ Add the following dependency to your pom.xml file:
 
 ## Usage
 ### Serialize
-To JSON:
+#### To JSON:
 ```java
 OpenApiSerializableContext context = new OpenApiSerializableContext();
 
@@ -56,7 +56,7 @@ mediaTypeObject.setSchema(schema, context);
 String openApiAsJson = OpenApiSerializer.toJson(openApiModel, context);
 ```
 
-To YAML:
+#### To YAML:
 ```java
 OpenApiSerializableContext context = new OpenApiSerializableContext();
 
@@ -71,13 +71,13 @@ String openApiAsYaml = OpenApiSerializer.toYaml(openApiModel, context);
 ```
 
 ### Deserialize
-From JSON:
+#### From JSON:
 ```java
 String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
 OpenApiObject openApiModel = OpenApiDeserializer.from(input);
 InfoObject infoModel = actual.getInfo();
 ```
-From YAML:
+#### From YAML:
 ```java
 String openApiAsYaml = "openapi: 3.0.0
                         info:
