@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenApiSerializationTest {
+public class OpenApiSerializerTest {
 
     private OpenApiObject openApiObject;
 
