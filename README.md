@@ -5,9 +5,11 @@
 [![Twitter](https://img.shields.io/twitter/follow/reedelk.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=reedelk)
 
 ## Overview
-The Reedelk OpenAPI v3.x serializer/deserializer library is a lightweight library serializing/deserializing the OpenAPI 
-v3.x model to/from JSON and/or YAML. The library uses only [JSON-java (org.json)](https://github.com/stleary/JSON-java) and 
-[SnakeYAML](https://github.com/asomov/snakeyaml) as dependencies making it the perfect choice if you are looking for a very lightweight solution to serialize/deserialize OpenAPI definitions. 
+The Reedelk OpenAPI v3.x serializer/deserializer library is a lightweight library to serialize/deserialize OpenAPI 
+v3.x model to/from JSON and to/from YAML. 
+
+The library uses only [JSON-java (org.json)](https://github.com/stleary/JSON-java) and 
+[SnakeYAML](https://github.com/asomov/snakeyaml) as dependencies making it the perfect choice if you are looking for a very lightweight solution to serialize/deserialize OpenAPI v3.x definitions. 
  
 ## Features
 
@@ -17,6 +19,7 @@ v3.x model to/from JSON and/or YAML. The library uses only [JSON-java (org.json)
 - Deserialize OpenAPI v3.x model from YAML
 
 ## Maven
+
 
 ## Usage
 
