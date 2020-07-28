@@ -1,4 +1,4 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;

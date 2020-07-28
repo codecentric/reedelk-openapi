@@ -1,8 +1,7 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
+import com.reedelk.openapi.Fixture;
 import com.reedelk.openapi.OpenApiSerializableContext;
-import com.reedelk.openapi.v3.ComponentsObject;
-import com.reedelk.openapi.v3.Fixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

@@ -1,6 +1,6 @@
-package com.reedelk.openapi.v3;
+package com.reedelk.openapi;
 
-import com.reedelk.openapi.OpenApiDeserializer;
+import com.reedelk.openapi.v3.OpenApiObject;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,10 +15,8 @@ class OpenApiDeserializerTest {
         // When
         OpenApiObject actual = OpenApiDeserializer.from(input);
 
-        InfoObject info = actual.getInfo();
         // Then
 
         assertThat(actual).isNotNull();
     }
-
 }

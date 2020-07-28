@@ -1,4 +1,4 @@
-package com.reedelk.openapi.v3;
+package com.reedelk.openapi;
 
 import java.io.IOException;
 import java.net.URL;
@@ -377,14 +377,14 @@ public class Fixture {
         SAMPLE_JSON() {
             @Override
             public String path() {
-                return "endtoend/sample.json";
+                return "endtoend/petstore.json";
             }
         },
 
         SAMPLE_YAML() {
             @Override
             public String path() {
-                return "endtoend/sample.yaml";
+                return "endtoend/petstore.yaml";
             }
         }
     }

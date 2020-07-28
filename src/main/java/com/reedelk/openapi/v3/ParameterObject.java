@@ -140,8 +140,12 @@ public class ParameterObject extends OpenApiSerializableAbstract {
     public void deserialize(Map<String, Object> serialized) {
         name = getString(serialized, "name");
         description = getString(serialized, "description");
-        in = ParameterLocation.valueOf(getString(serialized, "in"));
-        style = ParameterStyle.valueOf(getString(serialized, "style"));
+
+        String inValue = getString(serialized, "in");
+        if (inValue != null) this.in = ParameterLocation.valueOf(inValue);
+
+        String styleValue = getString(serialized, "style");
+        if (styleValue != null) this.style = ParameterStyle.valueOf(styleValue);
 
         // TODO: Schema
         // TODO: Example can it be a reference?

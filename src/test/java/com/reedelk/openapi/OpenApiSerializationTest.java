@@ -1,6 +1,6 @@
-package com.reedelk.openapi.v3;
+package com.reedelk.openapi;
 
-import com.reedelk.openapi.OpenApiSerializableContext;
+import com.reedelk.openapi.v3.*;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;

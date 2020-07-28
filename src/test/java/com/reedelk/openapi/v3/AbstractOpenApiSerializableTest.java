@@ -1,9 +1,9 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
+import com.reedelk.openapi.Fixture;
 import com.reedelk.openapi.OpenApiSerializable;
 import com.reedelk.openapi.OpenApiSerializableContext;
 import com.reedelk.openapi.OpenApiSerializer;
-import com.reedelk.openapi.v3.Fixture;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 

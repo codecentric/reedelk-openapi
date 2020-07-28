@@ -1,4 +1,4 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

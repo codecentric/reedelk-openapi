@@ -1,7 +1,6 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
-import com.reedelk.openapi.v3.Fixture;
-import com.reedelk.openapi.v3.OpenApiObject;
+import com.reedelk.openapi.Fixture;
 import org.junit.jupiter.api.Test;
 
 class OpenApiObjectTest extends AbstractOpenApiSerializableTest {

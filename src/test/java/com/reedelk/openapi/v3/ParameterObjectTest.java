@@ -1,9 +1,6 @@
-package com.reedelk.openapi.v3.model;
+package com.reedelk.openapi.v3;
 
-import com.reedelk.openapi.v3.Fixture;
-import com.reedelk.openapi.v3.ParameterLocation;
-import com.reedelk.openapi.v3.ParameterObject;
-import com.reedelk.openapi.v3.ParameterStyle;
+import com.reedelk.openapi.Fixture;
 import org.junit.jupiter.api.Test;
 
 class ParameterObjectTest extends AbstractOpenApiSerializableTest {

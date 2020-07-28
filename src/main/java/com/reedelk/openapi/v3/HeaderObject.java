@@ -90,7 +90,9 @@ public class HeaderObject extends OpenApiSerializableAbstract {
     @Override
     public void deserialize(Map<String, Object> serialized) {
         description = getString(serialized, "description");
-        style = ParameterStyle.valueOf(getString(serialized, "style"));
+
+        String styleValue = getString(serialized, "style");
+        if (styleValue != null) this.style = ParameterStyle.valueOf(styleValue);
         // TODO: Deserialize schema
         example = getString(serialized, "example");
         explode = getBoolean(serialized, "explode");
