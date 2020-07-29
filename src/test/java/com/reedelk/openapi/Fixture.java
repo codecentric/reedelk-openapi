@@ -211,6 +211,16 @@ public class Fixture {
         }
     }
 
+    public enum ExternalDocumentationObject implements Provider {
+
+        WithAllProperties;
+
+        @Override
+        public String path() {
+            return "externaldocumentation/external_documentation_object_with_defaults.json";
+        }
+    }
+
     public enum HeaderObject implements Provider {
 
         WithDefaults() {
@@ -461,8 +471,8 @@ public class Fixture {
         return Arrays.asList(petTag, storeTag, userTag);
     }
 
-    private static ExternalDocumentationObject createDocumentation(String description, String url) {
-        ExternalDocumentationObject externalDocumentationObject = new ExternalDocumentationObject();
+    private static com.reedelk.openapi.v3.ExternalDocumentationObject createDocumentation(String description, String url) {
+        com.reedelk.openapi.v3.ExternalDocumentationObject externalDocumentationObject = new com.reedelk.openapi.v3.ExternalDocumentationObject();
         externalDocumentationObject.setDescription(description);
         externalDocumentationObject.setUrl(url);
         return externalDocumentationObject;
