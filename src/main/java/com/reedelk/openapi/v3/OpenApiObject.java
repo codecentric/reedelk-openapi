@@ -4,8 +4,6 @@ import com.reedelk.openapi.OpenApiSerializableAbstract;
 
 import java.util.*;
 
-import static java.util.Optional.ofNullable;
-
 public class OpenApiObject extends OpenApiSerializableAbstract {
 
     private static final String OPEN_API_VERSION = "3.0.3";
@@ -16,7 +14,7 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
     private ComponentsObject components = new ComponentsObject();
     private List<ServerObject> servers = new ArrayList<>();
     private PathsObject paths = new PathsObject();
-    private String basePath;
+    private List<TagObject> tags = new ArrayList<>();
 
     public String getOpenapi() {
         return openapi;
@@ -58,8 +56,12 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         this.components = components;
     }
 
-    public void setBasePath(String basePath) {
-        this.basePath = basePath;
+    public List<TagObject> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagObject> tags) {
+        this.tags = tags;
     }
 
     @Override
@@ -67,19 +69,10 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "openapi", openapi); // REQUIRED
         set(map, "info", info); // REQUIRED
-
-        if (servers == null || servers.isEmpty()) {
-            // From OpenAPI spec 3.0.3:
-            // If the servers property is not provided, or is an empty array,
-            // the default value would be a Server Object with a url value of /.
-            ServerObject serverObject = new ServerObject();
-            serverObject.setUrl(ofNullable(basePath).orElse("/"));
-            servers = Collections.singletonList(serverObject);
-        }
-
         set(map, "servers", servers);
         set(map, "paths", paths); // REQUIRED
         set(map, "components", components);
+        set(map, "tags", tags);
         return map;
     }
 
@@ -105,7 +98,14 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         if (serialized.containsKey("paths")) {
             paths.deserialize(getMap(serialized, "paths"));
         }
-        basePath = getString(serialized, "basePath");
+        if (serialized.containsKey("tags")) {
+            List<Map<String, Object>> tagsList = getList(serialized, "tags");
+            tagsList.forEach(objectMap -> {
+                TagObject tagObject = new TagObject();
+                tagObject.deserialize(objectMap);
+                tags.add(tagObject);
+            });
+        }
     }
 
     @Override
@@ -118,12 +118,12 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
                 Objects.equals(components, that.components) &&
                 Objects.equals(servers, that.servers) &&
                 Objects.equals(paths, that.paths) &&
-                Objects.equals(basePath, that.basePath);
+                Objects.equals(tags, that.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(openapi, info, components, servers, paths, basePath);
+        return Objects.hash(openapi, info, components, servers, paths, tags);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
                 ", components=" + components +
                 ", servers=" + servers +
                 ", paths=" + paths +
-                ", basePath='" + basePath + '\'' +
+                ", tags=" + tags +
                 '}';
     }
 }

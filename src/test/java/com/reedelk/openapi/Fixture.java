@@ -5,10 +5,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
@@ -443,6 +440,32 @@ public class Fixture {
         expectedOpenApi.setServers(Collections.singletonList(createServer()));
         expectedOpenApi.setPaths(expectedPaths);
         expectedOpenApi.setComponents(componentsObject);
+        expectedOpenApi.setTags(createTags());
+    }
+
+    private static List<TagObject> createTags() {
+        TagObject petTag = new TagObject();
+        petTag.setDescription("Everything about your Pets");
+        petTag.setName("pet");
+        petTag.setExternalDocs(createDocumentation("Find out more", "http://swagger.io"));
+
+        TagObject storeTag = new TagObject();
+        storeTag.setDescription("Access to Petstore orders");
+        storeTag.setName("store");
+
+        TagObject userTag = new TagObject();
+        userTag.setDescription("Operations about user");
+        userTag.setName("user");
+        userTag.setExternalDocs(createDocumentation("Find out more about our store", "http://swagger.io"));
+
+        return Arrays.asList(petTag, userTag, storeTag);
+    }
+
+    private static ExternalDocumentationObject createDocumentation(String description, String url) {
+        ExternalDocumentationObject externalDocumentationObject = new ExternalDocumentationObject();
+        externalDocumentationObject.setDescription(description);
+        externalDocumentationObject.setUrl(url);
+        return externalDocumentationObject;
     }
 
     private static Map<RestMethod, com.reedelk.openapi.v3.OperationObject> createUserLoginOperationMap() {

@@ -118,7 +118,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
         set(map, "name", Optional.ofNullable(name).orElse(""));
         set(map, "description", description);
         set(map, "in", ofNullable(in).orElse(query).name().toLowerCase());
-        set(map, "style", style.name());
+        if (style != null) set(map, "style", style.name());
         set(map, "example", example);
         set(map, "explode", explode);
         set(map, "deprecated", deprecated);

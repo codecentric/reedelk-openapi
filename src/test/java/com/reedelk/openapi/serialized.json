@@ -62,16 +62,14 @@
                   "format": "date-time",
                   "type": "string"
                 },
-                "description": "date in UTC when token expires",
-                "style": "simple"
+                "description": "date in UTC when token expires"
               },
               "X-Rate-Limit": {
                 "schema": {
                   "format": "int32",
                   "type": "integer"
                 },
-                "description": "calls per hour allowed by the user",
-                "style": "simple"
+                "description": "calls per hour allowed by the user"
               }
             },
             "content": {
@@ -95,7 +93,6 @@
               "type": "string"
             },
             "description": "The user name for login",
-            "style": "form",
             "in": "query",
             "required": true
           },
@@ -105,7 +102,6 @@
               "type": "string"
             },
             "description": "The password for login in clear text",
-            "style": "form",
             "in": "query",
             "required": true
           }
@@ -152,7 +148,6 @@
               "type": "integer"
             },
             "description": "ID of pet that needs to be updated",
-            "style": "form",
             "in": "path",
             "required": true
           }
@@ -196,7 +191,6 @@
               "type": "integer"
             },
             "description": "ID of pet to return",
-            "style": "form",
             "in": "path",
             "required": true
           }

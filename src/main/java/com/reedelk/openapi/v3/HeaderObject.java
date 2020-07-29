@@ -9,7 +9,7 @@ import java.util.Objects;
 public class HeaderObject extends OpenApiSerializableAbstract {
 
     private String description;
-    private ParameterStyle style = ParameterStyle.simple;
+    private ParameterStyle style;
     private Schema schema;
     private String example;
 
@@ -77,7 +77,7 @@ public class HeaderObject extends OpenApiSerializableAbstract {
     public Map<String,Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "description", description);
-        set(map, "style", style.name());
+        if (style != null) set(map, "style", style.name());
         set(map, schema);
         set(map, "example", example);
         set(map, "explode", explode);
