@@ -69,10 +69,10 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         Map<String, Object> map = new LinkedHashMap<>();
         set(map, "openapi", openapi); // REQUIRED
         set(map, "info", info); // REQUIRED
+        set(map, "tags", tags);
         set(map, "servers", servers);
         set(map, "paths", paths); // REQUIRED
         set(map, "components", components);
-        set(map, "tags", tags);
         return map;
     }
 
@@ -84,8 +84,13 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         if (serialized.containsKey("info")) {
             info.deserialize(getMap(serialized, "info"));
         }
-        if (serialized.containsKey("components")) {
-            components.deserialize(getMap(serialized, "components"));
+        if (serialized.containsKey("tags")) {
+            List<Map<String, Object>> tagsList = getList(serialized, "tags");
+            tagsList.forEach(objectMap -> {
+                TagObject tagObject = new TagObject();
+                tagObject.deserialize(objectMap);
+                tags.add(tagObject);
+            });
         }
         if (serialized.containsKey("servers")) {
             List<Map<String, Object>> serversList = getList(serialized, "servers");
@@ -98,13 +103,8 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
         if (serialized.containsKey("paths")) {
             paths.deserialize(getMap(serialized, "paths"));
         }
-        if (serialized.containsKey("tags")) {
-            List<Map<String, Object>> tagsList = getList(serialized, "tags");
-            tagsList.forEach(objectMap -> {
-                TagObject tagObject = new TagObject();
-                tagObject.deserialize(objectMap);
-                tags.add(tagObject);
-            });
+        if (serialized.containsKey("components")) {
+            components.deserialize(getMap(serialized, "components"));
         }
     }
 
