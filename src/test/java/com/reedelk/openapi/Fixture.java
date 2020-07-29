@@ -578,7 +578,8 @@ public class Fixture {
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
         Map<String, com.reedelk.openapi.v3.MediaTypeObject> contentTypeMedia = new HashMap<>();
-        contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet"));
+
+        contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Pet>\n\t<id>1230</id>\n\t<Category>\n\t\t<id>0</id>\n\t\t<name>string</name>\n\t</Category>\n\t<name>doggie</name>\n\t<photoUrl>\n\t\t<photoUrl>string</photoUrl>\n\t</photoUrl>\n\t<tag>\n\t\t<Tag>\n\t\t\t<id>0</id>\n\t\t\t<name>string</name>\n\t\t</Tag>\n\t</tag>\n\t<status>available</status>\n</Pet>"));
         contentTypeMedia.put("application/json", createMediaType("#/components/schemas/Pet"));
 
         ResponseObject response200 = createResponseObject("successful operation");
@@ -720,6 +721,13 @@ public class Fixture {
     private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(String schemaId) {
         com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
         mediaType.setSchema(new Schema(schemaId));
+        return mediaType;
+    }
+
+    private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(String schemaId, String example) {
+        com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
+        mediaType.setSchema(new Schema(schemaId));
+        mediaType.setExample(new Example(example));
         return mediaType;
     }
 

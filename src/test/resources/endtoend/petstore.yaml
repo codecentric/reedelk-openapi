@@ -1,9 +1,9 @@
+---
 openapi: 3.0.0
 info:
-  description: "This is a sample server Petstore server.  You can find out more about
-    Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net,
-    #swagger](http://swagger.io/irc/).  For this sample, you can use the api key
-    `special-key` to test the authorization filters."
+  description: 'This is a sample server Petstore server.  You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For
+    this sample, you can use the api key `special-key` to test the authorization filters.'
   version: 1.0.2
   title: Swagger Petstore
   termsOfService: http://swagger.io/terms/
@@ -26,32 +26,32 @@ tags:
       description: Find out more about our store
       url: http://swagger.io
 paths:
-  /pet:
+  "/pet":
     post:
       tags:
         - pet
       summary: Add a new pet to the store
-      description: ""
+      description: ''
       operationId: addPet
       requestBody:
-        $ref: "#/components/requestBodies/Pet"
+        "$ref": "#/components/requestBodies/Pet"
       responses:
-        "405":
+        '405':
           description: Invalid input
     put:
       tags:
         - pet
       summary: Update an existing pet
-      description: ""
+      description: ''
       operationId: updatePet
       requestBody:
-        $ref: "#/components/requestBodies/Pet"
+        "$ref": "#/components/requestBodies/Pet"
       responses:
-        "400":
+        '400':
           description: Invalid ID supplied
-        "404":
+        '404':
           description: Pet not found
-        "405":
+        '405':
           description: Validation exception
   "/pet/{petId}":
     get:
@@ -69,24 +69,25 @@ paths:
             type: integer
             format: int64
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/xml:
+              example: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Pet>\n\t<id>1230</id>\n\t<Category>\n\t\t<id>0</id>\n\t\t<name>string</name>\n\t</Category>\n\t<name>doggie</name>\n\t<photoUrl>\n\t\t<photoUrl>string</photoUrl>\n\t</photoUrl>\n\t<tag>\n\t\t<Tag>\n\t\t\t<id>0</id>\n\t\t\t<name>string</name>\n\t\t</Tag>\n\t</tag>\n\t<status>available</status>\n</Pet>"
               schema:
-                $ref: "#/components/schemas/Pet"
+                "$ref": "#/components/schemas/Pet"
             application/json:
               schema:
-                $ref: "#/components/schemas/Pet"
-        "400":
+                "$ref": "#/components/schemas/Pet"
+        '400':
           description: Invalid ID supplied
-        "404":
+        '404':
           description: Pet not found
     post:
       tags:
         - pet
       summary: Updates a pet in the store with form data
-      description: ""
+      description: ''
       operationId: updatePetWithForm
       parameters:
         - name: petId
@@ -109,9 +110,9 @@ paths:
                   description: Updated status of the pet
                   type: string
       responses:
-        "405":
+        '405':
           description: Invalid input
-  /store/inventory:
+  "/store/inventory":
     get:
       tags:
         - store
@@ -119,7 +120,7 @@ paths:
       description: Returns a map of status codes to quantities
       operationId: getInventory
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
@@ -128,12 +129,12 @@ paths:
                 additionalProperties:
                   type: integer
                   format: int32
-  /user/login:
+  "/user/login":
     get:
       tags:
         - user
       summary: Logs user into the system
-      description: ""
+      description: ''
       operationId: loginUser
       parameters:
         - name: username
@@ -149,7 +150,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             X-Rate-Limit:
@@ -169,7 +170,7 @@ paths:
             application/json:
               schema:
                 type: string
-        "400":
+        '400':
           description: Invalid username/password supplied
 servers:
   - url: https://petstore.swagger.io/v2
@@ -179,10 +180,10 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Pet"
+            "$ref": "#/components/schemas/Pet"
         application/xml:
           schema:
-            $ref: "#/components/schemas/Pet"
+            "$ref": "#/components/schemas/Pet"
       description: Pet object that needs to be added to the store
       required: true
   schemas:
@@ -216,7 +217,7 @@ components:
           type: integer
           format: int64
         category:
-          $ref: "#/components/schemas/Category"
+          "$ref": "#/components/schemas/Category"
         name:
           type: string
           example: doggie
@@ -233,7 +234,7 @@ components:
             name: tag
             wrapped: true
           items:
-            $ref: "#/components/schemas/Tag"
+            "$ref": "#/components/schemas/Tag"
         status:
           type: string
           description: pet status in the store
