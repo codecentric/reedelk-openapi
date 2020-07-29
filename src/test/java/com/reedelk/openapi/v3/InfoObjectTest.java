@@ -34,6 +34,8 @@ class InfoObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeInfoWithRequiredValues() {
         // Given
         InfoObject info = new InfoObject();
+        info.setTitle("My API");
+        info.setVersion("1.0.0");
 
         // Expect
         assertSerializeJSON(info, Fixture.InfoObject.WithDefaultPropertiesJson);
