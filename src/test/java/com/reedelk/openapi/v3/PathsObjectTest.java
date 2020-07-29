@@ -51,7 +51,6 @@ class PathsObjectTest extends AbstractOpenApiSerializableTest {
         PathsObject paths = new PathsObject();
         paths.getPaths().put("/mypath", methodOperation);
 
-
         // Expect
         assertSerializeJSON(paths, Fixture.PathsObject.WithOperation);
     }

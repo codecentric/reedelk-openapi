@@ -325,7 +325,7 @@ public class Fixture {
 
     }
 
-    public enum ResponseBodyObject implements Provider {
+    public enum ResponseObject implements Provider {
 
         WithAllProperties() {
             @Override
@@ -514,11 +514,11 @@ public class Fixture {
         headersMap.put("X-Rate-Limit", rateLimit);
         headersMap.put("X-Expires-After", expiresAfter);
 
-        ResponseObject response200 = createResponseObject("successful operation");
+        com.reedelk.openapi.v3.ResponseObject response200 = createResponseObject("successful operation");
         response200.setContent(contentTypeMedia);
         response200.setHeaders(headersMap);
 
-        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
         getStatusCodeResponseMap.put("200", response200);
         getStatusCodeResponseMap.put("400", createResponseObject("Invalid username/password supplied"));
 
@@ -547,10 +547,10 @@ public class Fixture {
                 "                  }\n" +
                 "                }").toMap()));
 
-        ResponseObject response200 = createResponseObject("successful operation");
+        com.reedelk.openapi.v3.ResponseObject response200 = createResponseObject("successful operation");
         response200.setContent(contentTypeMedia);
 
-        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
         getStatusCodeResponseMap.put("200", response200);
 
         com.reedelk.openapi.v3.OperationObject getStoreInventoryOperation = new com.reedelk.openapi.v3.OperationObject();
@@ -582,10 +582,10 @@ public class Fixture {
         contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Pet>\n\t<id>1230</id>\n\t<Category>\n\t\t<id>0</id>\n\t\t<name>string</name>\n\t</Category>\n\t<name>doggie</name>\n\t<photoUrl>\n\t\t<photoUrl>string</photoUrl>\n\t</photoUrl>\n\t<tag>\n\t\t<Tag>\n\t\t\t<id>0</id>\n\t\t\t<name>string</name>\n\t\t</Tag>\n\t</tag>\n\t<status>available</status>\n</Pet>"));
         contentTypeMedia.put("application/json", createMediaType("#/components/schemas/Pet"));
 
-        ResponseObject response200 = createResponseObject("successful operation");
+        com.reedelk.openapi.v3.ResponseObject response200 = createResponseObject("successful operation");
         response200.setContent(contentTypeMedia);
 
-        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
         getStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
         getStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
         getStatusCodeResponseMap.put("200", response200);
@@ -610,7 +610,7 @@ public class Fixture {
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
 
-        Map<String, ResponseObject> postStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> postStatusCodeResponseMap = new HashMap<>();
         postStatusCodeResponseMap.put("405", createResponseObject("Invalid input"));
 
         com.reedelk.openapi.v3.MediaTypeObject wwwFormUrlEncoded = createMediaType(new JSONObject("{\n" +
@@ -652,7 +652,7 @@ public class Fixture {
         com.reedelk.openapi.v3.RequestBodyObject putPetRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        Map<String, ResponseObject> putStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> putStatusCodeResponseMap = new HashMap<>();
         putStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
         putStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
         putStatusCodeResponseMap.put("405", createResponseObject("Validation exception"));
@@ -670,7 +670,7 @@ public class Fixture {
         com.reedelk.openapi.v3.RequestBodyObject postPetRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
         postPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        Map<String, ResponseObject> postStatusResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.ResponseObject> postStatusResponseMap = new HashMap<>();
         postStatusResponseMap.put("405", createResponseObject("Invalid input"));
 
         com.reedelk.openapi.v3.OperationObject postPetOperation = new com.reedelk.openapi.v3.OperationObject();
@@ -768,8 +768,8 @@ public class Fixture {
         return expectedServer;
     }
 
-    private static ResponseObject createResponseObject(String description) {
-        ResponseObject responseObject = new ResponseObject();
+    private static com.reedelk.openapi.v3.ResponseObject createResponseObject(String description) {
+        com.reedelk.openapi.v3.ResponseObject responseObject = new com.reedelk.openapi.v3.ResponseObject();
         responseObject.setDescription(description);
         return responseObject;
     }

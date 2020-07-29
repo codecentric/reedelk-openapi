@@ -1,34 +1,40 @@
 package com.reedelk.openapi.v3;
 
-import org.assertj.core.api.Assertions;
+import com.reedelk.openapi.Fixture;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 class ResponseObjectTest extends AbstractOpenApiSerializableTest {
-/**
+
     @Test
     void shouldCorrectlySerializeResponseWithAllProperties() {
         // Given
-        ResourceText jsonExample = Mockito.mock(ResourceText.class);
-        Mockito.doReturn(just(Examples.JsonPet.string())).when(jsonExample).data();
-
-        ResourceText xmlExample = Mockito.mock(ResourceText.class);
-        Mockito.doReturn(just(Examples.NoteXml.string())).when(xmlExample).data();
-
         MediaTypeObject jsonMediaType = new MediaTypeObject();
-        jsonMediaType.setExample(jsonExample);
+        jsonMediaType.setExample(new Example("{\"id\":\"Dog\",\"name\":\"John\"}"));
 
         MediaTypeObject xmlMediaType = new MediaTypeObject();
-        xmlMediaType.setExample(xmlExample);
+        xmlMediaType.setExample(new Example("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>"));
 
-        Map<String, MediaTypeObject> content = new HashMap<>();
-        content.put("application/json", jsonMediaType);
-        content.put("text/xml", xmlMediaType);
+        Map<String, MediaTypeObject> contentTypeMediaType = new HashMap<>();
+        contentTypeMediaType.put("application/json", jsonMediaType);
+        contentTypeMediaType.put("text/xml", xmlMediaType);
 
         HeaderObject header1 = new HeaderObject();
         header1.setDescription("My header 1");
+        header1.setStyle(ParameterStyle.simple);
+        header1.setSchema(new Schema(new JSONObject("{\n" +
+                "        \"type\": \"string\"\n" +
+                "    }").toMap()));
 
         HeaderObject header2 = new HeaderObject();
         header2.setDescription("My header 2");
+        header2.setStyle(ParameterStyle.simple);
+        header2.setSchema(new Schema(new JSONObject("{\n" +
+                "        \"type\": \"string\"\n" +
+                "    }").toMap()));
 
         Map<String, HeaderObject> headers = new HashMap<>();
         headers.put("x-my-header1", header1);
@@ -36,17 +42,11 @@ class ResponseObjectTest extends AbstractOpenApiSerializableTest {
 
         ResponseObject response = new ResponseObject();
         response.setDescription("My response description");
-        response.setContent(content);
+        response.setContent(contentTypeMediaType);
         response.setHeaders(headers);
 
         // Expect
-        OpenApiJsons.ResponseBodyObject withAllProperties = OpenApiJsons.ResponseBodyObject.WithAllProperties;
-
-        ComponentsObject componentsObject = new ComponentsObject();
-        OpenApiSerializableContext context = new OpenApiSerializableContext(componentsObject);
-        JSONObject actualObject = response.serialize(context);
-        JSONObject expectedObject = new JSONObject(withAllProperties.string());
-        assertSameExamples(actualObject, expectedObject);
+        assertSerializeJSON(response, Fixture.ResponseObject.WithAllProperties);
     }
 
     @Test
@@ -55,17 +55,6 @@ class ResponseObjectTest extends AbstractOpenApiSerializableTest {
         ResponseObject response = new ResponseObject();
 
         // Expect
-        assertSerializedCorrectly(response, OpenApiJsons.ResponseBodyObject.WithDefault);
-    }*/
-
-    private void assertSameExamples(JSONObject object1, JSONObject object2) {
-        JSONObject contentObject1 = object1.getJSONObject("content");
-        JSONObject applicationJsonObject1 = contentObject1.getJSONObject("application/json");
-        String applicationJsonExample1 = applicationJsonObject1.getString("example");
-
-        JSONObject contentObject2 = object2.getJSONObject("content");
-        JSONObject applicationJsonObject2 = contentObject2.getJSONObject("application/json");
-        String applicationJsonExample2 = applicationJsonObject2.getString("example");
-        Assertions.assertThat(applicationJsonExample1).isEqualToIgnoringNewLines(applicationJsonExample2);
+        assertSerializeJSON(response, Fixture.ResponseObject.WithDefault);
     }
 }
