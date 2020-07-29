@@ -8,6 +8,7 @@ import java.util.Objects;
 public class SchemaObject extends OpenApiSerializableAbstract {
 
     private Schema schema;
+    private String schemaId;
 
     public Schema getSchema() {
         return schema;
@@ -15,6 +16,14 @@ public class SchemaObject extends OpenApiSerializableAbstract {
 
     public void setSchema(Schema schema) {
         this.schema = schema;
+    }
+
+    public String getSchemaId() {
+        return schemaId;
+    }
+
+    public void setSchemaId(String schemaId) {
+        this.schemaId = schemaId;
     }
 
     @Override

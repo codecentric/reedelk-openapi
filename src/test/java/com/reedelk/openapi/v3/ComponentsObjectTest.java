@@ -1,27 +1,26 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
+import java.util.Map;
+
 class ComponentsObjectTest extends AbstractOpenApiSerializableTest {
 
-    // TODO: Fixme
-    /**
     @Test
     void shouldCorrectlySerializeSchema() {
         // Given
-        ResourceText stringSchema = Mockito.mock(ResourceText.class);
-        Mockito.doReturn(just(PredefinedSchema.STRING.schema())).when(stringSchema).data();
         SchemaObject stringSchemaObject = new SchemaObject();
-        stringSchemaObject.setSchema(stringSchema);
+        stringSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
+                "      \"type\": \"string\"\n" +
+                "    }").toMap()));
 
-        ResourceText integerSchema = Mockito.mock(ResourceText.class);
-        Mockito.doReturn(just(PredefinedSchema.INTEGER.schema())).when(integerSchema).data();
         SchemaObject integerSchemaObject = new SchemaObject();
-        integerSchemaObject.setSchema(integerSchema);
+        integerSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
+                "      \"type\": \"integer\"\n" +
+                "    }").toMap()));
+
 
         ComponentsObject componentsObject = new ComponentsObject();
 
@@ -29,12 +28,9 @@ class ComponentsObjectTest extends AbstractOpenApiSerializableTest {
         schemas.put("MyString", stringSchemaObject);
         schemas.put("MyInteger", integerSchemaObject);
 
-
-        OpenApiSerializableContext context = new OpenApiSerializableContext(componentsObject);
-
         // Expect
-        assertSerializedCorrectly(context, componentsObject, OpenApiJsons.ComponentsObject.WithSampleSchemas);
-    }*/
+        assertSerializeJSON(componentsObject, Fixture.ComponentsObject.WithSampleSchemas);
+    }
 
     @Test
     void shouldCorrectlySerializeWhenNoSchemas() {
