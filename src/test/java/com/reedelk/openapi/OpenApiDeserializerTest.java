@@ -41,6 +41,7 @@ class OpenApiDeserializerTest {
         Map<String, Map<RestMethod, OperationObject>> paths = new HashMap<>();
         paths.put("/pet", createPetOperationMap());
         paths.put("/pet/{petId}", createPetByIdOperationMap());
+        paths.put("/store/inventory", createStoreInventoryOperationMap());
 
         // Paths Object
         PathsObject expectedPaths = new PathsObject();
@@ -56,6 +57,36 @@ class OpenApiDeserializerTest {
         expectedOpenApi.setServers(Collections.singletonList(createServer()));
         expectedOpenApi.setPaths(expectedPaths);
         expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static Map<RestMethod, OperationObject> createStoreInventoryOperationMap() {
+        // ---------------- GET Store Inventory Object ----------------
+        Map<String, MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"object\",\n" +
+                "                  \"additionalProperties\": {\n" +
+                "                    \"type\": \"integer\",\n" +
+                "                    \"format\": \"int32\"\n" +
+                "                  }\n" +
+                "                }").toMap()));
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("200", response200);
+
+        OperationObject getStoreInventoryOperation = new OperationObject();
+        getStoreInventoryOperation.setTags(Collections.singletonList("store"));
+        getStoreInventoryOperation.setSummary("Returns pet inventories by status");
+        getStoreInventoryOperation.setOperationId("getInventory");
+        getStoreInventoryOperation.setResponses(getStatusCodeResponseMap);
+        getStoreInventoryOperation.setDescription("Returns a map of status codes to quantities");
+        // ------------------------------------------------------
+
+        Map<RestMethod, OperationObject> storeInventoryOperationMap = new HashMap<>();
+        storeInventoryOperationMap.put(RestMethod.GET, getStoreInventoryOperation);
+        return storeInventoryOperationMap;
     }
 
     private static Map<RestMethod, OperationObject> createPetByIdOperationMap() {
