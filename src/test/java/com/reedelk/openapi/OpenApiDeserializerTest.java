@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OpenApiDeserializerTest {
@@ -42,6 +43,7 @@ class OpenApiDeserializerTest {
         paths.put("/pet", createPetOperationMap());
         paths.put("/pet/{petId}", createPetByIdOperationMap());
         paths.put("/store/inventory", createStoreInventoryOperationMap());
+        paths.put("/user/login", createUserLoginOperationMap());
 
         // Paths Object
         PathsObject expectedPaths = new PathsObject();
@@ -57,6 +59,74 @@ class OpenApiDeserializerTest {
         expectedOpenApi.setServers(Collections.singletonList(createServer()));
         expectedOpenApi.setPaths(expectedPaths);
         expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static Map<RestMethod, OperationObject> createUserLoginOperationMap() {
+        // ---------------- GET Store Inventory Object ----------------
+        ParameterObject usernameParameter = new ParameterObject();
+        usernameParameter.setName("username");
+        usernameParameter.setIn(ParameterLocation.query);
+        usernameParameter.setDescription("The user name for login");
+        usernameParameter.setRequired(true);
+        usernameParameter.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"string\",\n" +
+                "            }").toMap()));
+
+        ParameterObject passwordParameter = new ParameterObject();
+        passwordParameter.setName("password");
+        passwordParameter.setIn(ParameterLocation.query);
+        passwordParameter.setDescription("The password for login in clear text");
+        passwordParameter.setRequired(true);
+        passwordParameter.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"string\",\n" +
+                "            }").toMap()));
+
+        Map<String, MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"string\"\n" +
+                "                }").toMap()));
+        contentTypeMedia.put("application/xml", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"string\"\n" +
+                "                }").toMap()));
+
+        HeaderObject rateLimit = new HeaderObject();
+        rateLimit.setDescription("calls per hour allowed by the user");
+        rateLimit.setSchema(new Schema(new JSONObject("{\n" +
+                "                  \"type\": \"integer\",\n" +
+                "                  \"format\": \"int32\"\n" +
+                "                }").toMap()));
+
+        HeaderObject expiresAfter = new HeaderObject();
+        expiresAfter.setDescription("date in UTC when token expires");
+        expiresAfter.setSchema(new Schema(new JSONObject("{\n" +
+                "                  \"type\": \"string\",\n" +
+                "                  \"format\": \"date-time\"\n" +
+                "                }").toMap()));
+
+        Map<String, HeaderObject> headersMap = new HashMap<>();
+        headersMap.put("X-Rate-Limit", rateLimit);
+        headersMap.put("X-Expires-After", expiresAfter);
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+        response200.setHeaders(headersMap);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("200", response200);
+        getStatusCodeResponseMap.put("400", createResponseObject("Invalid username/password supplied"));
+
+        OperationObject loginOperation = new OperationObject();
+        loginOperation.setTags(Collections.singletonList("user"));
+        loginOperation.setSummary("Logs user into the system");
+        loginOperation.setOperationId("loginUser");
+        loginOperation.setResponses(getStatusCodeResponseMap);
+        loginOperation.setDescription("");
+        loginOperation.setParameters(asList(usernameParameter, passwordParameter));
+        // ------------------------------------------------------
+
+        Map<RestMethod, OperationObject> userLoginOperationMap = new HashMap<>();
+        userLoginOperationMap.put(RestMethod.GET, loginOperation);
+        return userLoginOperationMap;
     }
 
     private static Map<RestMethod, OperationObject> createStoreInventoryOperationMap() {
