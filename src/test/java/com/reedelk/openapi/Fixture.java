@@ -458,7 +458,7 @@ public class Fixture {
         userTag.setName("user");
         userTag.setExternalDocs(createDocumentation("Find out more about our store", "http://swagger.io"));
 
-        return Arrays.asList(petTag, userTag, storeTag);
+        return Arrays.asList(petTag, storeTag, userTag);
     }
 
     private static ExternalDocumentationObject createDocumentation(String description, String url) {

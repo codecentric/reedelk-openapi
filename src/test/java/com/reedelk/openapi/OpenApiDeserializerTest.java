@@ -16,7 +16,8 @@ class OpenApiDeserializerTest {
         OpenApiObject actualOpenApi = OpenApiDeserializer.from(json);
 
         // Then
-        assertThat(Fixture.expectedOpenApi).isEqualTo(actualOpenApi);
+        OpenApiObject expectedOpenApi = Fixture.expectedOpenApi;
+        assertThat(expectedOpenApi).isEqualTo(actualOpenApi);
     }
 
     @Test
@@ -28,6 +29,7 @@ class OpenApiDeserializerTest {
         OpenApiObject actualOpenApi = OpenApiDeserializer.from(yaml);
 
         // Then
-        assertThat(Fixture.expectedOpenApi).isEqualTo(actualOpenApi);
+        OpenApiObject expectedOpenApi = Fixture.expectedOpenApi;
+        assertThat(expectedOpenApi).isEqualTo(actualOpenApi);
     }
 }
