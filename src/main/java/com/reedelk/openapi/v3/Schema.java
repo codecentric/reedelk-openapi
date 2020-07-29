@@ -54,7 +54,7 @@ public class Schema extends OpenApiSerializableAbstract {
     public Map<String, Object> serialize() {
         if (isReference()) {
             Map<String, Object> schemaReferenceObject = new LinkedHashMap<>();
-            schemaReferenceObject.put(JSON_PROPERTY_REF, String.format(COMPONENTS_SCHEMA_REF_TEMPLATE, schemaId));
+            schemaReferenceObject.put(JSON_PROPERTY_REF, schemaId);
             return schemaReferenceObject;
         } else {
             return schemaData;

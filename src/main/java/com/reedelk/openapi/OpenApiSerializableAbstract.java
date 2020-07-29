@@ -12,13 +12,16 @@ import java.util.Map;
 public abstract class OpenApiSerializableAbstract implements OpenApiSerializable {
 
     private static final String JSON_PROPERTY_EXAMPLE = "example";
+    private static final String JSON_PROPERTY_SCHEMA = "schema";
 
     protected void set(Map<String, Object> parent, Schema schema) {
-        parent.put("schema", schema.serialize());
+        parent.put(JSON_PROPERTY_SCHEMA, schema.serialize());
     }
 
     protected void set(Map<String, Object> parent, Example example) {
-        parent.put(JSON_PROPERTY_EXAMPLE, new JSONObject(example.data()).toMap());
+        if (example != null) {
+            parent.put(JSON_PROPERTY_EXAMPLE, new JSONObject(example.data()).toMap());
+        }
     }
 
     protected void setMapSerializable(Map<String,Object> parent, String propertyName, Map<String, ? extends OpenApiSerializable> serializableMap) {

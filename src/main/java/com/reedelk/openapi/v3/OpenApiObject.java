@@ -11,7 +11,7 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
     private static final String OPEN_API_VERSION = "3.0.3";
     
     // Info Object is required by spec
-    private String openapi;
+    private String openapi = OPEN_API_VERSION;
     private InfoObject info = new InfoObject();
     private ComponentsObject components = new ComponentsObject();
     private List<ServerObject> servers = new ArrayList<>();
@@ -65,7 +65,7 @@ public class OpenApiObject extends OpenApiSerializableAbstract {
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "openapi", OPEN_API_VERSION); // REQUIRED
+        set(map, "openapi", openapi); // REQUIRED
         set(map, "info", info); // REQUIRED
 
         if (servers == null || servers.isEmpty()) {

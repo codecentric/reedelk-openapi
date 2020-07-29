@@ -2,7 +2,6 @@ package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,9 +19,7 @@ public class SchemaObject extends OpenApiSerializableAbstract {
 
     @Override
     public Map<String,Object> serialize() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        set(map, schema);
-        return map;
+        return schema.serialize();
     }
 
     @Override

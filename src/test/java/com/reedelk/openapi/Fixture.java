@@ -1,10 +1,17 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.v3.*;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 
 public class Fixture {
 
@@ -412,5 +419,327 @@ public class Fixture {
                 throw new RuntimeException("String from URI could not be read.", e);
             }
         }
+    }
+
+    public static final com.reedelk.openapi.v3.OpenApiObject expectedOpenApi;
+    static {
+        Map<String, Map<RestMethod, com.reedelk.openapi.v3.OperationObject>> paths = new HashMap<>();
+        paths.put("/pet", createPetOperationMap());
+        paths.put("/pet/{petId}", createPetByIdOperationMap());
+        paths.put("/store/inventory", createStoreInventoryOperationMap());
+        paths.put("/user/login", createUserLoginOperationMap());
+
+        // Paths Object
+        com.reedelk.openapi.v3.PathsObject expectedPaths = new com.reedelk.openapi.v3.PathsObject();
+        expectedPaths.setPaths(paths);
+        // ------------------------------------------------------
+
+        // Components Object
+        com.reedelk.openapi.v3.ComponentsObject componentsObject = createComponents();
+
+        expectedOpenApi = new com.reedelk.openapi.v3.OpenApiObject();
+        expectedOpenApi.setOpenapi("3.0.0");
+        expectedOpenApi.setInfo(createInfo());
+        expectedOpenApi.setServers(Collections.singletonList(createServer()));
+        expectedOpenApi.setPaths(expectedPaths);
+        expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static Map<RestMethod, com.reedelk.openapi.v3.OperationObject> createUserLoginOperationMap() {
+        // ---------------- GET Store Inventory Object ----------------
+        com.reedelk.openapi.v3.ParameterObject usernameParameter = new com.reedelk.openapi.v3.ParameterObject();
+        usernameParameter.setName("username");
+        usernameParameter.setIn(ParameterLocation.query);
+        usernameParameter.setDescription("The user name for login");
+        usernameParameter.setRequired(true);
+        usernameParameter.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"string\",\n" +
+                "            }").toMap()));
+
+        com.reedelk.openapi.v3.ParameterObject passwordParameter = new com.reedelk.openapi.v3.ParameterObject();
+        passwordParameter.setName("password");
+        passwordParameter.setIn(ParameterLocation.query);
+        passwordParameter.setDescription("The password for login in clear text");
+        passwordParameter.setRequired(true);
+        passwordParameter.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"string\",\n" +
+                "            }").toMap()));
+
+        Map<String, com.reedelk.openapi.v3.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"string\"\n" +
+                "                }").toMap()));
+        contentTypeMedia.put("application/xml", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"string\"\n" +
+                "                }").toMap()));
+
+        com.reedelk.openapi.v3.HeaderObject rateLimit = new com.reedelk.openapi.v3.HeaderObject();
+        rateLimit.setDescription("calls per hour allowed by the user");
+        rateLimit.setSchema(new Schema(new JSONObject("{\n" +
+                "                  \"type\": \"integer\",\n" +
+                "                  \"format\": \"int32\"\n" +
+                "                }").toMap()));
+
+        com.reedelk.openapi.v3.HeaderObject expiresAfter = new com.reedelk.openapi.v3.HeaderObject();
+        expiresAfter.setDescription("date in UTC when token expires");
+        expiresAfter.setSchema(new Schema(new JSONObject("{\n" +
+                "                  \"type\": \"string\",\n" +
+                "                  \"format\": \"date-time\"\n" +
+                "                }").toMap()));
+
+        Map<String, com.reedelk.openapi.v3.HeaderObject> headersMap = new HashMap<>();
+        headersMap.put("X-Rate-Limit", rateLimit);
+        headersMap.put("X-Expires-After", expiresAfter);
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+        response200.setHeaders(headersMap);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("200", response200);
+        getStatusCodeResponseMap.put("400", createResponseObject("Invalid username/password supplied"));
+
+        com.reedelk.openapi.v3.OperationObject loginOperation = new com.reedelk.openapi.v3.OperationObject();
+        loginOperation.setTags(Collections.singletonList("user"));
+        loginOperation.setSummary("Logs user into the system");
+        loginOperation.setOperationId("loginUser");
+        loginOperation.setResponses(getStatusCodeResponseMap);
+        loginOperation.setDescription("");
+        loginOperation.setParameters(asList(usernameParameter, passwordParameter));
+        // ------------------------------------------------------
+
+        Map<RestMethod, com.reedelk.openapi.v3.OperationObject> userLoginOperationMap = new HashMap<>();
+        userLoginOperationMap.put(RestMethod.GET, loginOperation);
+        return userLoginOperationMap;
+    }
+
+    private static Map<RestMethod, com.reedelk.openapi.v3.OperationObject> createStoreInventoryOperationMap() {
+        // ---------------- GET Store Inventory Object ----------------
+        Map<String, com.reedelk.openapi.v3.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
+                "                  \"type\": \"object\",\n" +
+                "                  \"additionalProperties\": {\n" +
+                "                    \"type\": \"integer\",\n" +
+                "                    \"format\": \"int32\"\n" +
+                "                  }\n" +
+                "                }").toMap()));
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("200", response200);
+
+        com.reedelk.openapi.v3.OperationObject getStoreInventoryOperation = new com.reedelk.openapi.v3.OperationObject();
+        getStoreInventoryOperation.setTags(Collections.singletonList("store"));
+        getStoreInventoryOperation.setSummary("Returns pet inventories by status");
+        getStoreInventoryOperation.setOperationId("getInventory");
+        getStoreInventoryOperation.setResponses(getStatusCodeResponseMap);
+        getStoreInventoryOperation.setDescription("Returns a map of status codes to quantities");
+        // ------------------------------------------------------
+
+        Map<RestMethod, com.reedelk.openapi.v3.OperationObject> storeInventoryOperationMap = new HashMap<>();
+        storeInventoryOperationMap.put(RestMethod.GET, getStoreInventoryOperation);
+        return storeInventoryOperationMap;
+    }
+
+    private static Map<RestMethod, com.reedelk.openapi.v3.OperationObject> createPetByIdOperationMap() {
+        // ---------------- GET Operation Object ----------------
+        com.reedelk.openapi.v3.ParameterObject getParameters = new com.reedelk.openapi.v3.ParameterObject();
+        getParameters.setName("petId");
+        getParameters.setIn(ParameterLocation.path);
+        getParameters.setDescription("ID of pet to return");
+        getParameters.setRequired(true);
+        getParameters.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"integer\",\n" +
+                "              \"format\": \"int64\"\n" +
+                "            }").toMap()));
+        Map<String, com.reedelk.openapi.v3.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet"));
+        contentTypeMedia.put("application/json", createMediaType("#/components/schemas/Pet"));
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
+        getStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
+        getStatusCodeResponseMap.put("200", response200);
+
+        com.reedelk.openapi.v3.OperationObject getPetOperation = new com.reedelk.openapi.v3.OperationObject();
+        getPetOperation.setTags(Collections.singletonList("pet"));
+        getPetOperation.setSummary("Find pet by ID");
+        getPetOperation.setOperationId("getPetById");
+        getPetOperation.setResponses(getStatusCodeResponseMap);
+        getPetOperation.setDescription("Returns a single pet");
+        getPetOperation.setParameters(Collections.singletonList(getParameters));
+        // ------------------------------------------------------
+
+        // ---------------- POST Operation Object ----------------
+        com.reedelk.openapi.v3.ParameterObject postParameters = new com.reedelk.openapi.v3.ParameterObject();
+        postParameters.setName("petId");
+        postParameters.setIn(ParameterLocation.path);
+        postParameters.setDescription("ID of pet that needs to be updated");
+        postParameters.setRequired(true);
+        postParameters.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"integer\",\n" +
+                "              \"format\": \"int64\"\n" +
+                "            }").toMap()));
+
+        Map<String, ResponseObject> postStatusCodeResponseMap = new HashMap<>();
+        postStatusCodeResponseMap.put("405", createResponseObject("Invalid input"));
+
+        com.reedelk.openapi.v3.MediaTypeObject wwwFormUrlEncoded = createMediaType(new JSONObject("{\n" +
+                "                \"type\": \"object\",\n" +
+                "                \"properties\": {\n" +
+                "                  \"name\": {\n" +
+                "                    \"description\": \"Updated name of the pet\",\n" +
+                "                    \"type\": \"string\"\n" +
+                "                  },\n" +
+                "                  \"status\": {\n" +
+                "                    \"description\": \"Updated status of the pet\",\n" +
+                "                    \"type\": \"string\"\n" +
+                "                  }\n" +
+                "                }\n" +
+                "              }").toMap());
+        Map<String, com.reedelk.openapi.v3.MediaTypeObject> postContentTypeMediaTypeMap = new HashMap<>();
+        postContentTypeMediaTypeMap.put("application/x-www-form-urlencoded", wwwFormUrlEncoded);
+        com.reedelk.openapi.v3.RequestBodyObject postPetRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
+        postPetRequestBody.setContent(postContentTypeMediaTypeMap);
+
+        com.reedelk.openapi.v3.OperationObject postPetOperation = new com.reedelk.openapi.v3.OperationObject();
+        postPetOperation.setTags(Collections.singletonList("pet"));
+        postPetOperation.setSummary("Updates a pet in the store with form data");
+        postPetOperation.setOperationId("updatePetWithForm");
+        postPetOperation.setRequestBody(postPetRequestBody);
+        postPetOperation.setResponses(postStatusCodeResponseMap);
+        postPetOperation.setDescription("");
+        postPetOperation.setParameters(Collections.singletonList(postParameters));
+        // ------------------------------------------------------
+
+        Map<RestMethod, com.reedelk.openapi.v3.OperationObject> petOperationMap = new HashMap<>();
+        petOperationMap.put(RestMethod.GET, getPetOperation);
+        petOperationMap.put(RestMethod.POST, postPetOperation);
+        return petOperationMap;
+    }
+
+    private static Map<RestMethod, com.reedelk.openapi.v3.OperationObject> createPetOperationMap() {
+        // ---------------- PUT Operation Object ----------------
+        com.reedelk.openapi.v3.RequestBodyObject putPetRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
+        putPetRequestBody.set$ref("#/components/requestBodies/Pet");
+
+        Map<String, ResponseObject> putStatusCodeResponseMap = new HashMap<>();
+        putStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
+        putStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
+        putStatusCodeResponseMap.put("405", createResponseObject("Validation exception"));
+
+        com.reedelk.openapi.v3.OperationObject putPetOperation = new com.reedelk.openapi.v3.OperationObject();
+        putPetOperation.setSummary("Update an existing pet");
+        putPetOperation.setOperationId("updatePet");
+        putPetOperation.setRequestBody(putPetRequestBody);
+        putPetOperation.setResponses(putStatusCodeResponseMap);
+        putPetOperation.setDescription("");
+        putPetOperation.setTags(Collections.singletonList("pet"));
+        // ------------------------------------------------------
+
+        // ---------------- POST Operation Object ----------------
+        com.reedelk.openapi.v3.RequestBodyObject postPetRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
+        postPetRequestBody.set$ref("#/components/requestBodies/Pet");
+
+        Map<String, ResponseObject> postStatusResponseMap = new HashMap<>();
+        postStatusResponseMap.put("405", createResponseObject("Invalid input"));
+
+        com.reedelk.openapi.v3.OperationObject postPetOperation = new com.reedelk.openapi.v3.OperationObject();
+        postPetOperation.setSummary("Add a new pet to the store");
+        postPetOperation.setOperationId("addPet");
+        postPetOperation.setRequestBody(postPetRequestBody);
+        postPetOperation.setResponses(postStatusResponseMap);
+        postPetOperation.setDescription("");
+        postPetOperation.setTags(Collections.singletonList("pet"));
+        // ------------------------------------------------------
+
+        Map<RestMethod, com.reedelk.openapi.v3.OperationObject> petOperationMap = new HashMap<>();
+        petOperationMap.put(RestMethod.PUT, putPetOperation);
+        petOperationMap.put(RestMethod.POST, postPetOperation);
+        return petOperationMap;
+    }
+
+    private static com.reedelk.openapi.v3.ComponentsObject createComponents() {
+        Map<String, com.reedelk.openapi.v3.MediaTypeObject> contentTypeMediaTypeMap = new HashMap<>();
+        contentTypeMediaTypeMap.put("application/xml", createMediaType("#/components/schemas/Pet"));
+        contentTypeMediaTypeMap.put("application/json", createMediaType("#/components/schemas/Pet"));
+
+        com.reedelk.openapi.v3.RequestBodyObject petRequestBody = new com.reedelk.openapi.v3.RequestBodyObject();
+        petRequestBody.setContent(contentTypeMediaTypeMap);
+        petRequestBody.setRequired(true);
+        petRequestBody.setDescription("Pet object that needs to be added to the store");
+
+        Map<String, com.reedelk.openapi.v3.RequestBodyObject> idAndRequestBody = new HashMap<>();
+        idAndRequestBody.put("Pet", petRequestBody);
+
+        Map<String, SchemaObject> idAndSchema = new HashMap<>();
+        idAndSchema.put("Pet", createSchema(Fixture.Schemas.Pet));
+        idAndSchema.put("Tag", createSchema(Fixture.Schemas.Tag));
+        idAndSchema.put("Category", createSchema(Fixture.Schemas.Category));
+
+        com.reedelk.openapi.v3.ComponentsObject componentsObject = new com.reedelk.openapi.v3.ComponentsObject();
+        componentsObject.setRequestBodies(idAndRequestBody);
+        componentsObject.setSchemas(idAndSchema);
+        return componentsObject;
+    }
+
+    private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(Map<String, Object> schemaData) {
+        com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
+        mediaType.setSchema(new Schema(schemaData));
+        return mediaType;
+    }
+
+    private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(String schemaId) {
+        com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
+        mediaType.setSchema(new Schema(schemaId));
+        return mediaType;
+    }
+
+    private static SchemaObject createSchema(Fixture.Schemas schemaData) {
+        Schema schema = new Schema(new JSONObject(schemaData.string()).toMap());
+        SchemaObject schemaObject = new SchemaObject();
+        schemaObject.setSchema(schema);
+        return schemaObject;
+    }
+
+    private static com.reedelk.openapi.v3.ContactObject createContact() {
+        com.reedelk.openapi.v3.ContactObject expectedContact = new com.reedelk.openapi.v3.ContactObject();
+        expectedContact.setEmail("apiteam@swagger.io");
+        return expectedContact;
+    }
+
+    private static com.reedelk.openapi.v3.LicenseObject createLicense() {
+        com.reedelk.openapi.v3.LicenseObject expectedLicense = new com.reedelk.openapi.v3.LicenseObject();
+        expectedLicense.setName("Apache 2.0");
+        expectedLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+        return expectedLicense;
+    }
+
+    private static com.reedelk.openapi.v3.InfoObject createInfo() {
+        com.reedelk.openapi.v3.InfoObject expectedInfo = new com.reedelk.openapi.v3.InfoObject();
+        expectedInfo.setDescription("This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.");
+        expectedInfo.setVersion("1.0.2");
+        expectedInfo.setTitle("Swagger Petstore");
+        expectedInfo.setTermsOfService("http://swagger.io/terms/");
+        expectedInfo.setContact(createContact());
+        expectedInfo.setLicense(createLicense());
+        return expectedInfo;
+    }
+
+    private static com.reedelk.openapi.v3.ServerObject createServer() {
+        com.reedelk.openapi.v3.ServerObject expectedServer = new com.reedelk.openapi.v3.ServerObject();
+        expectedServer.setUrl("https://petstore.swagger.io/v2");
+        return expectedServer;
+    }
+
+    private static ResponseObject createResponseObject(String description) {
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setDescription(description);
+        return responseObject;
     }
 }
