@@ -60,12 +60,12 @@ class OpenApiDeserializerTest {
 
     private static Map<RestMethod, OperationObject> createPetByIdOperationMap() {
         // ---------------- GET Operation Object ----------------
-        ParameterObject parameterObject = new ParameterObject();
-        parameterObject.setName("petId");
-        parameterObject.setIn(ParameterLocation.path);
-        parameterObject.setDescription("ID of pet to return");
-        parameterObject.setRequired(true);
-        parameterObject.setSchema(new Schema(new JSONObject("{\n" +
+        ParameterObject getParameters = new ParameterObject();
+        getParameters.setName("petId");
+        getParameters.setIn(ParameterLocation.path);
+        getParameters.setDescription("ID of pet to return");
+        getParameters.setRequired(true);
+        getParameters.setSchema(new Schema(new JSONObject("{\n" +
                 "              \"type\": \"integer\",\n" +
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
@@ -87,11 +87,54 @@ class OpenApiDeserializerTest {
         getPetOperation.setOperationId("getPetById");
         getPetOperation.setResponses(getStatusCodeResponseMap);
         getPetOperation.setDescription("Returns a single pet");
-        getPetOperation.setParameters(Collections.singletonList(parameterObject));
+        getPetOperation.setParameters(Collections.singletonList(getParameters));
+        // ------------------------------------------------------
+
+        // ---------------- POST Operation Object ----------------
+        ParameterObject postParameters = new ParameterObject();
+        postParameters.setName("petId");
+        postParameters.setIn(ParameterLocation.path);
+        postParameters.setDescription("ID of pet that needs to be updated");
+        postParameters.setRequired(true);
+        postParameters.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"integer\",\n" +
+                "              \"format\": \"int64\"\n" +
+                "            }").toMap()));
+
+        Map<String, ResponseObject> postStatusCodeResponseMap = new HashMap<>();
+        postStatusCodeResponseMap.put("405", createResponseObject("Invalid input"));
+
+        MediaTypeObject wwwFormUrlEncoded = createMediaType(new JSONObject("{\n" +
+                "                \"type\": \"object\",\n" +
+                "                \"properties\": {\n" +
+                "                  \"name\": {\n" +
+                "                    \"description\": \"Updated name of the pet\",\n" +
+                "                    \"type\": \"string\"\n" +
+                "                  },\n" +
+                "                  \"status\": {\n" +
+                "                    \"description\": \"Updated status of the pet\",\n" +
+                "                    \"type\": \"string\"\n" +
+                "                  }\n" +
+                "                }\n" +
+                "              }").toMap());
+        Map<String, MediaTypeObject> postContentTypeMediaTypeMap = new HashMap<>();
+        postContentTypeMediaTypeMap.put("application/x-www-form-urlencoded", wwwFormUrlEncoded);
+        RequestBodyObject postPetRequestBody = new RequestBodyObject();
+        postPetRequestBody.setContent(postContentTypeMediaTypeMap);
+
+        OperationObject postPetOperation = new OperationObject();
+        postPetOperation.setTags(Collections.singletonList("pet"));
+        postPetOperation.setSummary("Updates a pet in the store with form data");
+        postPetOperation.setOperationId("updatePetWithForm");
+        postPetOperation.setRequestBody(postPetRequestBody);
+        postPetOperation.setResponses(postStatusCodeResponseMap);
+        postPetOperation.setDescription("");
+        postPetOperation.setParameters(Collections.singletonList(postParameters));
         // ------------------------------------------------------
 
         Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
         petOperationMap.put(RestMethod.GET, getPetOperation);
+        petOperationMap.put(RestMethod.POST, postPetOperation);
         return petOperationMap;
     }
 
@@ -158,6 +201,12 @@ class OpenApiDeserializerTest {
         componentsObject.setRequestBodies(idAndRequestBody);
         componentsObject.setSchemas(idAndSchema);
         return componentsObject;
+    }
+
+    private static MediaTypeObject createMediaType(Map<String, Object> schemaData) {
+        MediaTypeObject mediaType = new MediaTypeObject();
+        mediaType.setSchema(new Schema(schemaData));
+        return mediaType;
     }
 
     private static MediaTypeObject createMediaType(String schemaId) {
