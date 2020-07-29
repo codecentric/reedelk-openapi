@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 class ParameterObjectTest extends AbstractOpenApiSerializableTest {
@@ -18,6 +19,10 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
         parameter.setIn(ParameterLocation.query);
         parameter.setStyle(ParameterStyle.simple);
         parameter.setDescription("My parameter description");
+        parameter.setSchema(new Schema(new JSONObject("{\n" +
+                "    \"type\": \"array\",\n" +
+                "    \"items\": {\"type\": \"string\"}\n" +
+                "  }").toMap()));
 
         // Expect
         assertSerializeJSON(parameter, Fixture.ParameterObject.WithAllProperties);
@@ -27,6 +32,9 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeParameterWithDefault() {
         // Given
         ParameterObject parameter = new ParameterObject();
+        parameter.setName("myParam");
+        parameter.setIn(ParameterLocation.query);
+        parameter.setRequired(true);
 
         // Expect
         assertSerializeJSON(parameter, Fixture.ParameterObject.WithDefault);
@@ -36,6 +44,7 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
     void shouldSetRequiredTrueWhenParameterInPath() {
         // Given
         ParameterObject parameter = new ParameterObject();
+        parameter.setName("myParam");
         parameter.setIn(ParameterLocation.path);
 
         // Expect

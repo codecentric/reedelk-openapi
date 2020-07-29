@@ -1,6 +1,5 @@
 {
-  "name": "",
+  "name": "myParam",
   "in": "query",
-  "style": "form",
-  "schema": {"type": "string"}
+  "required": true
 }

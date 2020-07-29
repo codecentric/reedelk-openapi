@@ -1,14 +1,11 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiSerializableAbstract;
+import com.reedelk.openapi.Precondition;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-
-import static com.reedelk.openapi.v3.ParameterLocation.query;
-import static java.util.Optional.ofNullable;
 
 public class ParameterObject extends OpenApiSerializableAbstract {
 
@@ -114,17 +111,23 @@ public class ParameterObject extends OpenApiSerializableAbstract {
 
     @Override
     public Map<String, Object> serialize() {
+        Precondition.checkNotNull("name", name);
+        Precondition.checkNotNull("in", in);
+        if (!ParameterLocation.path.equals(in)) {
+            Precondition.checkNotNull("required", required);
+        }
+
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "name", Optional.ofNullable(name).orElse(""));
+        set(map, "name", name);
         set(map, "description", description);
-        set(map, "in", ofNullable(in).orElse(query).name().toLowerCase());
-        if (style != null) set(map, "style", style.name());
+        set(map, "in", in.name().toLowerCase());
+        if (style != null) set(map, "style", style.name().toLowerCase());
         set(map, "example", example);
         set(map, "explode", explode);
         set(map, "deprecated", deprecated);
         set(map, schema);
-        // If the parameter location is "path", this property is REQUIRED and its value MUST be true.
-        // Otherwise, the property MAY be included and its default value is false.
+        // By OpenAPI specification, if the parameter location is "path", this property is REQUIRED
+        // and its value MUST be true. Otherwise, the property MAY be included and its default value is false.
         if (ParameterLocation.path.equals(in)) {
             set(map, "required", Boolean.TRUE);
         } else {
