@@ -46,9 +46,8 @@ public class MediaTypeObject extends OpenApiSerializableAbstract {
 
         boolean hasExample = serialized.containsKey("example");
         if (hasExample) {
-            example = new Example();
-            Map<String, Object> exampleDefinition = getMap(serialized, "example");
-            example.deserialize(exampleDefinition);
+            String exampleData = (String) serialized.get("example");
+            example = new Example(exampleData);
         }
     }
 

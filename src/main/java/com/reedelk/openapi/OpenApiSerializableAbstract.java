@@ -2,7 +2,6 @@ package com.reedelk.openapi;
 
 import com.reedelk.openapi.v3.Example;
 import com.reedelk.openapi.v3.Schema;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,7 +19,7 @@ public abstract class OpenApiSerializableAbstract implements OpenApiSerializable
 
     protected void set(Map<String, Object> parent, Example example) {
         if (example != null) {
-            parent.put(JSON_PROPERTY_EXAMPLE, new JSONObject(example.data()).toMap());
+            parent.put(JSON_PROPERTY_EXAMPLE, example.data());
         }
     }
 

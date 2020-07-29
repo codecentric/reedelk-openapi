@@ -1,11 +1,6 @@
 package com.reedelk.openapi.v3;
 
-import com.reedelk.openapi.OpenApiSerializableAbstract;
-
-import java.util.Map;
-
-// TODO:
-public class Example extends OpenApiSerializableAbstract {
+public class Example {
 
     private String data;
 
@@ -18,16 +13,5 @@ public class Example extends OpenApiSerializableAbstract {
 
     public String data() {
         return data;
-    }
-
-    @Override
-    public Map<String, Object> serialize() {
-        // TODO: Here
-        return null;
-    }
-
-    @Override
-    public void deserialize(Map<String, Object> serialized) {
-        // TODO: Here
     }
 }
