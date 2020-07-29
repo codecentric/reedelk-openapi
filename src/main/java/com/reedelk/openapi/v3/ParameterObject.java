@@ -15,7 +15,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
     private String name;
     private String description;
     private ParameterLocation in;
-    private ParameterStyle style = ParameterStyle.form;
+    private ParameterStyle style;
     private Schema schema;
     private String example;
     private Boolean explode;
