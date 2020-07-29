@@ -1,6 +1,9 @@
 package com.reedelk.openapi;
 
-import com.reedelk.openapi.v3.*;
+import com.reedelk.openapi.v3.Example;
+import com.reedelk.openapi.v3.ParameterLocation;
+import com.reedelk.openapi.v3.RestMethod;
+import com.reedelk.openapi.v3.SchemaObject;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -120,6 +123,16 @@ public class Fixture {
                 return "server/server_object_with_default_properties.yaml";
             }
         },
+    }
+
+    public enum TagObject implements Provider {
+
+        WithAllProperties() {
+            @Override
+            public String path() {
+                return "tag/tag_object_with_all_properties.json";
+            }
+        }
     }
 
     public enum ServerVariableObject implements Provider {
@@ -439,17 +452,17 @@ public class Fixture {
         expectedOpenApi.setTags(createTags());
     }
 
-    private static List<TagObject> createTags() {
-        TagObject petTag = new TagObject();
+    private static List<com.reedelk.openapi.v3.TagObject> createTags() {
+        com.reedelk.openapi.v3.TagObject petTag = new com.reedelk.openapi.v3.TagObject();
         petTag.setDescription("Everything about your Pets");
         petTag.setName("pet");
         petTag.setExternalDocs(createDocumentation("Find out more", "http://swagger.io"));
 
-        TagObject storeTag = new TagObject();
+        com.reedelk.openapi.v3.TagObject storeTag = new com.reedelk.openapi.v3.TagObject();
         storeTag.setDescription("Access to Petstore orders");
         storeTag.setName("store");
 
-        TagObject userTag = new TagObject();
+        com.reedelk.openapi.v3.TagObject userTag = new com.reedelk.openapi.v3.TagObject();
         userTag.setDescription("Operations about user");
         userTag.setName("user");
         userTag.setExternalDocs(createDocumentation("Find out more about our store", "http://swagger.io"));
