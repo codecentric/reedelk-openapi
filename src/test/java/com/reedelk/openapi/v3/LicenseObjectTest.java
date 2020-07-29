@@ -21,6 +21,7 @@ class LicenseObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeLicenseWithRequiredValues() {
         // Given
         LicenseObject license = new LicenseObject();
+        license.setName("API License");
 
         // Expect
         assertSerializeJSON(license, Fixture.LicenseObject.WithDefaultPropertiesJson);
