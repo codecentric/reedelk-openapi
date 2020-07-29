@@ -24,6 +24,7 @@ class ServerVariableObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeServerWithRequiredValues() {
         // Given
         ServerVariableObject serverVariable = new ServerVariableObject();
+        serverVariable.setDefaultValue("localhost");
 
         // When
         assertSerializeJSON(serverVariable, Fixture.ServerVariableObject.WithDefaultPropertiesJson);

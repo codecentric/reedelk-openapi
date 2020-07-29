@@ -1,67 +1,39 @@
 package com.reedelk.openapi.v3;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import com.reedelk.openapi.Fixture;
+import org.junit.jupiter.api.Test;
 
-@ExtendWith(MockitoExtension.class)
 public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
-//TODO: Fixme
-    /**
-    @Mock
-    private ResourceText schema;
-    @Mock
-    private ResourceText example;
 
     @Test
     void shouldCorrectlySerializeMediaTypeWithSchema() {
         // Given
-        Mockito.doReturn(just(OpenApiJsons.Schemas.Pet.string())).when(schema).data();
-
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setSchema(schema);
+        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
 
         // Expect
-        assertSerializedCorrectly(mediaType, OpenApiJsons.MediaTypeObject.WithSchema);
+        assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithSchema);
     }
 
     @Test
     void shouldCorrectlySerializeMediaTypeWithExample() {
         // Given
-        Mockito.doReturn(just(OpenApiJsons.Examples.JsonPet.string())).when(example).data();
-
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setExample(example);
+        mediaType.setExample(new Example("{\"id\":\"Dog\",\"name\":\"John\"}"));
 
         // Expect
-        OpenApiJsons.MediaTypeObject withExample = OpenApiJsons.MediaTypeObject.WithExample;
-
-        ComponentsObject componentsObject = new ComponentsObject();
-        OpenApiSerializableContext context = new OpenApiSerializableContext(componentsObject);
-        JSONObject actualObject = mediaType.serialize(context);
-        JSONObject expectedObject = new JSONObject(withExample.string());
-        Assertions.assertThat(actualObject.getString("example"))
-                .isEqualToIgnoringNewLines(expectedObject.getString("example"));
+        assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithExample);
     }
 
     @Test
     void shouldCorrectlySerializeMediaTypeWithSchemaAndExample() {
         // Given
-        Mockito.doReturn(just(OpenApiJsons.Examples.JsonPet.string())).when(example).data();
-        Mockito.doReturn(just(OpenApiJsons.Schemas.Pet.string())).when(schema).data();
-
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setExample(example);
-        mediaType.setSchema(schema);
+        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
+        mediaType.setExample(new Example("{\"id\":\"Dog\",\"name\":\"John\"}"));
 
         // Expect
-        OpenApiJsons.MediaTypeObject withSchemaAndExample = OpenApiJsons.MediaTypeObject.WithSchemaAndExample;
-
-        ComponentsObject componentsObject = new ComponentsObject();
-        OpenApiSerializableContext context = new OpenApiSerializableContext(componentsObject);
-        JSONObject actualObject = mediaType.serialize(context);
-        JSONObject expectedObject = new JSONObject(withSchemaAndExample.string());
-        Assertions.assertThat(actualObject.getString("example"))
-                .isEqualToIgnoringNewLines(expectedObject.getString("example"));
+        assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithSchemaAndExample);
     }
 
     @Test
@@ -70,6 +42,6 @@ public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
         MediaTypeObject mediaType = new MediaTypeObject();
 
         // Expect
-        assertSerializedCorrectly(mediaType, OpenApiJsons.MediaTypeObject.WithDefault);
-    }*/
+        assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithDefault);
+    }
 }
