@@ -1,27 +1,37 @@
 {
-  "tags": [
-    "tag1",
-    "tag2"
-  ],
+  "deprecated": true,
   "summary": "My summary",
   "description": "My operation description",
   "operationId": "myOperationId",
+  "requestBody": {
+    "description": "My request body",
+    "content": {},
+    "required": true
+  },
+  "responses": {
+    "500": {
+      "description": "Error response"
+    },
+    "200": {
+      "description": "Successful response"
+    }
+  },
   "parameters": [
     {
       "name": "param1",
+      "schema": {"type": "string"},
       "in": "query",
-      "style": "form",
-      "schema": {"type": "string"}
+      "required": true
     },
     {
       "name": "param2",
-      "in": "query",
-      "style": "form",
-      "schema": {"type": "string"}
+      "schema": {"type": "string"},
+      "in": "path",
+      "required": true
     }
   ],
-  "responses": {
-    "200": {},
-    "500": {}
-  }
+  "tags": [
+    "tag1",
+    "tag2"
+  ]
 }

@@ -15,6 +15,11 @@ class OpenApiObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeOpenApiWithDefaultInfoAndServersAndPaths() {
         // Given
         OpenApiObject openApi = new OpenApiObject();
+        openApi.getInfo().setTitle("API");
+        openApi.getInfo().setVersion("v1");
+        ServerObject serverObject = new ServerObject();
+        serverObject.setUrl("/");
+        openApi.getServers().add(serverObject);
 
         // Expect
         assertSerializeJSON(openApi, Fixture.OpenApiObject.WithDefaultInfoAndServersAndPaths);
