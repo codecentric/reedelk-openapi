@@ -227,10 +227,10 @@ public class Fixture {
             }
         },
 
-        WithAllPropertiesAndCustomSchema() {
+        WithAllPropertiesAndReferenceSchema() {
             @Override
             public String path() {
-                return "header/header_object_with_all_properties_and_custom_schema.json";
+                return "header/header_object_with_all_properties_and_reference_schema.json";
             }
         }
     }

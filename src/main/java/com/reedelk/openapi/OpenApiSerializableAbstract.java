@@ -14,7 +14,9 @@ public abstract class OpenApiSerializableAbstract implements OpenApiSerializable
     private static final String JSON_PROPERTY_SCHEMA = "schema";
 
     protected void set(Map<String, Object> parent, Schema schema) {
-        parent.put(JSON_PROPERTY_SCHEMA, schema.serialize());
+        if (schema != null) {
+            parent.put(JSON_PROPERTY_SCHEMA, schema.serialize());
+        }
     }
 
     protected void set(Map<String, Object> parent, Example example) {

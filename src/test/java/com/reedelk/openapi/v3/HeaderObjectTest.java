@@ -1,12 +1,13 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 class HeaderObjectTest extends AbstractOpenApiSerializableTest {
 
     @Test
-    void shouldCorrectlySerializeHeaderWithAllPropertiesAndDefaultSchema() {
+    void shouldCorrectlySerializeHeaderWithAllPropertiesAndInlineSchema() {
         // Given
         HeaderObject header = new HeaderObject();
         header.setAllowReserved(true);
@@ -15,19 +16,18 @@ class HeaderObjectTest extends AbstractOpenApiSerializableTest {
         header.setExample("my header value");
         header.setDescription("My header description");
         header.setStyle(ParameterStyle.spaceDelimited);
+        header.setSchema(new Schema(new JSONObject("{\n" +
+                "    \"type\": \"array\",\n" +
+                "    \"items\": {\"type\": \"string\"}\n" +
+                "  }").toMap()));
 
         // Expect
         assertSerializeJSON(header, Fixture.HeaderObject.WithAllPropertiesAndDefaultSchema);
     }
 
-    /**
     @Test
-    void shouldCorrectlySerializeHeaderWithCustomSchema() {
+    void shouldCorrectlySerializeHeaderWithReferenceSchema() {
         // Given
-        ResourceText schema = Mockito.mock(ResourceText.class);
-        Mockito.doReturn(just(OpenApiJsons.Schemas.Pet.string())).when(schema).data();
-        Mockito.doReturn("/assets/pet.schema.json").when(schema).path();
-
         HeaderObject header = new HeaderObject();
         header.setAllowReserved(true);
         header.setDeprecated(true);
@@ -35,15 +35,14 @@ class HeaderObjectTest extends AbstractOpenApiSerializableTest {
         header.setExample("my header value");
         header.setDescription("My header description");
         header.setStyle(ParameterStyle.spaceDelimited);
-        header.setPredefinedSchema(PredefinedSchema.NONE);
-        header.setSchema(schema);
+        header.setSchema(new Schema("#/components/schemas/Pet"));
 
         // Expect
-        assertSerializedCorrectly(header, OpenApiJsons.HeaderObject.WithAllPropertiesAndCustomSchema);
-    }**/
+        assertSerializeJSON(header, Fixture.HeaderObject.WithAllPropertiesAndReferenceSchema);
+    }
 
     @Test
-    void shouldCorrectlySerializeHeaderWithDefaults() {
+    void shouldSerializeEmptyObjectWhenNoProperties() {
         // Given
         HeaderObject header = new HeaderObject();
 
