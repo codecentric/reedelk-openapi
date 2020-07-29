@@ -13,20 +13,25 @@ public class OpenApiSerializerTest {
 
     @Test
     void shouldCorrectlySerializeAsJSON() {
+        // Given
+        String expected = Fixture.EndToEnd.SAMPLE_JSON.string();
+
         // When
         String actual = OpenApiSerializer.toJson(Fixture.expectedOpenApi);
 
         // Then
-        assertEquals(Fixture.EndToEnd.SAMPLE_JSON.string(), actual, JSONCompareMode.STRICT);
+        assertEquals(expected, actual, JSONCompareMode.STRICT);
     }
 
     @Test
     void shouldCorrectlySerializeAsYAML() {
+        // Given
+        String expected = Fixture.EndToEnd.SAMPLE_YAML.string();
+
         // When
         String actual = OpenApiSerializer.toYaml(Fixture.expectedOpenApi);
 
         // Then
-        String expected = Fixture.EndToEnd.SAMPLE_YAML.string();
         Yaml yaml = new Yaml();
         Map<String,Object> actualMap = yaml.load(actual);
         Map<String,Object> expectedMap = yaml.load(expected);
