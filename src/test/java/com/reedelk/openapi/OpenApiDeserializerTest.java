@@ -38,25 +38,83 @@ class OpenApiDeserializerTest {
 
     private static OpenApiObject expectedOpenApi;
     static {
-        // PUT Operation Object
+        Map<String, Map<RestMethod, OperationObject>> paths = new HashMap<>();
+        paths.put("/pet", createPetOperationMap());
+        paths.put("/pet/{petId}", createPetByIdOperationMap());
+
+        // Paths Object
+        PathsObject expectedPaths = new PathsObject();
+        expectedPaths.setPaths(paths);
+        // ------------------------------------------------------
+
+        // Components Object
+        ComponentsObject componentsObject = createComponents();
+
+        expectedOpenApi = new OpenApiObject();
+        expectedOpenApi.setOpenapi("3.0.0");
+        expectedOpenApi.setInfo(createInfo());
+        expectedOpenApi.setServers(Collections.singletonList(createServer()));
+        expectedOpenApi.setPaths(expectedPaths);
+        expectedOpenApi.setComponents(componentsObject);
+    }
+
+    private static Map<RestMethod, OperationObject> createPetByIdOperationMap() {
+        // ---------------- GET Operation Object ----------------
+        ParameterObject parameterObject = new ParameterObject();
+        parameterObject.setName("petId");
+        parameterObject.setIn(ParameterLocation.path);
+        parameterObject.setDescription("ID of pet to return");
+        parameterObject.setRequired(true);
+        parameterObject.setSchema(new Schema(new JSONObject("{\n" +
+                "              \"type\": \"integer\",\n" +
+                "              \"format\": \"int64\"\n" +
+                "            }").toMap()));
+        Map<String, MediaTypeObject> contentTypeMedia = new HashMap<>();
+        contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet"));
+        contentTypeMedia.put("application/json", createMediaType("#/components/schemas/Pet"));
+
+        ResponseObject response200 = createResponseObject("successful operation");
+        response200.setContent(contentTypeMedia);
+
+        Map<String, ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        getStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
+        getStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
+        getStatusCodeResponseMap.put("200", response200);
+
+        OperationObject getPetOperation = new OperationObject();
+        getPetOperation.setTags(Collections.singletonList("pet"));
+        getPetOperation.setSummary("Find pet by ID");
+        getPetOperation.setOperationId("getPetById");
+        getPetOperation.setResponses(getStatusCodeResponseMap);
+        getPetOperation.setDescription("Returns a single pet");
+        getPetOperation.setParameters(Collections.singletonList(parameterObject));
+        // ------------------------------------------------------
+
+        Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
+        petOperationMap.put(RestMethod.GET, getPetOperation);
+        return petOperationMap;
+    }
+
+    private static Map<RestMethod, OperationObject> createPetOperationMap() {
+        // ---------------- PUT Operation Object ----------------
         RequestBodyObject putPetRequestBody = new RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        Map<String, ResponseObject> statusCodeResponseMap = new HashMap<>();
-        statusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
-        statusCodeResponseMap.put("404", createResponseObject("Pet not found"));
-        statusCodeResponseMap.put("405", createResponseObject("Validation exception"));
+        Map<String, ResponseObject> putStatusCodeResponseMap = new HashMap<>();
+        putStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
+        putStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
+        putStatusCodeResponseMap.put("405", createResponseObject("Validation exception"));
 
         OperationObject putPetOperation = new OperationObject();
         putPetOperation.setSummary("Update an existing pet");
         putPetOperation.setOperationId("updatePet");
         putPetOperation.setRequestBody(putPetRequestBody);
-        putPetOperation.setResponses(statusCodeResponseMap);
+        putPetOperation.setResponses(putStatusCodeResponseMap);
         putPetOperation.setDescription("");
         putPetOperation.setTags(Collections.singletonList("pet"));
         // ------------------------------------------------------
 
-        // POST Operation Object
+        // ---------------- POST Operation Object ----------------
         RequestBodyObject postPetRequestBody = new RequestBodyObject();
         postPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
@@ -75,24 +133,7 @@ class OpenApiDeserializerTest {
         Map<RestMethod, OperationObject> petOperationMap = new HashMap<>();
         petOperationMap.put(RestMethod.PUT, putPetOperation);
         petOperationMap.put(RestMethod.POST, postPetOperation);
-
-        Map<String, Map<RestMethod, OperationObject>> paths = new HashMap<>();
-        paths.put("/pet", petOperationMap);
-
-        // Paths Object
-        PathsObject expectedPaths = new PathsObject();
-        expectedPaths.setPaths(paths);
-        // ------------------------------------------------------
-
-        // Components Object
-        ComponentsObject componentsObject = createComponents();
-
-        expectedOpenApi = new OpenApiObject();
-        expectedOpenApi.setOpenapi("3.0.0");
-        expectedOpenApi.setInfo(createInfo());
-        expectedOpenApi.setServers(Collections.singletonList(createServer()));
-        expectedOpenApi.setPaths(expectedPaths);
-        expectedOpenApi.setComponents(componentsObject);
+        return petOperationMap;
     }
 
     private static ComponentsObject createComponents() {
