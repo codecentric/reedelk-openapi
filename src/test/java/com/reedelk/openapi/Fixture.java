@@ -172,24 +172,10 @@ public class Fixture {
             }
         },
 
-        WithDefaultOperation() {
-            @Override
-            public String path() {
-                return "paths/paths_object_with_default_operation.json";
-            }
-        },
-
         WithOperation() {
             @Override
             public String path() {
                 return "paths/paths_object_with_operation.json";
-            }
-        },
-
-        WithOperationWithNullPath() {
-            @Override
-            public String path() {
-                return "paths/paths_object_with_operation_null_path.json";
             }
         }
     }
@@ -352,43 +338,43 @@ public class Fixture {
         }
     }
 
+    public enum Schema implements Provider {
+
+        WithReference() {
+            @Override
+            public String path() {
+                return "schema/schema_with_reference.json";
+            }
+        },
+
+        WithInlineSchema() {
+            @Override
+            public String path() {
+                return "schema/schema_with_inline_schema.json";
+            }
+        }
+    }
+
     public enum Schemas implements Provider {
 
         Pet() {
             @Override
             public String path() {
-                return "schema/pet.schema.json";
+                return "schemas/pet.schema.json";
             }
         },
 
         Category() {
             @Override
             public String path() {
-                return "schema/category.schema.json";
+                return "schemas/category.schema.json";
             }
         },
 
         Tag() {
             @Override
             public String path() {
-                return "schema/tag.schema.json";
-            }
-        }
-    }
-
-    public enum Examples implements Provider {
-
-        JsonPet() {
-            @Override
-            public String path() {
-                return "pet.json";
-            }
-        },
-
-        NoteXml() {
-            @Override
-            public String path() {
-                return "note.xml";
+                return "schemas/tag.schema.json";
             }
         }
     }
@@ -485,7 +471,7 @@ public class Fixture {
         usernameParameter.setIn(ParameterLocation.query);
         usernameParameter.setDescription("The user name for login");
         usernameParameter.setRequired(true);
-        usernameParameter.setSchema(new Schema(new JSONObject("{\n" +
+        usernameParameter.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "              \"type\": \"string\",\n" +
                 "            }").toMap()));
 
@@ -494,7 +480,7 @@ public class Fixture {
         passwordParameter.setIn(ParameterLocation.query);
         passwordParameter.setDescription("The password for login in clear text");
         passwordParameter.setRequired(true);
-        passwordParameter.setSchema(new Schema(new JSONObject("{\n" +
+        passwordParameter.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "              \"type\": \"string\",\n" +
                 "            }").toMap()));
 
@@ -508,14 +494,14 @@ public class Fixture {
 
         com.reedelk.openapi.v3.HeaderObject rateLimit = new com.reedelk.openapi.v3.HeaderObject();
         rateLimit.setDescription("calls per hour allowed by the user");
-        rateLimit.setSchema(new Schema(new JSONObject("{\n" +
+        rateLimit.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "                  \"type\": \"integer\",\n" +
                 "                  \"format\": \"int32\"\n" +
                 "                }").toMap()));
 
         com.reedelk.openapi.v3.HeaderObject expiresAfter = new com.reedelk.openapi.v3.HeaderObject();
         expiresAfter.setDescription("date in UTC when token expires");
-        expiresAfter.setSchema(new Schema(new JSONObject("{\n" +
+        expiresAfter.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "                  \"type\": \"string\",\n" +
                 "                  \"format\": \"date-time\"\n" +
                 "                }").toMap()));
@@ -583,7 +569,7 @@ public class Fixture {
         getParameters.setIn(ParameterLocation.path);
         getParameters.setDescription("ID of pet to return");
         getParameters.setRequired(true);
-        getParameters.setSchema(new Schema(new JSONObject("{\n" +
+        getParameters.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "              \"type\": \"integer\",\n" +
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
@@ -615,7 +601,7 @@ public class Fixture {
         postParameters.setIn(ParameterLocation.path);
         postParameters.setDescription("ID of pet that needs to be updated");
         postParameters.setRequired(true);
-        postParameters.setSchema(new Schema(new JSONObject("{\n" +
+        postParameters.setSchema(new com.reedelk.openapi.v3.Schema(new JSONObject("{\n" +
                 "              \"type\": \"integer\",\n" +
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
@@ -724,25 +710,25 @@ public class Fixture {
 
     private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(Map<String, Object> schemaData) {
         com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
-        mediaType.setSchema(new Schema(schemaData));
+        mediaType.setSchema(new com.reedelk.openapi.v3.Schema(schemaData));
         return mediaType;
     }
 
     private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(String schemaId) {
         com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
-        mediaType.setSchema(new Schema(schemaId));
+        mediaType.setSchema(new com.reedelk.openapi.v3.Schema(schemaId));
         return mediaType;
     }
 
     private static com.reedelk.openapi.v3.MediaTypeObject createMediaType(String schemaId, String example) {
         com.reedelk.openapi.v3.MediaTypeObject mediaType = new com.reedelk.openapi.v3.MediaTypeObject();
-        mediaType.setSchema(new Schema(schemaId));
+        mediaType.setSchema(new com.reedelk.openapi.v3.Schema(schemaId));
         mediaType.setExample(new Example(example));
         return mediaType;
     }
 
     private static SchemaObject createSchema(Fixture.Schemas schemaData) {
-        Schema schema = new Schema(new JSONObject(schemaData.string()).toMap());
+        com.reedelk.openapi.v3.Schema schema = new com.reedelk.openapi.v3.Schema(new JSONObject(schemaData.string()).toMap());
         SchemaObject schemaObject = new SchemaObject();
         schemaObject.setSchema(schema);
         return schemaObject;

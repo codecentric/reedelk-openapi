@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Schema extends OpenApiSerializableAbstract {
 
-    private static final String COMPONENTS_SCHEMA_REF_TEMPLATE = "#/components/schemas/%s";
     private static final String JSON_PROPERTY_REF = "$ref";
 
     private String schemaId;
