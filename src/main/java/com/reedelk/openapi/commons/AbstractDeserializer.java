@@ -1,4 +1,4 @@
-package com.reedelk.openapi;
+package com.reedelk.openapi.commons;
 
 import java.util.List;
 import java.util.Map;

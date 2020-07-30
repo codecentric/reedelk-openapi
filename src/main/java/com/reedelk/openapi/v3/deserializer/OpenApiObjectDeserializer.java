@@ -1,6 +1,6 @@
 package com.reedelk.openapi.v3.deserializer;
 
-import com.reedelk.openapi.AbstractDeserializer;
+import com.reedelk.openapi.commons.AbstractDeserializer;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.*;
 

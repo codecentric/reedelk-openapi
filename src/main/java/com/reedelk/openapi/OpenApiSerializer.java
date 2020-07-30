@@ -1,5 +1,6 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.commons.JsonObjectFactory;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.serializer.Serializers;
 import org.json.JSONObject;

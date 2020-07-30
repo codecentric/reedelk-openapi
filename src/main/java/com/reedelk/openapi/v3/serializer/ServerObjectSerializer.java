@@ -1,7 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
-import com.reedelk.openapi.AbstractSerializer;
-import com.reedelk.openapi.Precondition;
+import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.Precondition;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ServerObject;
 

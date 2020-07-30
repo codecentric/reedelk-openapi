@@ -1,6 +1,6 @@
 package com.reedelk.openapi.v3.serializer;
 
-import com.reedelk.openapi.AbstractSerializer;
+import com.reedelk.openapi.commons.AbstractSerializer;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ContactObject;
 

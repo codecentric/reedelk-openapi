@@ -1,7 +1,7 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiModel;
-import com.reedelk.openapi.Serializer;
+import com.reedelk.openapi.commons.Serializer;
 import com.reedelk.openapi.v3.serializer.Serializers;
 
 import java.util.Map;
