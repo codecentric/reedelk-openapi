@@ -19,21 +19,25 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
 
         // Content
         Map<String, MediaTypeObject> content = input.getContent();
-        Map<String, Map<String, Object>> serializedContent = new HashMap<>();
-        content.forEach((contentType, mediaTypeObject) -> {
-            Map<String, Object> serializedMediaType = context.serialize(mediaTypeObject);
-            serializedContent.put(contentType, serializedMediaType);
-        });
-        responseObject.put("content", serializedContent);
+        if (content != null && !content.isEmpty()) {
+            Map<String, Map<String, Object>> serializedContent = new HashMap<>();
+            content.forEach((contentType, mediaTypeObject) -> {
+                Map<String, Object> serializedMediaType = context.serialize(mediaTypeObject);
+                serializedContent.put(contentType, serializedMediaType);
+            });
+            responseObject.put("content", serializedContent);
+        }
 
         // Headers
         Map<String, HeaderObject> headerObjectMap = input.getHeaders();
-        Map<String, Object> serializedHeaders = new HashMap<>();
-        headerObjectMap.forEach((headerName, headerObject) -> {
-            Map<String, Object> serializedHeaderObject = context.serialize(headerObject);
-            serializedHeaders.put(headerName, serializedHeaderObject);
-        });
-        responseObject.put("headers", serializedHeaders);
+        if (headerObjectMap != null && !headerObjectMap.isEmpty()) {
+            Map<String, Object> serializedHeaders = new HashMap<>();
+            headerObjectMap.forEach((headerName, headerObject) -> {
+                Map<String, Object> serializedHeaderObject = context.serialize(headerObject);
+                serializedHeaders.put(headerName, serializedHeaderObject);
+            });
+            responseObject.put("headers", serializedHeaders);
+        }
 
         return responseObject;
     }

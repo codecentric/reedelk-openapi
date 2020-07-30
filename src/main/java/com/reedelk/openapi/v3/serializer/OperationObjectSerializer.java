@@ -3,6 +3,7 @@ package com.reedelk.openapi.v3.serializer;
 import com.reedelk.openapi.AbstractSerializer;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.OperationObject;
+import com.reedelk.openapi.v3.model.ParameterObject;
 import com.reedelk.openapi.v3.model.ResponseObject;
 
 import java.util.HashMap;
@@ -27,9 +28,8 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
             set(map, "requestBody", serializedRequestBody);
         }
 
-        Map<String, Map<String,Object>> serializedResponses = new HashMap<>();
-
-        Map<String, ResponseObject> responses = input.getResponses();
+        Map<String, ResponseObject> responses = input.getResponses() == null ? new HashMap<>() : input.getResponses(); // MANDATORY
+        Map<String, Map<String, Object>> serializedResponses = new HashMap<>();
         responses.forEach((statusCode, responseObject) -> {
             Map<String, Object> serializedResponse = context.serialize(responseObject);
             serializedResponses.put(statusCode, serializedResponse);
@@ -37,14 +37,18 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         map.put("responses", serializedResponses);
 
 
-        List<Map<String,Object>> serializedParameters = input
-                .getParameters()
-                .stream()
-                .map(context::serialize)
-                .collect(toList());
-        map.put("parameters", serializedParameters);
+        List<ParameterObject> parameters = input.getParameters();
+        if (parameters != null && !parameters.isEmpty()) {
+            List<Map<String,Object>> serializedParameters = parameters
+                    .stream()
+                    .map(context::serialize)
+                    .collect(toList());
+            map.put("parameters", serializedParameters);
+        }
 
-        map.put("tags", input.getTags());
+        if (input.getTags() != null && !input.getTags().isEmpty()) {
+            map.put("tags", input.getTags());
+        }
         return map;
     }
 }

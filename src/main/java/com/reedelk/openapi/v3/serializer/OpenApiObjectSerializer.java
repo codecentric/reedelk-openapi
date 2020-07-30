@@ -3,6 +3,7 @@ package com.reedelk.openapi.v3.serializer;
 import com.reedelk.openapi.AbstractSerializer;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.OpenApiObject;
+import com.reedelk.openapi.v3.model.TagObject;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,12 +22,14 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
         Map<String, Object> serializedInfo = context.serialize(input.getInfo());
         set(map, "info", serializedInfo); // REQUIRED
 
-        List<Map<String, Object>> mappedTags = input
-                .getTags()
-                .stream()
-                .map(context::serialize)
-                .collect(toList());
-        map.put("tags", mappedTags);
+        List<TagObject> tags = input.getTags();
+        if (tags != null && !tags.isEmpty()) {
+            List<Map<String, Object>> mappedTags = tags
+                    .stream()
+                    .map(context::serialize)
+                    .collect(toList());
+            map.put("tags", mappedTags);
+        }
 
         List<Map<String, Object>> mappedServers = input
                 .getServers()

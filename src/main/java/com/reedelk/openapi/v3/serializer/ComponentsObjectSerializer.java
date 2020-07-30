@@ -18,21 +18,25 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
 
         // Request bodies
         Map<String, RequestBodyObject> requestBodiesMap = input.getRequestBodies();
-        Map<String, Object> requestBodies = new HashMap<>();
-        requestBodiesMap.forEach((requestBody, requestBodyObject) -> {
-            Map<String, Object> serializedRequestBody = context.serialize(requestBodyObject);
-            requestBodies.put(requestBody, serializedRequestBody);
-        });
-        map.put("requestBodies", requestBodies);
+        if (requestBodiesMap != null && !requestBodiesMap.isEmpty()) {
+            Map<String, Object> requestBodies = new HashMap<>();
+            requestBodiesMap.forEach((requestBody, requestBodyObject) -> {
+                Map<String, Object> serializedRequestBody = context.serialize(requestBodyObject);
+                requestBodies.put(requestBody, serializedRequestBody);
+            });
+            map.put("requestBodies", requestBodies);
+        }
 
         // Schemas
         Map<String, SchemaObject> schemasMap = input.getSchemas();
-        Map<String, Object> schemas = new HashMap<>();
-        schemasMap.forEach((schemaId, schemaObject) -> {
-            Map<String, Object> serializedSchema = context.serialize(schemaObject);
-            schemas.put(schemaId, serializedSchema);
-        });
-        map.put("schemas", schemas);
+        if (schemasMap != null && !schemasMap.isEmpty()) {
+            Map<String, Object> schemas = new HashMap<>();
+            schemasMap.forEach((schemaId, schemaObject) -> {
+                Map<String, Object> serializedSchema = context.serialize(schemaObject);
+                schemas.put(schemaId, serializedSchema);
+            });
+            map.put("schemas", schemas);
+        }
 
         return map;
     }
