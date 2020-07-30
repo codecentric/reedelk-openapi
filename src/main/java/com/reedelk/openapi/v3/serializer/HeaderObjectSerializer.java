@@ -12,11 +12,15 @@ public class HeaderObjectSerializer extends AbstractSerializer<HeaderObject> {
     @Override
     public Map<String, Object> serialize(SerializerContext context, HeaderObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
+
         set(map, "description", input.getDescription());
         if (input.getStyle() != null) set(map, "style", input.getStyle().name());
 
-        Map<String, Object> serializedSchema = context.serialize(input.getSchema());
-        set(map, "schema", serializedSchema);
+        if (input.getSchema() != null) {
+            Map<String, Object> serializedSchema = context.serialize(input.getSchema());
+            set(map, "schema", serializedSchema);
+        }
+
         set(map, "example", input.getExample());
         set(map, "explode", input.getExplode());
         set(map, "deprecated", input.getDeprecated());

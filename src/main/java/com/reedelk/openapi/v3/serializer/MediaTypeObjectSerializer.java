@@ -13,8 +13,10 @@ public class MediaTypeObjectSerializer extends AbstractSerializer<MediaTypeObjec
     public Map<String, Object> serialize(SerializerContext context, MediaTypeObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
 
-        Map<String, Object> serializedSchema = context.serialize(input.getSchema());
-        set(map, "schema", serializedSchema);
+        if (input.getSchema() != null) {
+            Map<String, Object> serializedSchema = context.serialize(input.getSchema());
+            set(map, "schema", serializedSchema);
+        }
 
         if (input.getExample() != null) {
             set(map, "example", input.getExample().data());

@@ -17,7 +17,7 @@ public class OpenApiSerializerTest {
         String expected = Fixture.EndToEnd.SAMPLE_JSON.string();
 
         // When
-        String actual = OpenApiSerializer.toJson(Fixture.expectedOpenApi);
+        String actual = new OpenApiSerializer().toJson(Fixture.expectedOpenApi);
 
         // Then
         assertEquals(expected, actual, JSONCompareMode.STRICT);
@@ -29,7 +29,7 @@ public class OpenApiSerializerTest {
         String expected = Fixture.EndToEnd.SAMPLE_YAML.string();
 
         // When
-        String actual = OpenApiSerializer.toYaml(Fixture.expectedOpenApi);
+        String actual = new OpenApiSerializer().toYaml(Fixture.expectedOpenApi);
 
         // Then
         Yaml yaml = new Yaml();

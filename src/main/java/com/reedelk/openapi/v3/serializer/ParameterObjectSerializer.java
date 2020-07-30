@@ -31,8 +31,10 @@ public class ParameterObjectSerializer extends AbstractSerializer<ParameterObjec
         set(map, "explode", input.getExplode());
         set(map, "deprecated", input.getDeprecated());
 
-        Map<String, Object> serializedSchema = context.serialize(input.getSchema());
-        set(map, "schema", serializedSchema);
+        if (input.getSchema() != null) {
+            Map<String, Object> serializedSchema = context.serialize(input.getSchema());
+            set(map, "schema", serializedSchema);
+        }
 
         // By OpenAPI specification, if the parameter location is "path", this property is REQUIRED
         // and its value MUST be true. Otherwise, the property MAY be included and its default value is false.

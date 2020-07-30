@@ -15,8 +15,10 @@ public class TagObjectSerializer extends AbstractSerializer<TagObject> {
         set(map, "name", input.getName());
         set(map, "description", input.getDescription());
 
-        Map<String, Object> serializedExternalDocs = context.serialize(input.getExternalDocs());
-        map.put("externalDocs", serializedExternalDocs);
+        if (input.getExternalDocs() != null) {
+            Map<String, Object> serializedExternalDocs = context.serialize(input.getExternalDocs());
+            map.put("externalDocs", serializedExternalDocs);
+        }
         return map;
     }
 }

@@ -20,11 +20,15 @@ public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
         set(map, "description", input.getDescription());
         set(map, "termsOfService", input.getTermsOfService());
 
-        Map<String, Object> serializedContact = context.serialize(input.getContact());
-        set(map, "contact", serializedContact);
+        if (input.getContact() != null) {
+            Map<String, Object> serializedContact = context.serialize(input.getContact());
+            set(map, "contact", serializedContact);
+        }
 
-        Map<String, Object> serializedLicense = context.serialize(input.getLicense());
-        set(map, "license", serializedLicense);
+        if (input.getLicense() != null) {
+            Map<String, Object> serializedLicense = context.serialize(input.getLicense());
+            set(map, "license", serializedLicense);
+        }
 
         set(map, "version", input.getVersion());
         return map;
