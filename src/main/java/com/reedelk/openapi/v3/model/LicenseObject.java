@@ -39,4 +39,11 @@ public class LicenseObject implements OpenApiModel {
         return Objects.hash(name, url);
     }
 
+    @Override
+    public String toString() {
+        return "LicenseObject{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

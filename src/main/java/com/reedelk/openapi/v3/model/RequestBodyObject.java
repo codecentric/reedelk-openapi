@@ -60,4 +60,14 @@ public class RequestBodyObject implements OpenApiModel {
     public int hashCode() {
         return Objects.hash($ref, required, description, content);
     }
+
+    @Override
+    public String toString() {
+        return "RequestBodyObject{" +
+                "$ref='" + $ref + '\'' +
+                ", required=" + required +
+                ", description='" + description + '\'' +
+                ", content=" + content +
+                '}';
+    }
 }

@@ -50,5 +50,13 @@ public class ServerObject implements OpenApiModel {
         return Objects.hash(url, description, variables);
     }
 
+    @Override
+    public String toString() {
+        return "ServerObject{" +
+                "url='" + url + '\'' +
+                ", description='" + description + '\'' +
+                ", variables=" + variables +
+                '}';
+    }
 }
 

@@ -49,4 +49,12 @@ public class TagObject implements OpenApiModel {
         return Objects.hash(name, description, externalDocs);
     }
 
+    @Override
+    public String toString() {
+        return "TagObject{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", externalDocs=" + externalDocs +
+                '}';
+    }
 }

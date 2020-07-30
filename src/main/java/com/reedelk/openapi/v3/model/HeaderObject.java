@@ -89,4 +89,17 @@ public class HeaderObject implements OpenApiModel {
     public int hashCode() {
         return Objects.hash(description, style, schema, example, explode, deprecated, allowReserved);
     }
+
+    @Override
+    public String toString() {
+        return "HeaderObject{" +
+                "description='" + description + '\'' +
+                ", style=" + style +
+                ", schema=" + schema +
+                ", example='" + example + '\'' +
+                ", explode=" + explode +
+                ", deprecated=" + deprecated +
+                ", allowReserved=" + allowReserved +
+                '}';
+    }
 }

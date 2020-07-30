@@ -84,4 +84,15 @@ public class OpenApiObject implements OpenApiModel {
         return Objects.hash(openapi, info, components, servers, paths, tags);
     }
 
+    @Override
+    public String toString() {
+        return "OpenApiObject{" +
+                "openapi='" + openapi + '\'' +
+                ", info=" + info +
+                ", components=" + components +
+                ", servers=" + servers +
+                ", paths=" + paths +
+                ", tags=" + tags +
+                '}';
+    }
 }

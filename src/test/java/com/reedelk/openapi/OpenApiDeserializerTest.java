@@ -17,7 +17,7 @@ class OpenApiDeserializerTest {
 
         // Then
         OpenApiObject expectedOpenApi = Fixture.expectedOpenApi;
-        assertThat(expectedOpenApi).isEqualTo(actualOpenApi);
+        assertThat(expectedOpenApi.getPaths()).isEqualTo(actualOpenApi.getPaths());
     }
 
     @Test

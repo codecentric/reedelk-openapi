@@ -25,7 +25,6 @@ public class Serializers {
         serializers.put(RequestBodyObject.class, new RequestBodyObjectSerializer());
         serializers.put(ResponseObject.class, new ResponseObjectSerializer());
         serializers.put(Schema.class, new SchemaSerializer());
-        serializers.put(SchemaObject.class, new SchemaObjectSerializer());
         serializers.put(ServerObject.class, new ServerObjectSerializer());
         serializers.put(ServerVariableObject.class, new ServerVariableObjectSerializer());
         serializers.put(TagObject.class, new TagObjectSerializer());

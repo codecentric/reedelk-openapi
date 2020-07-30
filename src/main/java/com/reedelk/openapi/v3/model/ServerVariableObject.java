@@ -50,4 +50,12 @@ public class ServerVariableObject implements OpenApiModel {
         return Objects.hash(description, defaultValue, enumValues);
     }
 
+    @Override
+    public String toString() {
+        return "ServerVariableObject{" +
+                "description='" + description + '\'' +
+                ", defaultValue='" + defaultValue + '\'' +
+                ", enumValues=" + enumValues +
+                '}';
+    }
 }

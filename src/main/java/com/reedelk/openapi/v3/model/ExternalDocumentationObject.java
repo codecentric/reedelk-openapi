@@ -38,4 +38,12 @@ public class ExternalDocumentationObject implements OpenApiModel {
     public int hashCode() {
         return Objects.hash(description, url);
     }
+
+    @Override
+    public String toString() {
+        return "ExternalDocumentationObject{" +
+                "description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

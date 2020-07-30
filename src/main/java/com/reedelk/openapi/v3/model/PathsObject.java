@@ -31,4 +31,10 @@ public class PathsObject implements OpenApiModel {
         return Objects.hash(paths);
     }
 
+    @Override
+    public String toString() {
+        return "PathsObject{" +
+                "paths=" + paths +
+                '}';
+    }
 }

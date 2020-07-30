@@ -20,7 +20,7 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
         if (schemasMap != null && !schemasMap.isEmpty()) {
             Map<String, Object> schemas = new LinkedHashMap<>();
             schemasMap.forEach((schemaId, schemaObject) -> {
-                Map<String, Object> serializedSchema = context.serialize(schemaObject);
+                Map<String, Object> serializedSchema = context.serialize(schemaObject.getSchema());
                 schemas.put(schemaId, serializedSchema);
             });
             map.put("schemas", schemas);

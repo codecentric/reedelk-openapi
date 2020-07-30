@@ -39,4 +39,11 @@ public class MediaTypeObject implements OpenApiModel {
         return Objects.hash(example, schema);
     }
 
+    @Override
+    public String toString() {
+        return "MediaTypeObject{" +
+                "example=" + example +
+                ", schema=" + schema +
+                '}';
+    }
 }

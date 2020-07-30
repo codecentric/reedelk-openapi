@@ -98,4 +98,18 @@ public class OperationObject implements OpenApiModel {
     public int hashCode() {
         return Objects.hash(deprecated, summary, description, operationId, requestBody, responses, parameters, tags);
     }
+
+    @Override
+    public String toString() {
+        return "OperationObject{" +
+                "deprecated=" + deprecated +
+                ", summary='" + summary + '\'' +
+                ", description='" + description + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", requestBody=" + requestBody +
+                ", responses=" + responses +
+                ", parameters=" + parameters +
+                ", tags=" + tags +
+                '}';
+    }
 }

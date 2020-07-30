@@ -79,4 +79,15 @@ public class InfoObject implements OpenApiModel {
         return Objects.hash(title, description, termsOfService, version, contact, license);
     }
 
+    @Override
+    public String toString() {
+        return "InfoObject{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", termsOfService='" + termsOfService + '\'' +
+                ", version='" + version + '\'' +
+                ", contact=" + contact +
+                ", license=" + license +
+                '}';
+    }
 }

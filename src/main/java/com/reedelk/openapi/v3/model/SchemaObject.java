@@ -38,4 +38,11 @@ public class SchemaObject implements OpenApiModel {
         return Objects.hash(schema);
     }
 
+    @Override
+    public String toString() {
+        return "SchemaObject{" +
+                "schema=" + schema +
+                ", schemaId='" + schemaId + '\'' +
+                '}';
+    }
 }

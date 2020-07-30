@@ -25,7 +25,6 @@ public class Deserializers {
         deserializers.put(RequestBodyObject.class, new RequestBodyObjectDeserializer());
         deserializers.put(ResponseObject.class, new ResponseObjectDeserializer());
         deserializers.put(Schema.class, new SchemaDeserializer());
-        deserializers.put(SchemaObject.class, new SchemaObjectDeserializer());
         deserializers.put(ServerObject.class, new ServerObjectDeserializer());
         deserializers.put(ServerVariableObject.class, new ServerVariableObjectDeserializer());
         deserializers.put(TagObject.class, new TagObjectDeserializer());

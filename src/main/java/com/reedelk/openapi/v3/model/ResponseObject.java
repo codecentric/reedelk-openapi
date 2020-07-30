@@ -51,4 +51,12 @@ public class ResponseObject implements OpenApiModel {
         return Objects.hash(description, content, headers);
     }
 
+    @Override
+    public String toString() {
+        return "ResponseObject{" +
+                "description='" + description + '\'' +
+                ", content=" + content +
+                ", headers=" + headers +
+                '}';
+    }
 }

@@ -41,4 +41,11 @@ public class ComponentsObject implements OpenApiModel {
         return Objects.hash(schemas, requestBodies);
     }
 
+    @Override
+    public String toString() {
+        return "ComponentsObject{" +
+                "schemas=" + schemas +
+                ", requestBodies=" + requestBodies +
+                '}';
+    }
 }

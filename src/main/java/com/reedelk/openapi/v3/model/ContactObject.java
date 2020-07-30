@@ -49,4 +49,12 @@ public class ContactObject implements OpenApiModel {
         return Objects.hash(name, url, email);
     }
 
+    @Override
+    public String toString() {
+        return "ContactObject{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

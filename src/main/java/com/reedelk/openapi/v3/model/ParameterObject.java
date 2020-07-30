@@ -128,4 +128,21 @@ public class ParameterObject implements OpenApiModel {
     public int hashCode() {
         return Objects.hash(name, description, in, style, schema, example, explode, deprecated, required, allowEmptyValue, allowReserved);
     }
+
+    @Override
+    public String toString() {
+        return "ParameterObject{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", in=" + in +
+                ", style=" + style +
+                ", schema=" + schema +
+                ", example='" + example + '\'' +
+                ", explode=" + explode +
+                ", deprecated=" + deprecated +
+                ", required=" + required +
+                ", allowEmptyValue=" + allowEmptyValue +
+                ", allowReserved=" + allowReserved +
+                '}';
+    }
 }
