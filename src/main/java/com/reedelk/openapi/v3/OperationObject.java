@@ -6,7 +6,6 @@ import java.util.*;
 
 public class OperationObject extends OpenApiSerializableAbstract {
 
-    private Boolean exclude;
     private Boolean deprecated;
     private String summary;
     private String description;
@@ -15,14 +14,6 @@ public class OperationObject extends OpenApiSerializableAbstract {
     private Map<String, ResponseObject> responses = new HashMap<>();
     private List<ParameterObject> parameters = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
-
-    public Boolean getExclude() {
-        return exclude;
-    }
-
-    public void setExclude(Boolean exclude) {
-        this.exclude = exclude;
-    }
 
     public String getSummary() {
         return summary;
@@ -91,7 +82,6 @@ public class OperationObject extends OpenApiSerializableAbstract {
     @Override
     public Map<String,Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "exclude", exclude);
         set(map, "deprecated", deprecated);
         set(map, "summary", summary);
         set(map, "description", description);
@@ -111,7 +101,6 @@ public class OperationObject extends OpenApiSerializableAbstract {
     @SuppressWarnings("unchecked")
     @Override
     public void deserialize(Map<String, Object> serialized) {
-        exclude = getBoolean(serialized, "exclude");
         deprecated = getBoolean(serialized, "deprecated");
         summary = getString(serialized, "summary");
         description = getString(serialized, "description");
@@ -146,8 +135,7 @@ public class OperationObject extends OpenApiSerializableAbstract {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OperationObject that = (OperationObject) o;
-        return Objects.equals(exclude, that.exclude) &&
-                Objects.equals(deprecated, that.deprecated) &&
+        return Objects.equals(deprecated, that.deprecated) &&
                 Objects.equals(summary, that.summary) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(operationId, that.operationId) &&
@@ -159,13 +147,12 @@ public class OperationObject extends OpenApiSerializableAbstract {
 
     @Override
     public int hashCode() {
-        return Objects.hash(exclude, deprecated, summary, description, operationId, requestBody, responses, parameters, tags);
+        return Objects.hash(deprecated, summary, description, operationId, requestBody, responses, parameters, tags);
     }
 
     @Override
     public String toString() {
         return "OperationObject{" +
-                "exclude=" + exclude +
                 ", deprecated=" + deprecated +
                 ", summary='" + summary + '\'' +
                 ", description='" + description + '\'' +
