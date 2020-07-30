@@ -6,12 +6,13 @@ import org.yaml.snakeyaml.Yaml;
 import java.util.Arrays;
 import java.util.Map;
 
-public class OpenApiDeserializer {
+class OpenApiDeserializer {
 
-    public OpenApiObject from(String jsonOrYaml) {
+    OpenApiObject from(String jsonOrYaml) {
         Yaml yaml = new Yaml();
         Map<String,Object> openApiMap = yaml.load(jsonOrYaml);
 
+        // TODO: Add check on open api property is mandatory
         String openapi = (String) openApiMap.get("openapi");
         OpenApiVersion VERSION = Arrays.stream(OpenApiVersion.values())
                 .filter(openApiVersion -> openApiVersion.isSupported(openapi))

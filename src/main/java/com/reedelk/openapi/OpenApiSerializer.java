@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 
-public class OpenApiSerializer {
+class OpenApiSerializer {
 
     private static final int JSON_INDENT_FACTOR = 2;
 
@@ -16,7 +16,7 @@ public class OpenApiSerializer {
     /**
      * Serializes the open API object map to JSON.
      */
-    public String toJson(OpenApiModel serializable) {
+    String toJson(OpenApiModel serializable) {
         SerializerContext context =  new SerializerContext(serializers);
         Map<String, Object> serialized = context.serialize(serializable);
         // We use the custom object factory to preserve position
@@ -29,7 +29,7 @@ public class OpenApiSerializer {
     /**
      * Serializes the open API object map to YAML.
      */
-    public String toYaml(OpenApiModel serializable) {
+    String toYaml(OpenApiModel serializable) {
         SerializerContext context =  new SerializerContext(serializers);
         Map<String, Object> serialized = context.serialize(serializable);
         Yaml yaml = new Yaml();
