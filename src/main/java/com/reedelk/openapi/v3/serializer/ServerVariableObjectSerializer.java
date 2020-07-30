@@ -15,9 +15,9 @@ public class ServerVariableObjectSerializer extends AbstractSerializer<ServerVar
         Precondition.checkNotNull("default", input.getDefaultValue());
 
         Map<String, Object> map = new LinkedHashMap<>();
+        setList(map, "enum", input.getEnumValues());
         set(map, "default", input.getDefaultValue());
         set(map, "description", input.getDescription());
-        setList(map, "enum", input.getEnumValues());
         return map;
     }
 }

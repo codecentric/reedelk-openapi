@@ -22,15 +22,6 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
         Map<String, Object> serializedInfo = context.serialize(input.getInfo());
         set(map, "info", serializedInfo); // REQUIRED
 
-        List<TagObject> tags = input.getTags();
-        if (tags != null && !tags.isEmpty()) {
-            List<Map<String, Object>> mappedTags = tags
-                    .stream()
-                    .map(context::serialize)
-                    .collect(toList());
-            map.put("tags", mappedTags);
-        }
-
         List<Map<String, Object>> mappedServers = input
                 .getServers()
                 .stream()
@@ -43,6 +34,15 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
 
         Map<String, Object> serializedComponents = context.serialize(input.getComponents());
         set(map, "components", serializedComponents);
+
+        List<TagObject> tags = input.getTags();
+        if (tags != null && !tags.isEmpty()) {
+            List<Map<String, Object>> mappedTags = tags
+                    .stream()
+                    .map(context::serialize)
+                    .collect(toList());
+            map.put("tags", mappedTags);
+        }
         return map;
     }
 }

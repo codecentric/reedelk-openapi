@@ -15,17 +15,6 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
     public Map<String, Object> serialize(SerializerContext context, ComponentsObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
 
-        // Request bodies
-        Map<String, RequestBodyObject> requestBodiesMap = input.getRequestBodies();
-        if (requestBodiesMap != null && !requestBodiesMap.isEmpty()) {
-            Map<String, Object> requestBodies = new LinkedHashMap<>();
-            requestBodiesMap.forEach((requestBody, requestBodyObject) -> {
-                Map<String, Object> serializedRequestBody = context.serialize(requestBodyObject);
-                requestBodies.put(requestBody, serializedRequestBody);
-            });
-            map.put("requestBodies", requestBodies);
-        }
-
         // Schemas
         Map<String, SchemaObject> schemasMap = input.getSchemas();
         if (schemasMap != null && !schemasMap.isEmpty()) {
@@ -35,6 +24,17 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 schemas.put(schemaId, serializedSchema);
             });
             map.put("schemas", schemas);
+        }
+
+        // Request bodies
+        Map<String, RequestBodyObject> requestBodiesMap = input.getRequestBodies();
+        if (requestBodiesMap != null && !requestBodiesMap.isEmpty()) {
+            Map<String, Object> requestBodies = new LinkedHashMap<>();
+            requestBodiesMap.forEach((requestBody, requestBodyObject) -> {
+                Map<String, Object> serializedRequestBody = context.serialize(requestBodyObject);
+                requestBodies.put(requestBody, serializedRequestBody);
+            });
+            map.put("requestBodies", requestBodies);
         }
 
         return map;
