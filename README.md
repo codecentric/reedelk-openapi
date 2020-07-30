@@ -45,35 +45,39 @@ Add the following dependency to your pom.xml file:
 
 ## Usage
 ### Serialize
-#### To JSON:
+#### To JSON or YAML:
 ```java
-OpenApiObject openApiModel = new OpenApiObject();
-openApiModel.setBasePath("/api/v3");
-String openApiAsJson = OpenApiSerializer.toJson(openApiModel);
-```
+InfoObject infoModel = new InfoObject();
+infoModel.setDescription("This is a sample API.");
+infoModel.setVersion("1.0.2");
 
-#### To YAML:
-```java
 OpenApiObject openApiModel = new OpenApiObject();
-openApiModel.setBasePath("/api/v3");
-String openApiAsYaml = OpenApiSerializer.toYaml(openApiModel, context);
+openApiModel.setInfo(info);
+
+// to JSON string
+String openApiAsJson = OpenApi.toJson(openApiModel);
+
+// to YAML string
+String openApiAsYaml = OpenApi.toYaml(openApiModel);
 ```
 
 ### Deserialize
-#### From JSON:
+#### From JSON or YAML:
 ```java
+// from JSON string
 String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
 OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsJson);
 InfoObject infoModel = actual.getInfo();
-```
-#### From YAML:
-```java
+...
+
+// from YAML string
 String openApiAsYaml = "openapi: 3.0.0
                         info:
-                          description: \"My description\"
-                          version: 1.0.2";
+                          version: 1.0.2
+                          title: Petstore API";
 OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsYaml);
 InfoObject infoModel = actual.getInfo();
+...
 ```
 
 ## Contribute
