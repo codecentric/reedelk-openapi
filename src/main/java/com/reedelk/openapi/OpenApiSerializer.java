@@ -22,8 +22,7 @@ class OpenApiSerializer {
         Map<String, Object> serialized = context.serialize(serializable);
         // We use the custom object factory to preserve position
         // of serialized properties in the map.
-        JSONObject jsonObject = JsonObjectFactory.newJSONObject();
-        serialized.forEach(jsonObject::put);
+        JSONObject jsonObject = (JSONObject) process(serialized);
         return jsonObject.toString(JSON_INDENT_FACTOR);
     }
 
@@ -35,5 +34,17 @@ class OpenApiSerializer {
         Map<String, Object> serialized = context.serialize(serializable);
         Yaml yaml = new Yaml();
         return yaml.dump(serialized);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Object process(Object value) {
+        if (value instanceof Map) {
+            JSONObject nested = JsonObjectFactory.newJSONObject();
+            Map<String,Object> nestedMap = (Map<String, Object>) value;
+            nestedMap.forEach((key, theValue) -> nested.put(key, process(theValue)));
+            return nested;
+        } else {
+            return value;
+        }
     }
 }

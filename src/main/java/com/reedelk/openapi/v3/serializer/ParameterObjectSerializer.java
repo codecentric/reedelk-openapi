@@ -26,7 +26,9 @@ public class ParameterObjectSerializer extends AbstractSerializer<ParameterObjec
         set(map, "in", input.getIn().name().toLowerCase());
         if (input.getStyle() != null) set(map, "style", input.getStyle().name().toLowerCase());
 
-        map.put("example", input.getExample());
+        if (input.getExample() != null) {
+            map.put("example", input.getExample());
+        }
 
         set(map, "explode", input.getExplode());
         set(map, "deprecated", input.getDeprecated());

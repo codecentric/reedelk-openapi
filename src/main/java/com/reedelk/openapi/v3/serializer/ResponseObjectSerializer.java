@@ -6,7 +6,6 @@ import com.reedelk.openapi.v3.model.HeaderObject;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.ResponseObject;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
         // Content
         Map<String, MediaTypeObject> content = input.getContent();
         if (content != null && !content.isEmpty()) {
-            Map<String, Map<String, Object>> serializedContent = new HashMap<>();
+            Map<String, Map<String, Object>> serializedContent = new LinkedHashMap<>();
             content.forEach((contentType, mediaTypeObject) -> {
                 Map<String, Object> serializedMediaType = context.serialize(mediaTypeObject);
                 serializedContent.put(contentType, serializedMediaType);
@@ -31,7 +30,7 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
         // Headers
         Map<String, HeaderObject> headerObjectMap = input.getHeaders();
         if (headerObjectMap != null && !headerObjectMap.isEmpty()) {
-            Map<String, Object> serializedHeaders = new HashMap<>();
+            Map<String, Object> serializedHeaders = new LinkedHashMap<>();
             headerObjectMap.forEach((headerName, headerObject) -> {
                 Map<String, Object> serializedHeaderObject = context.serialize(headerObject);
                 serializedHeaders.put(headerName, serializedHeaderObject);

@@ -12,7 +12,7 @@ public class OpenApi {
         return new OpenApiSerializer().toYaml(openApiModel);
     }
 
-    public OpenApiObject from(String jsonOrYaml) {
+    public static OpenApiObject from(String jsonOrYaml) {
         return new OpenApiDeserializer().from(jsonOrYaml);
     }
 }

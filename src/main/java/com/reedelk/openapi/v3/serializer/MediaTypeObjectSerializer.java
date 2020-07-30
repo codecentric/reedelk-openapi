@@ -18,8 +18,8 @@ public class MediaTypeObjectSerializer extends AbstractSerializer<MediaTypeObjec
             set(map, "schema", serializedSchema);
         }
 
-        if (input.getExample() != null) {
-            set(map, "example", input.getExample().data());
+        if (input.getExample() != null && input.getExample().data() != null) {
+            map.put("example", input.getExample().data());
         }
         return map;
     }

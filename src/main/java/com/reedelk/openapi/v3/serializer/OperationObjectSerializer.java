@@ -29,7 +29,7 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         }
 
         Map<String, ResponseObject> responses = input.getResponses() == null ? new HashMap<>() : input.getResponses(); // MANDATORY
-        Map<String, Map<String, Object>> serializedResponses = new HashMap<>();
+        Map<String, Map<String, Object>> serializedResponses = new LinkedHashMap<>();
         responses.forEach((statusCode, responseObject) -> {
             Map<String, Object> serializedResponse = context.serialize(responseObject);
             serializedResponses.put(statusCode, serializedResponse);

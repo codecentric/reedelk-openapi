@@ -2,14 +2,14 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class ComponentsObject implements OpenApiModel {
 
-    private Map<String, SchemaObject> schemas = new HashMap<>();
-    private Map<String, RequestBodyObject> requestBodies = new HashMap<>();
+    private Map<String, SchemaObject> schemas = new LinkedHashMap<>();
+    private Map<String, RequestBodyObject> requestBodies = new LinkedHashMap<>();
 
     public Map<String, SchemaObject> getSchemas() {
         return schemas;

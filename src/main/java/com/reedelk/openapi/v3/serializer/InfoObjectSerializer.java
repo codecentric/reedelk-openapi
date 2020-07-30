@@ -16,8 +16,9 @@ public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
         Precondition.checkNotNull("version", input.getVersion());
 
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "title", input.getTitle());
         set(map, "description", input.getDescription());
+        set(map, "version", input.getVersion());
+        set(map, "title", input.getTitle());
         set(map, "termsOfService", input.getTermsOfService());
 
         if (input.getContact() != null) {
@@ -30,7 +31,6 @@ public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
             set(map, "license", serializedLicense);
         }
 
-        set(map, "version", input.getVersion());
         return map;
     }
 }

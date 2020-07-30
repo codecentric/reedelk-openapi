@@ -5,7 +5,7 @@ import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.ServerObject;
 import com.reedelk.openapi.v3.model.ServerVariableObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ServerObjectDeserializer extends AbstractDeserializer<ServerObject> {
@@ -18,7 +18,7 @@ public class ServerObjectDeserializer extends AbstractDeserializer<ServerObject>
         serverObject.setDescription(getString(serialized, "description"));
 
         if (serialized.containsKey("variables")) {
-            Map<String, ServerVariableObject> serverVariableObjectMap = new HashMap<>();
+            Map<String, ServerVariableObject> serverVariableObjectMap = new LinkedHashMap<>();
             Map<String, Map<String, Object>> variablesMap = (Map<String, Map<String, Object>>) serialized.get("variables");
             variablesMap.forEach((serverVariableKey, objectMap) -> {
                 ServerVariableObject serverVariableObject = context.deserialize(ServerVariableObject.class, objectMap);

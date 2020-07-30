@@ -6,7 +6,7 @@ import com.reedelk.openapi.v3.model.ComponentsObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
 import com.reedelk.openapi.v3.model.SchemaObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ComponentsObjectDeserializer extends AbstractDeserializer<ComponentsObject> {
@@ -18,7 +18,7 @@ public class ComponentsObjectDeserializer extends AbstractDeserializer<Component
 
         // Request Bodies
         if (serialized.containsKey("requestBodies")) {
-            Map<String, RequestBodyObject> requestBodyObjectMap = new HashMap<>();
+            Map<String, RequestBodyObject> requestBodyObjectMap = new LinkedHashMap<>();
             Map<String,Object> requestBodiesMap = (Map<String, Object>) serialized.get("requestBodies");
             requestBodiesMap.forEach((requestBodyId, requestBodyDataMap) -> {
                 Map<String, Object> requestBodyMap = (Map<String, Object>) requestBodyDataMap;
@@ -30,7 +30,7 @@ public class ComponentsObjectDeserializer extends AbstractDeserializer<Component
 
         // Schemas
         if (serialized.containsKey("schemas")) {
-            Map<String, SchemaObject> schemaObjectMap = new HashMap<>();
+            Map<String, SchemaObject> schemaObjectMap = new LinkedHashMap<>();
             Map<String,Object> schemasMap = (Map<String, Object>) serialized.get("schemas");
             schemasMap.forEach((schemaId, schemaData) -> {
                 Map<String, Object> schemaMap = (Map<String, Object>) schemaData;

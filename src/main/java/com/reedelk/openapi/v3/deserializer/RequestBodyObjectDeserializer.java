@@ -5,7 +5,7 @@ import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RequestBodyObjectDeserializer extends AbstractDeserializer<RequestBodyObject> {
@@ -19,7 +19,7 @@ public class RequestBodyObjectDeserializer extends AbstractDeserializer<RequestB
             requestBodyObject.set$ref(getString(serialized, "$ref"));
 
         } else {
-            Map<String, MediaTypeObject> contentMediaTypeMap = new HashMap<>();
+            Map<String, MediaTypeObject> contentMediaTypeMap = new LinkedHashMap<>();
             Map<String, Map<String,Object>> contentMap = (Map<String, Map<String, Object>>) serialized.get("content");
             contentMap.forEach((contentType, mediaTypeMap) -> {
                 MediaTypeObject mediaTypeObject = context.deserialize(MediaTypeObject.class, mediaTypeMap);

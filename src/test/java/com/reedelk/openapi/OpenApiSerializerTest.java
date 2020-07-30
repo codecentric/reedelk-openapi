@@ -12,24 +12,24 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 public class OpenApiSerializerTest {
 
     @Test
-    void shouldCorrectlySerializeAsJSON() {
+    void shouldCorrectlySerializeToJSON() {
         // Given
         String expected = Fixture.EndToEnd.SAMPLE_JSON.string();
 
         // When
-        String actual = new OpenApiSerializer().toJson(Fixture.expectedOpenApi);
+        String actual = OpenApi.toJson(Fixture.expectedOpenApi);
 
         // Then
         assertEquals(expected, actual, JSONCompareMode.STRICT);
     }
 
     @Test
-    void shouldCorrectlySerializeAsYAML() {
+    void shouldCorrectlySerializeToYAML() {
         // Given
         String expected = Fixture.EndToEnd.SAMPLE_YAML.string();
 
         // When
-        String actual = new OpenApiSerializer().toYaml(Fixture.expectedOpenApi);
+        String actual = OpenApi.toYaml(Fixture.expectedOpenApi);
 
         // Then
         Yaml yaml = new Yaml();

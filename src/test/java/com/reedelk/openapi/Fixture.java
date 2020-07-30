@@ -429,7 +429,7 @@ public class Fixture {
 
     public static final com.reedelk.openapi.v3.model.OpenApiObject expectedOpenApi;
     static {
-        Map<String, Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject>> paths = new HashMap<>();
+        Map<String, Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject>> paths = new LinkedHashMap<>();
         paths.put("/pet", createPetOperationMap());
         paths.put("/pet/{petId}", createPetByIdOperationMap());
         paths.put("/store/inventory", createStoreInventoryOperationMap());
@@ -497,7 +497,7 @@ public class Fixture {
                 "              \"type\": \"string\",\n" +
                 "            }").toMap()));
 
-        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new LinkedHashMap<>();
         contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
                 "                  \"type\": \"string\"\n" +
                 "                }").toMap()));
@@ -519,7 +519,7 @@ public class Fixture {
                 "                  \"format\": \"date-time\"\n" +
                 "                }").toMap()));
 
-        Map<String, com.reedelk.openapi.v3.model.HeaderObject> headersMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.HeaderObject> headersMap = new LinkedHashMap<>();
         headersMap.put("X-Rate-Limit", rateLimit);
         headersMap.put("X-Expires-After", expiresAfter);
 
@@ -527,7 +527,7 @@ public class Fixture {
         response200.setContent(contentTypeMedia);
         response200.setHeaders(headersMap);
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new LinkedHashMap<>();
         getStatusCodeResponseMap.put("200", response200);
         getStatusCodeResponseMap.put("400", createResponseObject("Invalid username/password supplied"));
 
@@ -540,14 +540,14 @@ public class Fixture {
         loginOperation.setParameters(asList(usernameParameter, passwordParameter));
         // ------------------------------------------------------
 
-        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> userLoginOperationMap = new HashMap<>();
+        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> userLoginOperationMap = new LinkedHashMap<>();
         userLoginOperationMap.put(RestMethod.GET, loginOperation);
         return userLoginOperationMap;
     }
 
     private static Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> createStoreInventoryOperationMap() {
         // ---------------- GET Store Inventory Object ----------------
-        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new LinkedHashMap<>();
         contentTypeMedia.put("application/json", createMediaType(new JSONObject("{\n" +
                 "                  \"type\": \"object\",\n" +
                 "                  \"additionalProperties\": {\n" +
@@ -559,7 +559,7 @@ public class Fixture {
         com.reedelk.openapi.v3.model.ResponseObject response200 = createResponseObject("successful operation");
         response200.setContent(contentTypeMedia);
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new LinkedHashMap<>();
         getStatusCodeResponseMap.put("200", response200);
 
         com.reedelk.openapi.v3.model.OperationObject getStoreInventoryOperation = new com.reedelk.openapi.v3.model.OperationObject();
@@ -570,7 +570,7 @@ public class Fixture {
         getStoreInventoryOperation.setDescription("Returns a map of status codes to quantities");
         // ------------------------------------------------------
 
-        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> storeInventoryOperationMap = new HashMap<>();
+        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> storeInventoryOperationMap = new LinkedHashMap<>();
         storeInventoryOperationMap.put(RestMethod.GET, getStoreInventoryOperation);
         return storeInventoryOperationMap;
     }
@@ -586,7 +586,7 @@ public class Fixture {
                 "              \"type\": \"integer\",\n" +
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
-        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMedia = new LinkedHashMap<>();
 
         contentTypeMedia.put("application/xml", createMediaType("#/components/schemas/Pet", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Pet>\n\t<id>1230</id>\n\t<Category>\n\t\t<id>0</id>\n\t\t<name>string</name>\n\t</Category>\n\t<name>doggie</name>\n\t<photoUrl>\n\t\t<photoUrl>string</photoUrl>\n\t</photoUrl>\n\t<tag>\n\t\t<Tag>\n\t\t\t<id>0</id>\n\t\t\t<name>string</name>\n\t\t</Tag>\n\t</tag>\n\t<status>available</status>\n</Pet>"));
         contentTypeMedia.put("application/json", createMediaType("#/components/schemas/Pet"));
@@ -594,7 +594,7 @@ public class Fixture {
         com.reedelk.openapi.v3.model.ResponseObject response200 = createResponseObject("successful operation");
         response200.setContent(contentTypeMedia);
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> getStatusCodeResponseMap = new LinkedHashMap<>();
         getStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
         getStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
         getStatusCodeResponseMap.put("200", response200);
@@ -619,7 +619,7 @@ public class Fixture {
                 "              \"format\": \"int64\"\n" +
                 "            }").toMap()));
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> postStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> postStatusCodeResponseMap = new LinkedHashMap<>();
         postStatusCodeResponseMap.put("405", createResponseObject("Invalid input"));
 
         com.reedelk.openapi.v3.model.MediaTypeObject wwwFormUrlEncoded = createMediaType(new JSONObject("{\n" +
@@ -635,7 +635,7 @@ public class Fixture {
                 "                  }\n" +
                 "                }\n" +
                 "              }").toMap());
-        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> postContentTypeMediaTypeMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> postContentTypeMediaTypeMap = new LinkedHashMap<>();
         postContentTypeMediaTypeMap.put("application/x-www-form-urlencoded", wwwFormUrlEncoded);
         com.reedelk.openapi.v3.model.RequestBodyObject postPetRequestBody = new com.reedelk.openapi.v3.model.RequestBodyObject();
         postPetRequestBody.setContent(postContentTypeMediaTypeMap);
@@ -650,7 +650,7 @@ public class Fixture {
         postPetOperation.setParameters(Collections.singletonList(postParameters));
         // ------------------------------------------------------
 
-        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> petOperationMap = new HashMap<>();
+        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> petOperationMap = new LinkedHashMap<>();
         petOperationMap.put(RestMethod.GET, getPetOperation);
         petOperationMap.put(RestMethod.POST, postPetOperation);
         return petOperationMap;
@@ -661,7 +661,7 @@ public class Fixture {
         com.reedelk.openapi.v3.model.RequestBodyObject putPetRequestBody = new com.reedelk.openapi.v3.model.RequestBodyObject();
         putPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> putStatusCodeResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> putStatusCodeResponseMap = new LinkedHashMap<>();
         putStatusCodeResponseMap.put("400", createResponseObject("Invalid ID supplied"));
         putStatusCodeResponseMap.put("404", createResponseObject("Pet not found"));
         putStatusCodeResponseMap.put("405", createResponseObject("Validation exception"));
@@ -679,7 +679,7 @@ public class Fixture {
         com.reedelk.openapi.v3.model.RequestBodyObject postPetRequestBody = new com.reedelk.openapi.v3.model.RequestBodyObject();
         postPetRequestBody.set$ref("#/components/requestBodies/Pet");
 
-        Map<String, com.reedelk.openapi.v3.model.ResponseObject> postStatusResponseMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.ResponseObject> postStatusResponseMap = new LinkedHashMap<>();
         postStatusResponseMap.put("405", createResponseObject("Invalid input"));
 
         com.reedelk.openapi.v3.model.OperationObject postPetOperation = new com.reedelk.openapi.v3.model.OperationObject();
@@ -691,14 +691,14 @@ public class Fixture {
         postPetOperation.setTags(Collections.singletonList("pet"));
         // ------------------------------------------------------
 
-        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> petOperationMap = new HashMap<>();
+        Map<RestMethod, com.reedelk.openapi.v3.model.OperationObject> petOperationMap = new LinkedHashMap<>();
         petOperationMap.put(RestMethod.PUT, putPetOperation);
         petOperationMap.put(RestMethod.POST, postPetOperation);
         return petOperationMap;
     }
 
     private static com.reedelk.openapi.v3.model.ComponentsObject createComponents() {
-        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMediaTypeMap = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.MediaTypeObject> contentTypeMediaTypeMap = new LinkedHashMap<>();
         contentTypeMediaTypeMap.put("application/xml", createMediaType("#/components/schemas/Pet"));
         contentTypeMediaTypeMap.put("application/json", createMediaType("#/components/schemas/Pet"));
 
@@ -707,10 +707,10 @@ public class Fixture {
         petRequestBody.setRequired(true);
         petRequestBody.setDescription("Pet object that needs to be added to the store");
 
-        Map<String, com.reedelk.openapi.v3.model.RequestBodyObject> idAndRequestBody = new HashMap<>();
+        Map<String, com.reedelk.openapi.v3.model.RequestBodyObject> idAndRequestBody = new LinkedHashMap<>();
         idAndRequestBody.put("Pet", petRequestBody);
 
-        Map<String, SchemaObject> idAndSchema = new HashMap<>();
+        Map<String, SchemaObject> idAndSchema = new LinkedHashMap<>();
         idAndSchema.put("Pet", createSchema(Fixture.Schemas.Pet));
         idAndSchema.put("Tag", createSchema(Fixture.Schemas.Tag));
         idAndSchema.put("Category", createSchema(Fixture.Schemas.Category));

@@ -35,6 +35,11 @@
       }
     }
   ],
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2"
+    }
+  ],
   "paths": {
     "/pet": {
       "post": {
@@ -259,11 +264,6 @@
       }
     }
   },
-  "servers": [
-    {
-      "url": "https://petstore.swagger.io/v2"
-    }
-  ],
   "components": {
     "requestBodies": {
       "Pet": {

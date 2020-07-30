@@ -13,7 +13,7 @@ class OpenApiDeserializerTest {
         String json = Fixture.EndToEnd.SAMPLE_JSON.string();
 
         // When
-        OpenApiObject actualOpenApi = new OpenApiDeserializer().from(json);
+        OpenApiObject actualOpenApi = OpenApi.from(json);
 
         // Then
         OpenApiObject expectedOpenApi = Fixture.expectedOpenApi;
@@ -26,7 +26,7 @@ class OpenApiDeserializerTest {
         String yaml = Fixture.EndToEnd.SAMPLE_YAML.string();
 
         // When
-        OpenApiObject actualOpenApi = new OpenApiDeserializer().from(yaml);
+        OpenApiObject actualOpenApi = OpenApi.from(yaml);
 
         // Then
         OpenApiObject expectedOpenApi = Fixture.expectedOpenApi;

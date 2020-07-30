@@ -6,7 +6,7 @@ import com.reedelk.openapi.v3.model.OperationObject;
 import com.reedelk.openapi.v3.model.PathsObject;
 import com.reedelk.openapi.v3.model.RestMethod;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PathsObjectDeserializer extends AbstractDeserializer<PathsObject> {
@@ -16,11 +16,11 @@ public class PathsObjectDeserializer extends AbstractDeserializer<PathsObject> {
     public PathsObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         PathsObject pathsObject = new PathsObject();
 
-        Map<String, Map<RestMethod, OperationObject>> pathsMap = new HashMap<>();
+        Map<String, Map<RestMethod, OperationObject>> pathsMap = new LinkedHashMap<>();
 
         serialized.forEach((pathEntry, pathDefinition) -> {
             Map<String,Object> pathDefinitionMap = (Map<String, Object>) pathDefinition;
-            Map<RestMethod, OperationObject> methodAndOperationMap = new HashMap<>();
+            Map<RestMethod, OperationObject> methodAndOperationMap = new LinkedHashMap<>();
             pathDefinitionMap.forEach((method, operationObjectData) -> {
                 RestMethod restMethod = RestMethod.valueOf(method.toUpperCase());
                 Map<String,Object> operationObjectMap = (Map<String,Object>)operationObjectData;

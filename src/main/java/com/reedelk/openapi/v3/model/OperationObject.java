@@ -11,7 +11,7 @@ public class OperationObject implements OpenApiModel {
     private String description;
     private String operationId;
     private RequestBodyObject requestBody;
-    private Map<String, ResponseObject> responses = new HashMap<>();
+    private Map<String, ResponseObject> responses = new LinkedHashMap<>();
     private List<ParameterObject> parameters = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
 

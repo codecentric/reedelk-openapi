@@ -5,7 +5,6 @@ import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +24,7 @@ public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyO
             if (input.getContent().isEmpty()) {
                 map.put("content", new LinkedHashMap<>());
             }
-            Map<String, Map<String,Object>> contentTypeMediaTypeMap = new HashMap<>();
+            Map<String, Map<String,Object>> contentTypeMediaTypeMap = new LinkedHashMap<>();
             Map<String, MediaTypeObject> content = input.getContent();
             content.forEach((contentType, mediaTypeObject) -> {
                 Map<String, Object> serialized = context.serialize(mediaTypeObject);

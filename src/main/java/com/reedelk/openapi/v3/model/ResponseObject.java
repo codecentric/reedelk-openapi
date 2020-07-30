@@ -2,15 +2,15 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class ResponseObject implements OpenApiModel {
 
     private String description;
-    private Map<String, MediaTypeObject> content = new HashMap<>();
-    private Map<String, HeaderObject> headers = new HashMap<>();
+    private Map<String, MediaTypeObject> content = new LinkedHashMap<>();
+    private Map<String, HeaderObject> headers = new LinkedHashMap<>();
 
     public String getDescription() {
         return description;

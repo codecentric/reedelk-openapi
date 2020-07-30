@@ -5,7 +5,6 @@ import com.reedelk.openapi.commons.Precondition;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ServerObject;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class ServerObjectSerializer extends AbstractSerializer<ServerObject> {
         set(serverObject, "description", input.getDescription());
 
         if (input.getVariables() != null) {
-            Map<String, Map<String,Object>> serializedServerVariableMap = new HashMap<>();
+            Map<String, Map<String,Object>> serializedServerVariableMap = new LinkedHashMap<>();
             input.getVariables().forEach((variableName, serverVariableObject) -> {
                 Map<String, Object> serializedServerVariableObject = context.serialize(serverVariableObject);
                 serializedServerVariableMap.put(variableName, serializedServerVariableObject);
