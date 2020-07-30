@@ -16,7 +16,7 @@ class HeaderObjectTest extends AbstractOpenApiSerializableTest {
         header.setExample("my header value");
         header.setDescription("My header description");
         header.setStyle(ParameterStyle.spaceDelimited);
-        header.setSchema(new Schema(new JSONObject("{\n" +
+        header.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "    \"type\": \"array\",\n" +
                 "    \"items\": {\"type\": \"string\"}\n" +
                 "  }").toMap()));
@@ -35,7 +35,7 @@ class HeaderObjectTest extends AbstractOpenApiSerializableTest {
         header.setExample("my header value");
         header.setDescription("My header description");
         header.setStyle(ParameterStyle.spaceDelimited);
-        header.setSchema(new Schema("#/components/schemas/Pet"));
+        header.setSchema(new SchemaDefault("#/components/schemas/Pet"));
 
         // Expect
         assertSerializeJSON(header, Fixture.HeaderObject.WithAllPropertiesAndReferenceSchema);

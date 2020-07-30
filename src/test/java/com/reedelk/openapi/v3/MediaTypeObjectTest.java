@@ -9,7 +9,7 @@ public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeMediaTypeWithSchema() {
         // Given
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
+        mediaType.setSchema(new SchemaDefault("#/components/schemas/Pet"));
 
         // Expect
         assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithSchema);
@@ -29,7 +29,7 @@ public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeMediaTypeWithSchemaAndExample() {
         // Given
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
+        mediaType.setSchema(new SchemaDefault("#/components/schemas/Pet"));
         mediaType.setExample(new Example("{\"id\":\"Dog\",\"name\":\"John\"}"));
 
         // Expect

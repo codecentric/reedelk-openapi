@@ -12,12 +12,12 @@ class ComponentsObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeSchema() {
         // Given
         SchemaObject stringSchemaObject = new SchemaObject();
-        stringSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
+        stringSchemaObject.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "      \"type\": \"string\"\n" +
                 "    }").toMap()));
 
         SchemaObject integerSchemaObject = new SchemaObject();
-        integerSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
+        integerSchemaObject.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "      \"type\": \"integer\"\n" +
                 "    }").toMap()));
 

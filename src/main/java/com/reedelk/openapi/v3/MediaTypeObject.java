@@ -39,7 +39,7 @@ public class MediaTypeObject extends OpenApiSerializableAbstract {
     public void deserialize(Map<String, Object> serialized) {
         boolean hasSchema = serialized.containsKey("schema");
         if (hasSchema) {
-            schema = new Schema();
+            schema = new SchemaDefault();
             Map<String, Object> schemaDefinition = getMap(serialized, "schema");
             schema.deserialize(schemaDefinition);
         }

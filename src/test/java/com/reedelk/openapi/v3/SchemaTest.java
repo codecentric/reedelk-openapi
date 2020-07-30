@@ -9,7 +9,7 @@ public class SchemaTest extends AbstractOpenApiSerializableTest {
     @Test
     void shouldCorrectlySerializeSchemaWithReference() {
         // Given
-        Schema schema = new Schema("#/components/schemas/Pet");
+        Schema schema = new SchemaDefault("#/components/schemas/Pet");
 
         // Expect
         assertSerializeJSON(schema, Fixture.Schema.WithReference);
@@ -18,7 +18,7 @@ public class SchemaTest extends AbstractOpenApiSerializableTest {
     @Test
     void shouldCorrectlySerializeInfoWithRequiredValues() {
         // Given
-        Schema schema = new Schema(new JSONObject(
+        Schema schema = new SchemaDefault(new JSONObject(
                 "{\n" +
                         "  \"type\": \"object\",\n" +
                         "  \"properties\": {\n" +

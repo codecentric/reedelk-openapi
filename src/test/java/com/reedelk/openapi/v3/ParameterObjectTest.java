@@ -19,7 +19,7 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
         parameter.setIn(ParameterLocation.query);
         parameter.setStyle(ParameterStyle.simple);
         parameter.setDescription("My parameter description");
-        parameter.setSchema(new Schema(new JSONObject("{\n" +
+        parameter.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "    \"type\": \"array\",\n" +
                 "    \"items\": {\"type\": \"string\"}\n" +
                 "  }").toMap()));

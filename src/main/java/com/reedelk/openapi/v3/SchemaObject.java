@@ -33,7 +33,7 @@ public class SchemaObject extends OpenApiSerializableAbstract {
 
     @Override
     public void deserialize(Map<String, Object> serialized) {
-        schema = new Schema();
+        schema = new SchemaDefault();
         schema.deserialize(serialized);
     }
 

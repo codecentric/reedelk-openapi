@@ -152,7 +152,7 @@ public class ParameterObject extends OpenApiSerializableAbstract {
 
         if (serialized.containsKey("schema")) {
             Map<String, Object> schemaMap = (Map<String, Object>) serialized.get("schema");
-            schema = new Schema();
+            schema = new SchemaDefault();
             schema.deserialize(schemaMap);
         }
 

@@ -25,14 +25,14 @@ class ResponseObjectTest extends AbstractOpenApiSerializableTest {
         HeaderObject header1 = new HeaderObject();
         header1.setDescription("My header 1");
         header1.setStyle(ParameterStyle.simple);
-        header1.setSchema(new Schema(new JSONObject("{\n" +
+        header1.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "        \"type\": \"string\"\n" +
                 "    }").toMap()));
 
         HeaderObject header2 = new HeaderObject();
         header2.setDescription("My header 2");
         header2.setStyle(ParameterStyle.simple);
-        header2.setSchema(new Schema(new JSONObject("{\n" +
+        header2.setSchema(new SchemaDefault(new JSONObject("{\n" +
                 "        \"type\": \"string\"\n" +
                 "    }").toMap()));
 
