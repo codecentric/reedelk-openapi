@@ -1,6 +1,10 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.ParameterLocation;
+import com.reedelk.openapi.v3.model.ParameterObject;
+import com.reedelk.openapi.v3.model.ParameterStyle;
+import com.reedelk.openapi.v3.model.Schema;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +23,7 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
         parameter.setIn(ParameterLocation.query);
         parameter.setStyle(ParameterStyle.simple);
         parameter.setDescription("My parameter description");
-        parameter.setSchema(new SchemaDefault(new JSONObject("{\n" +
+        parameter.setSchema(new Schema(new JSONObject("{\n" +
                 "    \"type\": \"array\",\n" +
                 "    \"items\": {\"type\": \"string\"}\n" +
                 "  }").toMap()));

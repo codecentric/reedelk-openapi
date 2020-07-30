@@ -1,6 +1,6 @@
 package com.reedelk.openapi;
 
-import com.reedelk.openapi.v3.OpenApiObject;
+import com.reedelk.openapi.v3.model.OpenApiObject;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

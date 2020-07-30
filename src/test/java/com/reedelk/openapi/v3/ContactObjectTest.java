@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.ContactObject;
 import org.junit.jupiter.api.Test;
 
 public class ContactObjectTest extends AbstractOpenApiSerializableTest {

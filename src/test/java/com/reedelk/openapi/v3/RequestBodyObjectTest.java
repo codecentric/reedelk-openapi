@@ -1,6 +1,9 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.Example;
+import com.reedelk.openapi.v3.model.MediaTypeObject;
+import com.reedelk.openapi.v3.model.RequestBodyObject;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

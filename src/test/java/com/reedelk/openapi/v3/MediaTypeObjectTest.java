@@ -1,6 +1,9 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.Example;
+import com.reedelk.openapi.v3.model.MediaTypeObject;
+import com.reedelk.openapi.v3.model.Schema;
 import org.junit.jupiter.api.Test;
 
 public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
@@ -9,7 +12,7 @@ public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeMediaTypeWithSchema() {
         // Given
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setSchema(new SchemaDefault("#/components/schemas/Pet"));
+        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
 
         // Expect
         assertSerializeJSON(mediaType, Fixture.MediaTypeObject.WithSchema);
@@ -29,7 +32,7 @@ public class MediaTypeObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeMediaTypeWithSchemaAndExample() {
         // Given
         MediaTypeObject mediaType = new MediaTypeObject();
-        mediaType.setSchema(new SchemaDefault("#/components/schemas/Pet"));
+        mediaType.setSchema(new Schema("#/components/schemas/Pet"));
         mediaType.setExample(new Example("{\"id\":\"Dog\",\"name\":\"John\"}"));
 
         // Expect

@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.*;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -27,12 +28,12 @@ class OperationObjectTest extends AbstractOpenApiSerializableTest {
         parameter1.setName("param1");
         parameter1.setRequired(true);
         parameter1.setIn(ParameterLocation.query);
-        parameter1.setSchema(new SchemaDefault(new JSONObject("{\"type\": \"string\"}").toMap()));
+        parameter1.setSchema(new Schema(new JSONObject("{\"type\": \"string\"}").toMap()));
 
         ParameterObject parameter2 = new ParameterObject();
         parameter2.setName("param2");
         parameter2.setIn(ParameterLocation.path);
-        parameter2.setSchema(new SchemaDefault(new JSONObject("{\"type\": \"string\"}").toMap()));
+        parameter2.setSchema(new Schema(new JSONObject("{\"type\": \"string\"}").toMap()));
 
         RequestBodyObject requestBody = new RequestBodyObject();
         requestBody.setDescription("My request body");

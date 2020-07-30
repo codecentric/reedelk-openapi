@@ -1,5 +1,7 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.v3.SerializerContext;
+import com.reedelk.openapi.v3.serializer.Serializers;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
@@ -9,11 +11,14 @@ public class OpenApiSerializer {
 
     private static final int JSON_INDENT_FACTOR = 2;
 
+    private final Serializers serializers = new Serializers();
+
     /**
      * Serializes the open API object map to JSON.
      */
-    public static String toJson(OpenApiSerializable serializable) {
-        Map<String, Object> serialized = serializable.serialize();
+    public String toJson(OpenApiModel serializable) {
+        SerializerContext context =  new SerializerContext(serializers);
+        Map<String, Object> serialized = context.serialize(serializable);
         // We use the custom object factory to preserve position
         // of serialized properties in the map.
         JSONObject jsonObject = JsonObjectFactory.newJSONObject();
@@ -24,8 +29,9 @@ public class OpenApiSerializer {
     /**
      * Serializes the open API object map to YAML.
      */
-    public static String toYaml(OpenApiSerializable serializable) {
-        Map<String, Object> serialized = serializable.serialize();
+    public String toYaml(OpenApiModel serializable) {
+        SerializerContext context =  new SerializerContext(serializers);
+        Map<String, Object> serialized = context.serialize(serializable);
         Yaml yaml = new Yaml();
         return yaml.dump(serialized);
     }

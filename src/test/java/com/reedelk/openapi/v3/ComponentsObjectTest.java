@@ -1,6 +1,9 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.ComponentsObject;
+import com.reedelk.openapi.v3.model.Schema;
+import com.reedelk.openapi.v3.model.SchemaObject;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +15,12 @@ class ComponentsObjectTest extends AbstractOpenApiSerializableTest {
     void shouldCorrectlySerializeSchema() {
         // Given
         SchemaObject stringSchemaObject = new SchemaObject();
-        stringSchemaObject.setSchema(new SchemaDefault(new JSONObject("{\n" +
+        stringSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
                 "      \"type\": \"string\"\n" +
                 "    }").toMap()));
 
         SchemaObject integerSchemaObject = new SchemaObject();
-        integerSchemaObject.setSchema(new SchemaDefault(new JSONObject("{\n" +
+        integerSchemaObject.setSchema(new Schema(new JSONObject("{\n" +
                 "      \"type\": \"integer\"\n" +
                 "    }").toMap()));
 

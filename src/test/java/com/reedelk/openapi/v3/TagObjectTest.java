@@ -1,6 +1,8 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.ExternalDocumentationObject;
+import com.reedelk.openapi.v3.model.TagObject;
 import org.junit.jupiter.api.Test;
 
 public class TagObjectTest extends AbstractOpenApiSerializableTest {

@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
+import com.reedelk.openapi.v3.model.Schema;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ public class SchemaTest extends AbstractOpenApiSerializableTest {
     @Test
     void shouldCorrectlySerializeSchemaWithReference() {
         // Given
-        Schema schema = new SchemaDefault("#/components/schemas/Pet");
+        Schema schema = new Schema("#/components/schemas/Pet");
 
         // Expect
         assertSerializeJSON(schema, Fixture.Schema.WithReference);
@@ -18,7 +19,7 @@ public class SchemaTest extends AbstractOpenApiSerializableTest {
     @Test
     void shouldCorrectlySerializeInfoWithRequiredValues() {
         // Given
-        Schema schema = new SchemaDefault(new JSONObject(
+        Schema schema = new Schema(new JSONObject(
                 "{\n" +
                         "  \"type\": \"object\",\n" +
                         "  \"properties\": {\n" +
