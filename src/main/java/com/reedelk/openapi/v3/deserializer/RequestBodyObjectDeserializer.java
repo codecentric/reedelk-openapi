@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
+import com.reedelk.openapi.commons.Properties;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
@@ -15,8 +16,8 @@ public class RequestBodyObjectDeserializer extends AbstractDeserializer<RequestB
     public RequestBodyObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         RequestBodyObject requestBodyObject = new RequestBodyObject();
 
-        if (serialized.containsKey("$ref")) {
-            requestBodyObject.set$ref(getString(serialized, "$ref"));
+        if (serialized.containsKey(Properties.$REF)) {
+            requestBodyObject.set$ref(getString(serialized, Properties.$REF));
 
         } else {
             Map<String, MediaTypeObject> contentMediaTypeMap = new LinkedHashMap<>();

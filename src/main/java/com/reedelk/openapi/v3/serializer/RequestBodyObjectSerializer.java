@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.Properties;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
@@ -15,7 +16,7 @@ public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyO
         Map<String, Object> map = new LinkedHashMap<>();
         if (input.get$ref() != null && input.get$ref().length() > 0) {
             // It is a reference.
-            set(map, "$ref", input.get$ref());
+            set(map, Properties.$REF, input.get$ref());
 
         } else {
             set(map, "description", input.getDescription());

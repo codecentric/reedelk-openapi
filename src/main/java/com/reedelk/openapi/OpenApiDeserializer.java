@@ -1,5 +1,6 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.commons.Utils;
 import com.reedelk.openapi.v3.model.OpenApiObject;
 import org.yaml.snakeyaml.Yaml;
 
@@ -12,12 +13,14 @@ class OpenApiDeserializer {
         Yaml yaml = new Yaml();
         Map<String,Object> openApiMap = yaml.load(jsonOrYaml);
 
-        // TODO: Add check on open api property is mandatory
-        String openapi = (String) openApiMap.get("openapi");
+        String openApiVersion = (String) openApiMap.get("openapi");
+        if (Utils.isBlank(openApiVersion)) {
+            throw new IllegalArgumentException("Missing 'openapi' version property in the JSON or YAML structure");
+        }
         OpenApiVersion VERSION = Arrays.stream(OpenApiVersion.values())
-                .filter(openApiVersion -> openApiVersion.isSupported(openapi))
+                .filter(version -> version.isSupported(openApiVersion))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Open API version " + openapi + ", not supported"));
+                .orElseThrow(() -> new IllegalArgumentException("Open API version " + openApiVersion + ", not supported"));
 
         return VERSION.deserialize(openApiMap);
     }

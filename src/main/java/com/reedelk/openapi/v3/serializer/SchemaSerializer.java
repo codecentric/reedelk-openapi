@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.Properties;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.Schema;
 
@@ -13,12 +14,11 @@ public class SchemaSerializer extends AbstractSerializer<Schema> {
     // {
     //      "$ref": "#/components/schemas/mySchema"
     // }
-    // TODO: Extract $ref
     @Override
     public Map<String, Object> serialize(SerializerContext context, Schema input) {
         if (isReference(input)) {
             Map<String, Object> schemaReferenceObject = new LinkedHashMap<>();
-            schemaReferenceObject.put("$ref", input.getSchemaId());
+            schemaReferenceObject.put(Properties.$REF, input.getSchemaId());
             return schemaReferenceObject;
         } else {
             return input.getSchemaData();
