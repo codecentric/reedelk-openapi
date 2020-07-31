@@ -8,7 +8,6 @@ import com.reedelk.openapi.v3.model.RequestBodyObject;
 import com.reedelk.openapi.v3.model.ResponseObject;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +31,9 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         }
 
         // Responses
-        if (serialized.containsKey("responses")) {
-            Map<String, ResponseObject> statusResponseObjectMap = new LinkedHashMap<>();
-            Map<String, Map<String,Object>> responsesMap = (Map<String, Map<String, Object>>) serialized.get("responses");
-            responsesMap.forEach((responseStatusCode, responseObjectMap) -> {
-                ResponseObject responseObject = context.deserialize(ResponseObject.class, responseObjectMap);
-                statusResponseObjectMap.put(responseStatusCode, responseObject);
-            });
-            operationObject.setResponses(statusResponseObjectMap);
-        }
+        mapKeyApiModel("responses", serialized,
+                (key, source) -> context.deserialize(ResponseObject.class, source))
+                .ifPresent(operationObject::setResponses);
 
         // Parameters
         if (serialized.containsKey("parameters")) {

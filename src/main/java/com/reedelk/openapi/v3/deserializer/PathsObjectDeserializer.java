@@ -18,6 +18,7 @@ public class PathsObjectDeserializer extends AbstractDeserializer<PathsObject> {
 
         Map<String, Map<RestMethod, OperationObject>> pathsMap = new LinkedHashMap<>();
 
+        // Paths mapping
         serialized.forEach((pathEntry, pathDefinition) -> {
             Map<String,Object> pathDefinitionMap = (Map<String, Object>) pathDefinition;
             Map<RestMethod, OperationObject> methodAndOperationMap = new LinkedHashMap<>();

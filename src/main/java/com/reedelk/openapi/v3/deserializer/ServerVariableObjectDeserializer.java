@@ -15,6 +15,7 @@ public class ServerVariableObjectDeserializer extends AbstractDeserializer<Serve
         ServerVariableObject serverVariableObject = new ServerVariableObject();
         serverVariableObject.setDescription(getString(serialized, "description"));
         serverVariableObject.setDefaultValue(getString(serialized, "defaultValue"));
+
         List<String> enumValues = (List<String>) serialized.get("enumValues");
         serverVariableObject.setEnumValues(enumValues);
         return serverVariableObject;
