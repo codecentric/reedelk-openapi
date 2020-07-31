@@ -9,6 +9,7 @@ import java.util.Map;
 public enum OpenApiVersion {
 
     v30() {
+
         @Override
         boolean isSupported(String openapi) {
             return openapi.startsWith("3.0");
