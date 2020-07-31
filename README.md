@@ -66,7 +66,7 @@ String openApiAsYaml = OpenApi.toYaml(openApiModel);
 ```java
 // from JSON string
 String openApiAsJson = "{"openapi": "3.0.3","info": {"title": "API","version": "v1" }}";
-OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsJson);
+OpenApiObject openApiModel = OpenApi.from(openApiAsJson);
 InfoObject infoModel = actual.getInfo();
 ...
 
@@ -75,7 +75,7 @@ String openApiAsYaml = "openapi: 3.0.0
                         info:
                           version: 1.0.2
                           title: Petstore API";
-OpenApiObject openApiModel = OpenApiDeserializer.from(openApiAsYaml);
+OpenApiObject openApiModel = OpenApi.from(openApiAsYaml);
 InfoObject infoModel = actual.getInfo();
 ...
 ```
