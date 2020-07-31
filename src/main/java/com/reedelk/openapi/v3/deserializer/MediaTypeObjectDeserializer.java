@@ -14,12 +14,11 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
     public MediaTypeObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         MediaTypeObject mediaTypeObject = new MediaTypeObject();
 
-        if (serialized.containsKey("schema")) {
-            Map<String, Object> schemaDefinition = getMap(serialized, "schema");
-            Schema schemaObject = context.deserialize(Schema.class, schemaDefinition);
-            mediaTypeObject.setSchema(schemaObject);
-        }
+        // Schema
+        mapApiModel(serialized, "schema", Schema.class, context)
+                .ifPresent(mediaTypeObject::setSchema);
 
+        // Example (we keep the raw string)
         if (serialized.containsKey("example")) {
             String exampleData = (String) serialized.get("example");
             Example example = new Example(exampleData);

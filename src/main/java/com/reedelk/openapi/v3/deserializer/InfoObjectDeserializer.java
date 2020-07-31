@@ -18,17 +18,13 @@ public class InfoObjectDeserializer extends AbstractDeserializer<InfoObject> {
         infoObject.setTermsOfService(getString(serialized, "termsOfService"));
         infoObject.setVersion(getString(serialized, "version"));
 
-        if (serialized.containsKey("contact")) {
-            Map<String, Object> contactObjectMap = getMap(serialized, "contact");
-            ContactObject contactObject = context.deserialize(ContactObject.class, contactObjectMap);
-            infoObject.setContact(contactObject);
-        }
+        // Contact
+        mapApiModel(serialized, "contact", ContactObject.class, context)
+                .ifPresent(infoObject::setContact);
 
-        if (serialized.containsKey("license")) {
-            Map<String, Object> licenseObjectMap = getMap(serialized, "license");
-            LicenseObject licenseObject = context.deserialize(LicenseObject.class, licenseObjectMap);
-            infoObject.setLicense(licenseObject);
-        }
+        // License
+        mapApiModel(serialized, "license", LicenseObject.class, context)
+                .ifPresent(infoObject::setLicense);
 
         return infoObject;
     }

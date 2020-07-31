@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class HeaderObjectDeserializer extends AbstractDeserializer<HeaderObject> {
 
-    @SuppressWarnings("unchecked")
     @Override
     public HeaderObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         HeaderObject headerObject = new HeaderObject();
@@ -23,11 +22,8 @@ public class HeaderObjectDeserializer extends AbstractDeserializer<HeaderObject>
         }
 
         // Schema
-        if (serialized.containsKey("schema")) {
-            Map<String, Object> schemaMap = (Map<String, Object>) serialized.get("schema");
-            Schema schema = context.deserialize(Schema.class, schemaMap);
-            headerObject.setSchema(schema);
-        }
+        mapApiModel(serialized, "schema", Schema.class, context)
+                .ifPresent(headerObject::setSchema);
 
         headerObject.setExample(getString(serialized, "example"));
         headerObject.setExplode(getBoolean(serialized, "explode"));

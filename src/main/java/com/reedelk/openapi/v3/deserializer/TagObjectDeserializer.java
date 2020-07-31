@@ -15,12 +15,9 @@ public class TagObjectDeserializer extends AbstractDeserializer<TagObject> {
         tagObject.setName(getString(serialized, "name"));
         tagObject.setDescription(getString(serialized, "description"));
 
-        if (serialized.containsKey("externalDocs")) {
-            Map<String, Object> externalDocsMap = getMap(serialized, "externalDocs");
-            ExternalDocumentationObject externalDocumentationObject =
-                    context.deserialize(ExternalDocumentationObject.class, externalDocsMap);
-            tagObject.setExternalDocs(externalDocumentationObject);
-        }
+        // External Docs
+        mapApiModel(serialized, "externalDocs", ExternalDocumentationObject.class, context)
+                .ifPresent(tagObject::setExternalDocs);
         return tagObject;
     }
 }

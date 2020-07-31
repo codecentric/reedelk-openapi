@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class ParameterObjectDeserializer extends AbstractDeserializer<ParameterObject> {
 
-    @SuppressWarnings("unchecked")
     @Override
     public ParameterObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         ParameterObject parameterObject = new ParameterObject();
@@ -32,11 +31,8 @@ public class ParameterObjectDeserializer extends AbstractDeserializer<ParameterO
         }
 
         // Parameter schema
-        if (serialized.containsKey("schema")) {
-            Map<String, Object> schemaMap = (Map<String, Object>) serialized.get("schema");
-            Schema schema = context.deserialize(Schema.class, schemaMap);
-            parameterObject.setSchema(schema);
-        }
+        mapApiModel(serialized, "schema", Schema.class, context)
+                .ifPresent(parameterObject::setSchema);
 
         parameterObject.setExample(getString(serialized, "example"));
         parameterObject.setExplode(getBoolean(serialized, "explode"));

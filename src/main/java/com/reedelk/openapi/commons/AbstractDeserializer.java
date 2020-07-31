@@ -1,11 +1,14 @@
 package com.reedelk.openapi.commons;
 
 import com.reedelk.openapi.Deserializer;
+import com.reedelk.openapi.v3.DeserializerContext;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractDeserializer<T> implements Deserializer<T> {
 
@@ -28,7 +31,17 @@ public abstract class AbstractDeserializer<T> implements Deserializer<T> {
     }
 
     @SuppressWarnings("unchecked")
-    protected <U> Optional<Map<String,U>> mapKeyApiModel(String propertyName, Map<String, Object> parent, Mapper<U> mapper) {
+    protected <U> Optional<U> mapApiModel(Map<String, Object> serialized, String propertyName, Class<U> targetClazz, DeserializerContext context) {
+        if (serialized.containsKey(propertyName)) {
+            Map<String, Object> objectMap = (Map<String, Object>) serialized.get(propertyName);
+            return Optional.of(context.deserialize(targetClazz, objectMap));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <U> Optional<Map<String,U>> mapKeyApiModel(String propertyName, Map<String, Object> parent, KeyValueMapper<U> mapper) {
         if (parent.containsKey(propertyName)) {
             Map<String, U> targetMap = new LinkedHashMap<>();
             Map<String, Object> sourceMap = (Map<String, Object>) parent.get(propertyName);
@@ -42,7 +55,23 @@ public abstract class AbstractDeserializer<T> implements Deserializer<T> {
         return Optional.empty();
     }
 
-    protected interface Mapper<U> {
+    protected <U> Optional<List<U>> mapListApiModel(String propertyName, Map<String, Object> parent, ValueMapper<U> mapper) {
+        if (parent.containsKey(propertyName)) {
+            List<Map<String, Object>> serversList = getList(parent, propertyName);
+            List<U> serverObjects = serversList
+                    .stream()
+                    .map(mapper::map)
+                    .collect(toList());
+            return Optional.of(serverObjects);
+        }
+        return Optional.empty();
+    }
+
+    protected interface KeyValueMapper<U> {
         U map(String key, Map<String, Object> source);
+    }
+
+    protected interface ValueMapper<U> {
+        U map(Map<String, Object> source);
     }
 }

@@ -4,10 +4,7 @@ import com.reedelk.openapi.commons.AbstractDeserializer;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.*;
 
-import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 public class OpenApiObjectDeserializer extends AbstractDeserializer<OpenApiObject> {
 
@@ -19,41 +16,27 @@ public class OpenApiObjectDeserializer extends AbstractDeserializer<OpenApiObjec
             openApiObject.setOpenapi(getString(serialized, "openapi"));
         }
 
-        if (serialized.containsKey("info")) {
-            Map<String, Object> infoObjectMap = getMap(serialized, "info");
-            InfoObject infoObject = context.deserialize(InfoObject.class, infoObjectMap);
-            openApiObject.setInfo(infoObject);
-        }
+        // Info
+        mapApiModel(serialized, "info", InfoObject.class, context)
+                .ifPresent(openApiObject::setInfo);
 
-        if (serialized.containsKey("tags")) {
-            List<Map<String, Object>> tagsList = getList(serialized, "tags");
-            List<TagObject> tagObjects = tagsList
-                    .stream()
-                    .map(objectMap -> context.deserialize(TagObject.class, objectMap))
-                    .collect(toList());
-            openApiObject.setTags(tagObjects);
-        }
+        // Tags
+        mapListApiModel("tags", serialized,
+                source -> context.deserialize(TagObject.class, source))
+                .ifPresent(openApiObject::setTags);
 
-        if (serialized.containsKey("servers")) {
-            List<Map<String, Object>> serversList = getList(serialized, "servers");
-            List<ServerObject> serverObjects = serversList
-                    .stream()
-                    .map(objectMap -> context.deserialize(ServerObject.class, objectMap))
-                    .collect(toList());
-            openApiObject.setServers(serverObjects);
-        }
+        // Servers
+        mapListApiModel("servers", serialized,
+                source -> context.deserialize(ServerObject.class, source))
+                .ifPresent(openApiObject::setServers);
 
-        if (serialized.containsKey("paths")) {
-            Map<String, Object> pathsObjectMap = getMap(serialized, "paths");
-            PathsObject pathsObject = context.deserialize(PathsObject.class, pathsObjectMap);
-            openApiObject.setPaths(pathsObject);
-        }
+        // Paths
+        mapApiModel(serialized, "paths", PathsObject.class, context)
+                .ifPresent(openApiObject::setPaths);
 
-        if (serialized.containsKey("components")) {
-            Map<String, Object> componentsObjectMap = getMap(serialized, "components");
-            ComponentsObject componentsObject = context.deserialize(ComponentsObject.class, componentsObjectMap);
-            openApiObject.setComponents(componentsObject);
-        }
+        // Components
+        mapApiModel(serialized, "components", ComponentsObject.class, context)
+                .ifPresent(openApiObject::setComponents);
 
         return openApiObject;
     }
