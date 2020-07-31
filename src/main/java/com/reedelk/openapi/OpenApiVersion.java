@@ -16,8 +16,8 @@ public enum OpenApiVersion {
         }
 
         @Override
-        public OpenApiObject deserialize(Map<String, Object> openApiMap) {
-            Deserializers deserializers = new Deserializers();
+        public OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden) {
+            Deserializers deserializers = new Deserializers(overridden);
             DeserializerContext context =  new DeserializerContext(deserializers);
             return context.deserialize(OpenApiObject.class, openApiMap);
         }
@@ -25,6 +25,6 @@ public enum OpenApiVersion {
 
     abstract boolean isSupported(String openapi);
 
-    public abstract OpenApiObject deserialize(Map<String, Object> openApiMap);
+    public abstract OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden);
 
 }

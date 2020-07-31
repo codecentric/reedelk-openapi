@@ -1,6 +1,6 @@
 package com.reedelk.openapi.v3;
 
-import com.reedelk.openapi.commons.Deserializer;
+import com.reedelk.openapi.Deserializer;
 import com.reedelk.openapi.v3.deserializer.Deserializers;
 
 import java.util.Map;
