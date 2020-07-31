@@ -1,6 +1,6 @@
 package com.reedelk.openapi.v3.serializer;
 
-import com.reedelk.openapi.commons.Serializer;
+import com.reedelk.openapi.Serializer;
 import com.reedelk.openapi.v3.model.*;
 
 import java.util.HashMap;

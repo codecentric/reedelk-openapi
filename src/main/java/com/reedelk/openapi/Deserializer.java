@@ -1,4 +1,4 @@
-package com.reedelk.openapi.commons;
+package com.reedelk.openapi;
 
 import com.reedelk.openapi.v3.DeserializerContext;
 

@@ -1,6 +1,6 @@
 package com.reedelk.openapi;
 
-import com.reedelk.openapi.commons.JsonObjectFactory;
+import com.reedelk.openapi.commons.MapToJsonObject;
 import com.reedelk.openapi.commons.Utils;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.OpenApiObject;
@@ -49,34 +49,22 @@ public class OpenApi {
 
         private static final int JSON_INDENT_FACTOR = 2;
 
-        private final Serializers serializers = new Serializers();
-
         String toJson(OpenApiModel serializable) {
+            Serializers serializers = new Serializers();
             SerializerContext context =  new SerializerContext(serializers);
             Map<String, Object> serialized = context.serialize(serializable);
             // We use the custom object factory to preserve position
             // of serialized properties in the map.
-            JSONObject jsonObject = (JSONObject) process(serialized);
+            JSONObject jsonObject = (JSONObject) MapToJsonObject.convert(serialized);
             return jsonObject.toString(JSON_INDENT_FACTOR);
         }
 
         String toYaml(OpenApiModel serializable) {
+            Serializers serializers = new Serializers();
             SerializerContext context =  new SerializerContext(serializers);
             Map<String, Object> serialized = context.serialize(serializable);
             Yaml yaml = new Yaml();
             return yaml.dump(serialized);
-        }
-
-        @SuppressWarnings("unchecked")
-        private Object process(Object value) {
-            if (value instanceof Map) {
-                JSONObject nested = JsonObjectFactory.newJSONObject();
-                Map<String,Object> nestedMap = (Map<String, Object>) value;
-                nestedMap.forEach((key, theValue) -> nested.put(key, process(theValue)));
-                return nested;
-            } else {
-                return value;
-            }
         }
     }
 }

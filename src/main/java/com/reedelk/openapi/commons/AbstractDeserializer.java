@@ -1,5 +1,7 @@
 package com.reedelk.openapi.commons;
 
+import com.reedelk.openapi.Deserializer;
+
 import java.util.List;
 import java.util.Map;
 
