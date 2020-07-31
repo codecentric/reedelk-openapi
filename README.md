@@ -1,4 +1,4 @@
-# Reedelk OpenAPI v3.x serializer / deserializer
+# Reedelk OpenAPI v3 serializer / deserializer
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/reedelk/reedelk-runtime/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/reedelk.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=reedelk)
