@@ -20,8 +20,7 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
 
         set(map, "openapi", input.getOpenapi()); // REQUIRED
 
-        NavigationPath currentNavigationPath = navigationPath.with("info");
-        Map<String, Object> serializedInfo = context.serialize(currentNavigationPath, input.getInfo());
+        Map<String, Object> serializedInfo = context.serialize(navigationPath.with("info"), input.getInfo());
         set(map, "info", serializedInfo); // REQUIRED
 
         List<Map<String, Object>> mappedServers = input
@@ -36,12 +35,10 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
                 .collect(toList());
         map.put("servers", mappedServers);
 
-        currentNavigationPath = currentNavigationPath.with("paths");
-        Map<String, Object> serializedPaths = context.serialize(currentNavigationPath, input.getPaths());
+        Map<String, Object> serializedPaths = context.serialize(navigationPath.with("paths"), input.getPaths());
         set(map, "paths", serializedPaths); // REQUIRED
 
-        currentNavigationPath = currentNavigationPath.with("components");
-        Map<String, Object> serializedComponents = context.serialize(currentNavigationPath, input.getComponents());
+        Map<String, Object> serializedComponents = context.serialize(navigationPath.with("components"), input.getComponents());
         set(map, "components", serializedComponents);
 
 

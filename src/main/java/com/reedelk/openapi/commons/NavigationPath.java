@@ -2,6 +2,7 @@ package com.reedelk.openapi.commons;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NavigationPath {
 
@@ -31,9 +32,7 @@ public class NavigationPath {
 
     @Override
     public String toString() {
-        return "NavigationPath{" +
-                "pathList=" + pathList +
-                '}';
+        return pathList + "";
     }
 
     static class PathSegment {
@@ -56,10 +55,11 @@ public class NavigationPath {
 
         @Override
         public String toString() {
-            return "PathSegment{" +
-                    "segmentKey='" + segmentKey + '\'' +
-                    ", segmentValue='" + segmentValue + '\'' +
-                    '}';
+            if (Objects.equals(segmentKey, segmentValue)) {
+                return segmentKey;
+            } else {
+                return segmentValue + " (" + segmentKey + ")";
+            }
         }
     }
 }
