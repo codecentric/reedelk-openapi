@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.commons.Precondition;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.InfoObject;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
 
     @Override
-    public Map<String, Object> serialize(SerializerContext context, InfoObject input) {
+    public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, InfoObject input) {
         Precondition.checkNotNull("title", input.getTitle());
         Precondition.checkNotNull("version", input.getVersion());
 
@@ -21,12 +22,14 @@ public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
         set(map, "termsOfService", input.getTermsOfService());
 
         if (input.getContact() != null) {
-            Map<String, Object> serializedContact = context.serialize(input.getContact());
+            NavigationPath currentNavigationPath = navigationPath.with("contact");
+            Map<String, Object> serializedContact = context.serialize(currentNavigationPath, input.getContact());
             set(map, "contact", serializedContact);
         }
 
         if (input.getLicense() != null) {
-            Map<String, Object> serializedLicense = context.serialize(input.getLicense());
+            NavigationPath currentNavigationPath = navigationPath.with("license");
+            Map<String, Object> serializedLicense = context.serialize(currentNavigationPath, input.getLicense());
             set(map, "license", serializedLicense);
         }
 

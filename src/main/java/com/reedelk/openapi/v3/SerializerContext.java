@@ -2,6 +2,7 @@ package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.OpenApiModel;
 import com.reedelk.openapi.Serializer;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.v3.serializer.Serializers;
 
 import java.util.Map;
@@ -15,8 +16,8 @@ public class SerializerContext {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends OpenApiModel> Map<String, Object> serialize(T input) {
+    public <T extends OpenApiModel> Map<String, Object> serialize(NavigationPath navigationPath, T input) {
         Serializer<T> serializer = (Serializer<T>) serializers.forType(input.getClass());
-        return serializer.serialize(this, input);
+        return serializer.serialize(this, navigationPath, input);
     }
 }

@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.commons.Precondition;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ParameterLocation;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class ParameterObjectSerializer extends AbstractSerializer<ParameterObject> {
 
     @Override
-    public Map<String, Object> serialize(SerializerContext context, ParameterObject input) {
+    public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, ParameterObject input) {
         Precondition.checkNotNull("name", input.getName());
         Precondition.checkNotNull("in", input.getIn());
 
@@ -34,7 +35,8 @@ public class ParameterObjectSerializer extends AbstractSerializer<ParameterObjec
         set(map, "deprecated", input.getDeprecated());
 
         if (input.getSchema() != null) {
-            Map<String, Object> serializedSchema = context.serialize(input.getSchema());
+            NavigationPath currentNavigationPath = navigationPath.with("schema");
+            Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, input.getSchema());
             set(map, "schema", serializedSchema);
         }
 

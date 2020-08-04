@@ -7,7 +7,6 @@ import java.util.Map;
 
 public abstract class AbstractSerializer<T> implements Serializer<T> {
 
-
     protected void setList(Map<String,Object> object, String propertyName, List<String> items) {
         if (items != null && !items.isEmpty()) object.put(propertyName, items);
     }

@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.OpenApiObject;
 import com.reedelk.openapi.v3.model.TagObject;
@@ -14,32 +15,46 @@ import static java.util.stream.Collectors.toList;
 public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
 
     @Override
-    public Map<String, Object> serialize(SerializerContext context, OpenApiObject input) {
+    public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, OpenApiObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
 
         set(map, "openapi", input.getOpenapi()); // REQUIRED
 
-        Map<String, Object> serializedInfo = context.serialize(input.getInfo());
+        NavigationPath currentNavigationPath = navigationPath.with("info");
+        Map<String, Object> serializedInfo = context.serialize(currentNavigationPath, input.getInfo());
         set(map, "info", serializedInfo); // REQUIRED
 
         List<Map<String, Object>> mappedServers = input
                 .getServers()
                 .stream()
-                .map(context::serialize)
+                .map(serverObject -> {
+                    NavigationPath navPath = navigationPath
+                            .with("servers")
+                            .with("serverUrl", serverObject.getUrl());
+                    return context.serialize(navPath, serverObject);
+                })
                 .collect(toList());
         map.put("servers", mappedServers);
 
-        Map<String, Object> serializedPaths = context.serialize(input.getPaths());
+        currentNavigationPath = currentNavigationPath.with("paths");
+        Map<String, Object> serializedPaths = context.serialize(currentNavigationPath, input.getPaths());
         set(map, "paths", serializedPaths); // REQUIRED
 
-        Map<String, Object> serializedComponents = context.serialize(input.getComponents());
+        currentNavigationPath = currentNavigationPath.with("components");
+        Map<String, Object> serializedComponents = context.serialize(currentNavigationPath, input.getComponents());
         set(map, "components", serializedComponents);
+
 
         List<TagObject> tags = input.getTags();
         if (tags != null && !tags.isEmpty()) {
             List<Map<String, Object>> mappedTags = tags
                     .stream()
-                    .map(context::serialize)
+                    .map(tagObject -> {
+                        NavigationPath navPath = navigationPath
+                                .with("tags")
+                                .with("tagName", tagObject.getName());
+                        return context.serialize(navPath, tagObject);
+                    })
                     .collect(toList());
             map.put("tags", mappedTags);
         }

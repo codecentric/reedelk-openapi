@@ -1,6 +1,7 @@
 package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.commons.Precondition;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ServerObject;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class ServerObjectSerializer extends AbstractSerializer<ServerObject> {
 
     @Override
-    public Map<String, Object> serialize(SerializerContext context, ServerObject input) {
+    public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, ServerObject input) {
         Precondition.checkNotNull(input.getUrl(), "url");
 
         Map<String, Object> serverObject = new LinkedHashMap<>();
@@ -21,7 +22,10 @@ public class ServerObjectSerializer extends AbstractSerializer<ServerObject> {
         if (input.getVariables() != null) {
             Map<String, Map<String,Object>> serializedServerVariableMap = new LinkedHashMap<>();
             input.getVariables().forEach((variableName, serverVariableObject) -> {
-                Map<String, Object> serializedServerVariableObject = context.serialize(serverVariableObject);
+                NavigationPath currentNavigationPath = navigationPath
+                        .with("variables")
+                        .with("variableName", variableName);
+                Map<String, Object> serializedServerVariableObject = context.serialize(currentNavigationPath, serverVariableObject);
                 serializedServerVariableMap.put(variableName, serializedServerVariableObject);
             });
             serverObject.put("variables", serializedServerVariableMap);

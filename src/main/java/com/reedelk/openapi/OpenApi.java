@@ -1,6 +1,7 @@
 package com.reedelk.openapi;
 
 import com.reedelk.openapi.commons.MapToJsonObject;
+import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.commons.Utils;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.OpenApiObject;
@@ -79,7 +80,8 @@ public class OpenApi {
         private Map<String, Object> serializeAsMap(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
             Serializers serializers = new Serializers(overridden);
             SerializerContext context = new SerializerContext(serializers);
-            return context.serialize(serializable);
+            NavigationPath currentNavigationPath = NavigationPath.create();
+            return context.serialize(currentNavigationPath, serializable);
         }
     }
 }
