@@ -1,6 +1,7 @@
 package com.reedelk.openapi.commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +29,10 @@ public class NavigationPath {
 
     public static NavigationPath create() {
         return new NavigationPath();
+    }
+
+    public List<PathSegment> getPathList() {
+        return Collections.unmodifiableList(pathList);
     }
 
     @Override
