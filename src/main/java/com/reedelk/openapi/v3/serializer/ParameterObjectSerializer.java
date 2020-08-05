@@ -35,7 +35,7 @@ public class ParameterObjectSerializer extends AbstractSerializer<ParameterObjec
         set(map, "deprecated", input.getDeprecated());
 
         if (input.getSchema() != null) {
-            NavigationPath currentNavigationPath = navigationPath.with("schema");
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.SCHEMA);
             Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, input.getSchema());
             set(map, "schema", serializedSchema);
         }

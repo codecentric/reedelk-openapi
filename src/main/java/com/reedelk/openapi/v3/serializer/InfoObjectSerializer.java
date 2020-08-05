@@ -22,13 +22,13 @@ public class InfoObjectSerializer extends AbstractSerializer<InfoObject> {
         set(map, "termsOfService", input.getTermsOfService());
 
         if (input.getContact() != null) {
-            NavigationPath currentNavigationPath = navigationPath.with("contact");
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.CONTACT);
             Map<String, Object> serializedContact = context.serialize(currentNavigationPath, input.getContact());
             set(map, "contact", serializedContact);
         }
 
         if (input.getLicense() != null) {
-            NavigationPath currentNavigationPath = navigationPath.with("license");
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.LICENSE);
             Map<String, Object> serializedLicense = context.serialize(currentNavigationPath, input.getLicense());
             set(map, "license", serializedLicense);
         }

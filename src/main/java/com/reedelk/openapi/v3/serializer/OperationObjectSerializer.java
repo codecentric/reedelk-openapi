@@ -25,7 +25,7 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         set(map, "operationId", input.getOperationId());
 
         if (input.getRequestBody() != null) {
-            NavigationPath currentNavigationPath = navigationPath.with("requestBody");
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.REQUEST_BODY);
             Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, input.getRequestBody());
             set(map, "requestBody", serializedRequestBody);
         }
@@ -34,8 +34,8 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         Map<String, Map<String, Object>> serializedResponses = new LinkedHashMap<>();
         responses.forEach((statusCode, responseObject) -> {
             NavigationPath currentNavigationPath = navigationPath
-                    .with("responses")
-                    .with("statusCode", statusCode);
+                    .with(NavigationPath.SegmentKey.RESPONSES)
+                    .with(NavigationPath.SegmentKey.STATUS_CODE, statusCode);
             Map<String, Object> serializedResponse = context.serialize(currentNavigationPath, responseObject);
             serializedResponses.put(statusCode, serializedResponse);
         });
@@ -48,8 +48,8 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
                     .stream()
                     .map(parameterObject -> {
                         NavigationPath currentNavigationPath = navigationPath
-                                .with("parameters")
-                                .with("parameterName", parameterObject.getName());
+                                .with(NavigationPath.SegmentKey.PARAMETERS)
+                                .with(NavigationPath.SegmentKey.PARAMETER_NAME, parameterObject.getName());
                         return context.serialize(currentNavigationPath, parameterObject);
                     })
                     .collect(toList());

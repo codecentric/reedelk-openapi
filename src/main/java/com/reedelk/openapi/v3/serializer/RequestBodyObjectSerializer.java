@@ -31,8 +31,8 @@ public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyO
             Map<String, MediaTypeObject> content = input.getContent();
             content.forEach((contentType, mediaTypeObject) -> {
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("content")
-                        .with("contentType", contentType);
+                        .with(NavigationPath.SegmentKey.CONTENT)
+                        .with(NavigationPath.SegmentKey.CONTENT_TYPE, contentType);
                 Map<String, Object> serialized = context.serialize(currentNavigationPath, mediaTypeObject);
                 contentTypeMediaTypeMap.put(contentType, serialized);
             });

@@ -18,9 +18,9 @@ public class PathsObjectSerializer extends AbstractSerializer<PathsObject> {
             Map<String, Object> operationsByPathJsonObject = new LinkedHashMap<>();
             pathItemObject.forEach((restMethod, operationObject) -> {
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("path", path)
-                        .with("method", restMethod.name())
-                        .with("operationId", operationObject.getOperationId());
+                        .with(NavigationPath.SegmentKey.PATH, path)
+                        .with(NavigationPath.SegmentKey.METHOD, restMethod.name())
+                        .with(NavigationPath.SegmentKey.OPERATION_ID, operationObject.getOperationId());
                 Map<String, Object> serializedOperation = context.serialize(currentNavigationPath, operationObject);
                 operationsByPathJsonObject.put(restMethod.name().toLowerCase(), serializedOperation);
             });

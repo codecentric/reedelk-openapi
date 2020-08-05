@@ -24,8 +24,8 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
             content.forEach((contentType, mediaTypeObject) -> {
 
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("content")
-                        .with("contentType", contentType);
+                        .with(NavigationPath.SegmentKey.CONTENT)
+                        .with(NavigationPath.SegmentKey.CONTENT_TYPE, contentType);
 
                 Map<String, Object> serializedMediaType = context.serialize(currentNavigationPath, mediaTypeObject);
                 serializedContent.put(contentType, serializedMediaType);
@@ -40,8 +40,8 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
             headerObjectMap.forEach((headerName, headerObject) -> {
 
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("headers")
-                        .with("headerName", headerName);
+                        .with(NavigationPath.SegmentKey.HEADERS)
+                        .with(NavigationPath.SegmentKey.HEADER_NAME, headerName);
 
                 Map<String, Object> serializedHeaderObject = context.serialize(currentNavigationPath, headerObject);
                 serializedHeaders.put(headerName, serializedHeaderObject);

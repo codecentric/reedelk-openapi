@@ -23,8 +23,8 @@ public class ServerObjectSerializer extends AbstractSerializer<ServerObject> {
             Map<String, Map<String,Object>> serializedServerVariableMap = new LinkedHashMap<>();
             input.getVariables().forEach((variableName, serverVariableObject) -> {
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("variables")
-                        .with("variableName", variableName);
+                        .with(NavigationPath.SegmentKey.VARIABLES)
+                        .with(NavigationPath.SegmentKey.VARIABLE_NAME, variableName);
                 Map<String, Object> serializedServerVariableObject = context.serialize(currentNavigationPath, serverVariableObject);
                 serializedServerVariableMap.put(variableName, serializedServerVariableObject);
             });

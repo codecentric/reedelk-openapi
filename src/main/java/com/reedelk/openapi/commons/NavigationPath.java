@@ -13,17 +13,17 @@ public class NavigationPath {
         pathList = new ArrayList<>();
     }
 
-    private NavigationPath(List<PathSegment> pathList, String segmentKey, String segmentValue) {
+    private NavigationPath(List<PathSegment> pathList, SegmentKey key, String segmentValue) {
         this.pathList = new ArrayList<>(pathList);
-        this.pathList.add(new PathSegment(segmentKey, segmentValue));
+        this.pathList.add(new PathSegment(key, segmentValue));
     }
 
-    public NavigationPath with(String segmentKey) {
+    public NavigationPath with(SegmentKey tokenKey) {
         // Segment Key == Segment Value
-        return new NavigationPath(pathList, segmentKey, segmentKey);
+        return new NavigationPath(pathList, tokenKey, tokenKey.key);
     }
 
-    public NavigationPath with(String segmentKey, String segmentValue) {
+    public NavigationPath with(SegmentKey segmentKey, String segmentValue) {
         return new NavigationPath(pathList, segmentKey, segmentValue);
     }
 
@@ -42,15 +42,15 @@ public class NavigationPath {
 
     public static class PathSegment {
 
-        private final String segmentKey;
+        private final SegmentKey segmentKey;
         private final String segmentValue;
 
-        PathSegment(String segmentKey, String segmentValue) {
+        PathSegment(SegmentKey segmentKey, String segmentValue) {
             this.segmentKey = segmentKey;
             this.segmentValue = segmentValue;
         }
 
-        public String getSegmentKey() {
+        public SegmentKey getSegmentKey() {
             return segmentKey;
         }
 
@@ -60,11 +60,50 @@ public class NavigationPath {
 
         @Override
         public String toString() {
-            if (Objects.equals(segmentKey, segmentValue)) {
-                return segmentKey;
+            if (Objects.equals(segmentKey.key, segmentValue)) {
+                return segmentKey.key;
             } else {
-                return segmentValue + " (" + segmentKey + ")";
+                return segmentValue + " (" + segmentKey.key + ")";
             }
+        }
+    }
+
+    public enum SegmentKey {
+
+        EXTERNAL_DOCS("externalDocs"),
+        HEADERS("headers"),
+        HEADER_NAME("headerName"),
+        CONTENT("content"),
+        CONTENT_TYPE("contentType"),
+        INFO("info"),
+        SERVERS("servers"),
+        SERVER_URL("serverUrl"),
+        TAGS("tags"),
+        TAG_NAME("tagName"),
+        COMPONENTS("components"),
+        PATH("path"),
+        PATHS("paths"),
+        METHOD("method"),
+        OPERATION_ID("operationId"),
+        LICENSE("license"),
+        CONTACT("contact"),
+        REQUEST_BODY_ID("requestBodyId"),
+        REQUEST_BODIES("requestBodies"),
+        REQUEST_BODY("requestBody"),
+        RESPONSES("responses"),
+        STATUS_CODE("statusCode"),
+        VARIABLES("variables"),
+        VARIABLE_NAME("variableName"),
+        PARAMETERS("parameters"),
+        PARAMETER_NAME("parameterName"),
+        SCHEMA("schema"),
+        SCHEMAS("schemas"),
+        SCHEMA_ID("schemaId");
+
+        String key;
+
+        SegmentKey(String key) {
+            this.key = key;
         }
     }
 }

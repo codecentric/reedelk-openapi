@@ -17,7 +17,7 @@ public class TagObjectSerializer extends AbstractSerializer<TagObject> {
         set(map, "description", input.getDescription());
 
         if (input.getExternalDocs() != null) {
-            NavigationPath currentNavigationPath = navigationPath.with("externalDocs");
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.EXTERNAL_DOCS);
             Map<String, Object> serializedExternalDocs = context.serialize(currentNavigationPath, input.getExternalDocs());
             map.put("externalDocs", serializedExternalDocs);
         }

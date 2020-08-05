@@ -20,7 +20,7 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
 
         set(map, "openapi", input.getOpenapi()); // REQUIRED
 
-        Map<String, Object> serializedInfo = context.serialize(navigationPath.with("info"), input.getInfo());
+        Map<String, Object> serializedInfo = context.serialize(navigationPath.with(NavigationPath.SegmentKey.INFO), input.getInfo());
         set(map, "info", serializedInfo); // REQUIRED
 
         List<Map<String, Object>> mappedServers = input
@@ -28,17 +28,17 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
                 .stream()
                 .map(serverObject -> {
                     NavigationPath navPath = navigationPath
-                            .with("servers")
-                            .with("serverUrl", serverObject.getUrl());
+                            .with(NavigationPath.SegmentKey.SERVERS)
+                            .with(NavigationPath.SegmentKey.SERVER_URL, serverObject.getUrl());
                     return context.serialize(navPath, serverObject);
                 })
                 .collect(toList());
         map.put("servers", mappedServers);
 
-        Map<String, Object> serializedPaths = context.serialize(navigationPath.with("paths"), input.getPaths());
+        Map<String, Object> serializedPaths = context.serialize(navigationPath.with(NavigationPath.SegmentKey.PATHS), input.getPaths());
         set(map, "paths", serializedPaths); // REQUIRED
 
-        Map<String, Object> serializedComponents = context.serialize(navigationPath.with("components"), input.getComponents());
+        Map<String, Object> serializedComponents = context.serialize(navigationPath.with(NavigationPath.SegmentKey.COMPONENTS), input.getComponents());
         set(map, "components", serializedComponents);
 
 
@@ -48,8 +48,8 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
                     .stream()
                     .map(tagObject -> {
                         NavigationPath navPath = navigationPath
-                                .with("tags")
-                                .with("tagName", tagObject.getName());
+                                .with(NavigationPath.SegmentKey.TAGS)
+                                .with(NavigationPath.SegmentKey.TAG_NAME, tagObject.getName());
                         return context.serialize(navPath, tagObject);
                     })
                     .collect(toList());

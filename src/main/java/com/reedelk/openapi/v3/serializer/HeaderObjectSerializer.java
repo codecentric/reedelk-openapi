@@ -20,7 +20,7 @@ public class HeaderObjectSerializer extends AbstractSerializer<HeaderObject> {
         if (input.getSchema() != null) {
 
             NavigationPath currentNavigationPath = navigationPath
-                    .with("schema");
+                    .with(NavigationPath.SegmentKey.SCHEMA);
 
             Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, input.getSchema());
             set(map, "schema", serializedSchema);

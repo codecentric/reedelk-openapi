@@ -22,8 +22,8 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
             Map<String, Object> schemas = new LinkedHashMap<>();
             schemasMap.forEach((schemaId, schemaObject) -> {
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("schemas")
-                        .with("schemaId", schemaId);
+                        .with(NavigationPath.SegmentKey.SCHEMAS)
+                        .with(NavigationPath.SegmentKey.SCHEMA_ID, schemaId);
                 Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, schemaObject.getSchema());
                 schemas.put(schemaId, serializedSchema);
             });
@@ -36,8 +36,8 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
             Map<String, Object> requestBodies = new LinkedHashMap<>();
             requestBodiesMap.forEach((requestBodyId, requestBodyObject) -> {
                 NavigationPath currentNavigationPath = navigationPath
-                        .with("requestBodies")
-                        .with("requestBodyId", requestBodyId);
+                        .with(NavigationPath.SegmentKey.REQUEST_BODIES)
+                        .with(NavigationPath.SegmentKey.REQUEST_BODY_ID, requestBodyId);
                 Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, requestBodyObject);
                 requestBodies.put(requestBodyId, serializedRequestBody);
             });
