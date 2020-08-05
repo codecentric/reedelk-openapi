@@ -40,7 +40,7 @@ public class NavigationPath {
         return pathList + "";
     }
 
-    static class PathSegment {
+    public static class PathSegment {
 
         private final String segmentKey;
         private final String segmentValue;
