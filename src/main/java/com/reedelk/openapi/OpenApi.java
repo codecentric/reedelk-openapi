@@ -64,7 +64,7 @@ public class OpenApi {
         private static final int JSON_INDENT_FACTOR = 2;
 
         String toJson(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, overridden);
+            Map<String, Object> serialized = serializeAsMap(serializable, NavigationPath.create(), overridden);
             // We use the custom object factory to preserve position
             // of serialized properties in the map.
             JSONObject jsonObject = (JSONObject) MapToJsonObject.convert(serialized);
@@ -72,16 +72,29 @@ public class OpenApi {
         }
 
         String toYaml(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, overridden);
+            Map<String, Object> serialized = serializeAsMap(serializable, NavigationPath.create(), overridden);
             Yaml yaml = new Yaml();
             return yaml.dump(serialized);
         }
 
-        private Map<String, Object> serializeAsMap(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
+        String toJson(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
+            Map<String, Object> serialized = serializeAsMap(serializable, navigationPath, overridden);
+            // We use the custom object factory to preserve position
+            // of serialized properties in the map.
+            JSONObject jsonObject = (JSONObject) MapToJsonObject.convert(serialized);
+            return jsonObject.toString(JSON_INDENT_FACTOR);
+        }
+
+        String toYaml(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
+            Map<String, Object> serialized = serializeAsMap(serializable, navigationPath, overridden);
+            Yaml yaml = new Yaml();
+            return yaml.dump(serialized);
+        }
+
+        private Map<String, Object> serializeAsMap(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
             Serializers serializers = new Serializers(overridden);
             SerializerContext context = new SerializerContext(serializers);
-            NavigationPath currentNavigationPath = NavigationPath.create();
-            return context.serialize(currentNavigationPath, serializable);
+            return context.serialize(navigationPath, serializable);
         }
     }
 }
