@@ -23,12 +23,20 @@ public class OpenApi {
         return new OpenApiSerializer().toJson(openApiModel, overridden);
     }
 
-    public static String toYaml(OpenApiModel openApiModel, Map<Class<?>, Serializer<?>> overridden) {
-        return new OpenApiSerializer().toYaml(openApiModel, overridden);
+    public static String toJson(OpenApiModel openApiModel, Map<Class<?>, Serializer<?>> overridden, NavigationPath navigationPath) {
+        return new OpenApiSerializer().toJson(openApiModel, overridden, navigationPath);
     }
 
     public static String toYaml(OpenApiModel openApiModel) {
         return new OpenApiSerializer().toYaml(openApiModel, new HashMap<>());
+    }
+
+    public static String toYaml(OpenApiModel openApiModel, Map<Class<?>, Serializer<?>> overridden) {
+        return new OpenApiSerializer().toYaml(openApiModel, overridden);
+    }
+
+    public static String toYaml(OpenApiModel openApiModel, Map<Class<?>, Serializer<?>> overridden, NavigationPath navigationPath) {
+        return new OpenApiSerializer().toYaml(openApiModel, overridden, navigationPath);
     }
 
     public static OpenApiObject from(String jsonOrYaml) {
@@ -64,7 +72,7 @@ public class OpenApi {
         private static final int JSON_INDENT_FACTOR = 2;
 
         String toJson(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, NavigationPath.create(), overridden);
+            Map<String, Object> serialized = serializeAsMap(serializable, overridden, NavigationPath.create());
             // We use the custom object factory to preserve position
             // of serialized properties in the map.
             JSONObject jsonObject = (JSONObject) MapToJsonObject.convert(serialized);
@@ -72,26 +80,26 @@ public class OpenApi {
         }
 
         String toYaml(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, NavigationPath.create(), overridden);
+            Map<String, Object> serialized = serializeAsMap(serializable, overridden, NavigationPath.create());
             Yaml yaml = new Yaml();
             return yaml.dump(serialized);
         }
 
-        String toJson(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, navigationPath, overridden);
+        String toJson(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden, NavigationPath navigationPath) {
+            Map<String, Object> serialized = serializeAsMap(serializable, overridden, navigationPath);
             // We use the custom object factory to preserve position
             // of serialized properties in the map.
             JSONObject jsonObject = (JSONObject) MapToJsonObject.convert(serialized);
             return jsonObject.toString(JSON_INDENT_FACTOR);
         }
 
-        String toYaml(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
-            Map<String, Object> serialized = serializeAsMap(serializable, navigationPath, overridden);
+        String toYaml(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden, NavigationPath navigationPath) {
+            Map<String, Object> serialized = serializeAsMap(serializable, overridden, navigationPath);
             Yaml yaml = new Yaml();
             return yaml.dump(serialized);
         }
 
-        private Map<String, Object> serializeAsMap(OpenApiModel serializable, NavigationPath navigationPath, Map<Class<?>, Serializer<?>> overridden) {
+        private Map<String, Object> serializeAsMap(OpenApiModel serializable, Map<Class<?>, Serializer<?>> overridden, NavigationPath navigationPath) {
             Serializers serializers = new Serializers(overridden);
             SerializerContext context = new SerializerContext(serializers);
             return context.serialize(navigationPath, serializable);
