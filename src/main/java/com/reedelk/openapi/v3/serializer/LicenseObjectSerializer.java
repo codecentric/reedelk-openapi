@@ -9,15 +9,17 @@ import com.reedelk.openapi.v3.model.LicenseObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.LicenseObject.Properties;
+
 public class LicenseObjectSerializer extends AbstractSerializer<LicenseObject> {
 
     @Override
     public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, LicenseObject input) {
-        Precondition.checkNotNull("name", input.getName());
+        Precondition.checkNotNull(Properties.NAME.value(), input.getName());
 
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "name", input.getName());
-        set(map, "url", input.getUrl());
+        set(map, Properties.NAME.value(), input.getName());
+        set(map, Properties.URL.value(), input.getUrl());
         return map;
     }
 }

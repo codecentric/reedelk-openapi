@@ -57,4 +57,21 @@ public class TagObject implements OpenApiModel {
                 ", externalDocs=" + externalDocs +
                 '}';
     }
+
+    public enum Properties {
+
+        NAME("name"),
+        DESCRIPTION("description"),
+        EXTERNAL_DOCS("externalDocs");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

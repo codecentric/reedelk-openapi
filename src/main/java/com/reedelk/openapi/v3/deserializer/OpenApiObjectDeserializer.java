@@ -6,36 +6,38 @@ import com.reedelk.openapi.v3.model.*;
 
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.OpenApiObject.Properties;
+
 public class OpenApiObjectDeserializer extends AbstractDeserializer<OpenApiObject> {
 
     @Override
     public OpenApiObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         OpenApiObject openApiObject = new OpenApiObject();
 
-        if (serialized.containsKey("openapi")) {
-            openApiObject.setOpenapi(getString(serialized, "openapi"));
+        if (serialized.containsKey(Properties.OPEN_API.value())) {
+            openApiObject.setOpenapi(getString(serialized, Properties.OPEN_API.value()));
         }
 
         // Info
-        mapApiModel(serialized, "info", InfoObject.class, context)
+        mapApiModel(serialized, Properties.INFO.value(), InfoObject.class, context)
                 .ifPresent(openApiObject::setInfo);
 
         // Tags
-        mapListApiModel("tags", serialized,
+        mapListApiModel(Properties.TAGS.value(), serialized,
                 source -> context.deserialize(TagObject.class, source))
                 .ifPresent(openApiObject::setTags);
 
         // Servers
-        mapListApiModel("servers", serialized,
+        mapListApiModel(Properties.SERVERS.value(), serialized,
                 source -> context.deserialize(ServerObject.class, source))
                 .ifPresent(openApiObject::setServers);
 
         // Paths
-        mapApiModel(serialized, "paths", PathsObject.class, context)
+        mapApiModel(serialized, Properties.PATHS.value(), PathsObject.class, context)
                 .ifPresent(openApiObject::setPaths);
 
         // Components
-        mapApiModel(serialized, "components", ComponentsObject.class, context)
+        mapApiModel(serialized, Properties.COMPONENTS.value(), ComponentsObject.class, context)
                 .ifPresent(openApiObject::setComponents);
 
         return openApiObject;

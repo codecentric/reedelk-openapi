@@ -8,13 +8,15 @@ import com.reedelk.openapi.v3.model.ExternalDocumentationObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.ExternalDocumentationObject.Properties;
+
 public class ExternalDocumentationObjectSerializer extends AbstractSerializer<ExternalDocumentationObject> {
 
     @Override
     public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, ExternalDocumentationObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
-        set(map, "description", input.getDescription());
-        set(map, "url", input.getUrl());
+        set(map, Properties.DESCRIPTION.value(), input.getDescription());
+        set(map, Properties.URL.value(), input.getUrl());
         return map;
     }
 }

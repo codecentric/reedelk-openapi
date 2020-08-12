@@ -112,4 +112,26 @@ public class OperationObject implements OpenApiModel {
                 ", tags=" + tags +
                 '}';
     }
+
+    public enum Properties {
+
+        DEPRECATED("deprecated"),
+        SUMMARY("summary"),
+        DESCRIPTION("description"),
+        OPERATION_ID("operationId"),
+        REQUEST_BODY("requestBody"),
+        RESPONSES("responses"),
+        PARAMETERS("parameters"),
+        TAGS("tags");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

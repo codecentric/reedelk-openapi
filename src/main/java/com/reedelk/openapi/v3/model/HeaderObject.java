@@ -102,4 +102,25 @@ public class HeaderObject implements OpenApiModel {
                 ", allowReserved=" + allowReserved +
                 '}';
     }
+
+    public enum Properties {
+
+        SCHEMA("schema"),
+        EXAMPLE("example"),
+        EXPLODE("explode"),
+        DEPRECATED("deprecated"),
+        ALLOW_RESERVED("allowReserved"),
+        DESCRIPTION("description"),
+        STYLE("style");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

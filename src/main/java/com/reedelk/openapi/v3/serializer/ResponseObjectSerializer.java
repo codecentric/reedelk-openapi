@@ -10,12 +10,14 @@ import com.reedelk.openapi.v3.model.ResponseObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.ResponseObject.Properties;
+
 public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject> {
 
     @Override
     public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, ResponseObject input) {
         Map<String, Object> responseObject = new LinkedHashMap<>();
-        set(responseObject, "description", input.getDescription());
+        set(responseObject, Properties.DESCRIPTION.value(), input.getDescription());
 
         // Content
         Map<String, MediaTypeObject> content = input.getContent();
@@ -30,7 +32,7 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
                 Map<String, Object> serializedMediaType = context.serialize(currentNavigationPath, mediaTypeObject);
                 serializedContent.put(contentType, serializedMediaType);
             });
-            responseObject.put("content", serializedContent);
+            responseObject.put(Properties.CONTENT.value(), serializedContent);
         }
 
         // Headers
@@ -46,7 +48,7 @@ public class ResponseObjectSerializer extends AbstractSerializer<ResponseObject>
                 Map<String, Object> serializedHeaderObject = context.serialize(currentNavigationPath, headerObject);
                 serializedHeaders.put(headerName, serializedHeaderObject);
             });
-            responseObject.put("headers", serializedHeaders);
+            responseObject.put(Properties.HEADERS.value(), serializedHeaders);
         }
 
         return responseObject;

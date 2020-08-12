@@ -90,4 +90,24 @@ public class InfoObject implements OpenApiModel {
                 ", license=" + license +
                 '}';
     }
+
+    public enum Properties {
+
+        TITLE("title"),
+        DESCRIPTION("description"),
+        TERMS_OF_SERVICE("termsOfService"),
+        VERSION("version"),
+        CONTACT("contact"),
+        LICENSE("license");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

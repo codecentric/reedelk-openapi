@@ -9,6 +9,8 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.MediaTypeObject.Properties;
+
 public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeObject> {
 
     @Override
@@ -16,13 +18,13 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
         MediaTypeObject mediaTypeObject = new MediaTypeObject();
 
         // Schema
-        mapApiModel(serialized, "schema", Schema.class, context)
+        mapApiModel(serialized, Properties.SCHEMA.value(), Schema.class, context)
                 .ifPresent(mediaTypeObject::setSchema);
 
         // Example (we keep the raw string)
-        if (serialized.containsKey("example")) {
+        if (serialized.containsKey(Properties.EXAMPLE.value())) {
             // It could be a string, or a JSON (or YAML object)
-            Object exampleData = serialized.get("example");
+            Object exampleData = serialized.get(Properties.EXAMPLE.value());
             if (exampleData instanceof String) {
                 Example example = new Example((String) exampleData);
                 mediaTypeObject.setExample(example);

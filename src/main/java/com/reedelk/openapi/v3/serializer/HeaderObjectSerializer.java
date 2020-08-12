@@ -8,14 +8,16 @@ import com.reedelk.openapi.v3.model.HeaderObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.HeaderObject.Properties;
+
 public class HeaderObjectSerializer extends AbstractSerializer<HeaderObject> {
 
     @Override
     public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, HeaderObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
 
-        set(map, "description", input.getDescription());
-        if (input.getStyle() != null) set(map, "style", input.getStyle().name());
+        set(map, Properties.DESCRIPTION.value(), input.getDescription());
+        if (input.getStyle() != null) set(map, Properties.STYLE.value(), input.getStyle().name());
 
         if (input.getSchema() != null) {
 
@@ -23,13 +25,13 @@ public class HeaderObjectSerializer extends AbstractSerializer<HeaderObject> {
                     .with(NavigationPath.SegmentKey.SCHEMA);
 
             Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, input.getSchema());
-            set(map, "schema", serializedSchema);
+            set(map, Properties.SCHEMA.value(), serializedSchema);
         }
 
-        set(map, "example", input.getExample());
-        set(map, "explode", input.getExplode());
-        set(map, "deprecated", input.getDeprecated());
-        set(map, "allowReserved", input.getAllowReserved());
+        set(map, Properties.EXAMPLE.value(), input.getExample());
+        set(map, Properties.EXPLODE.value(), input.getExplode());
+        set(map, Properties.DEPRECATED.value(), input.getDeprecated());
+        set(map, Properties.ALLOW_RESERVED.value(), input.getAllowReserved());
         return map;
     }
 }

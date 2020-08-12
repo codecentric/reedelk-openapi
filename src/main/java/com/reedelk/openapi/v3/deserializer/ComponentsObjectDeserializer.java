@@ -9,6 +9,8 @@ import com.reedelk.openapi.v3.model.SchemaObject;
 
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.ComponentsObject.Properties;
+
 public class ComponentsObjectDeserializer extends AbstractDeserializer<ComponentsObject> {
 
     @Override
@@ -16,12 +18,12 @@ public class ComponentsObjectDeserializer extends AbstractDeserializer<Component
         ComponentsObject componentsObject = new ComponentsObject();
 
         // Request Bodies
-        mapKeyApiModel("requestBodies", serialized,
+        mapKeyApiModel(Properties.REQUEST_BODIES.value(), serialized,
                 (key, source) -> context.deserialize(RequestBodyObject.class, source))
                 .ifPresent(componentsObject::setRequestBodies);
 
         // Schemas
-        mapKeyApiModel("schemas", serialized, (key, source) -> {
+        mapKeyApiModel(Properties.SCHEMAS.value(), serialized, (key, source) -> {
             Schema schemaObject = context.deserialize(Schema.class, source);
             SchemaObject schemaObjectObject = new SchemaObject();
             schemaObjectObject.setSchemaId(key);

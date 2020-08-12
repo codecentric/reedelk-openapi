@@ -8,21 +8,23 @@ import com.reedelk.openapi.v3.model.ResponseObject;
 
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.ResponseObject.Properties;
+
 public class ResponseObjectDeserializer extends AbstractDeserializer<ResponseObject> {
 
     @Override
     public ResponseObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         ResponseObject responseObject = new ResponseObject();
 
-        responseObject.setDescription(getString(serialized, "description"));
+        responseObject.setDescription(getString(serialized, Properties.DESCRIPTION.value()));
 
         // Content
-        mapKeyApiModel("content", serialized,
+        mapKeyApiModel(Properties.CONTENT.value(), serialized,
                 (key, source) -> context.deserialize(MediaTypeObject.class, source))
                 .ifPresent(responseObject::setContent);
 
         // Headers
-        mapKeyApiModel("headers", serialized,
+        mapKeyApiModel(Properties.HEADERS.value(), serialized,
                 (key, source) -> context.deserialize(HeaderObject.class, source))
                 .ifPresent(responseObject::setHeaders);
 

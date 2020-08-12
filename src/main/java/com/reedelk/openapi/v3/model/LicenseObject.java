@@ -46,4 +46,20 @@ public class LicenseObject implements OpenApiModel {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+    public enum Properties {
+
+        NAME("name"),
+        URL("url");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

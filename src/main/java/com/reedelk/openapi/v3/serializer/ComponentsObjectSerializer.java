@@ -10,6 +10,8 @@ import com.reedelk.openapi.v3.model.SchemaObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.ComponentsObject.Properties;
+
 public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObject> {
 
     @Override
@@ -27,7 +29,7 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, schemaObject.getSchema());
                 schemas.put(schemaId, serializedSchema);
             });
-            map.put("schemas", schemas);
+            map.put(Properties.SCHEMAS.value(), schemas);
         }
 
         // Request bodies
@@ -41,7 +43,7 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, requestBodyObject);
                 requestBodies.put(requestBodyId, serializedRequestBody);
             });
-            map.put("requestBodies", requestBodies);
+            map.put(Properties.REQUEST_BODIES.value(), requestBodies);
         }
 
         return map;

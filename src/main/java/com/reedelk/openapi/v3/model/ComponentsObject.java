@@ -48,4 +48,20 @@ public class ComponentsObject implements OpenApiModel {
                 ", requestBodies=" + requestBodies +
                 '}';
     }
+
+    public enum Properties {
+
+        SCHEMAS("schemas"),
+        REQUEST_BODIES("requestBodies");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

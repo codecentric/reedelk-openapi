@@ -58,4 +58,21 @@ public class ServerVariableObject implements OpenApiModel {
                 ", enumValues=" + enumValues +
                 '}';
     }
+
+    public enum Properties {
+
+        ENUM_VALUES("enum"),
+        DESCRIPTION("description"),
+        DEFAULT_VALUE("default");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

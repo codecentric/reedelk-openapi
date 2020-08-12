@@ -59,4 +59,21 @@ public class ResponseObject implements OpenApiModel {
                 ", headers=" + headers +
                 '}';
     }
+
+    public enum Properties {
+
+        DESCRIPTION("description"),
+        CONTENT("content"),
+        HEADERS("headers");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

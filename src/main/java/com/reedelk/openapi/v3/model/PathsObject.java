@@ -37,4 +37,19 @@ public class PathsObject implements OpenApiModel {
                 "paths=" + paths +
                 '}';
     }
+
+    public enum Properties {
+
+        PATHS("paths");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

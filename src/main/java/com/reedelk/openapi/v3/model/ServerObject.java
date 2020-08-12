@@ -58,5 +58,22 @@ public class ServerObject implements OpenApiModel {
                 ", variables=" + variables +
                 '}';
     }
+
+    public enum Properties {
+
+        URL("url"),
+        DESCRIPTION("description"),
+        VARIABLES("variables");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }
 

@@ -57,4 +57,21 @@ public class ContactObject implements OpenApiModel {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public enum Properties {
+
+        NAME("name"),
+        URL("url"),
+        EMAIL("email");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

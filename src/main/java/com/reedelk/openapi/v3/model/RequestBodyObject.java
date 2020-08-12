@@ -70,4 +70,22 @@ public class RequestBodyObject implements OpenApiModel {
                 ", content=" + content +
                 '}';
     }
+
+    public enum Properties {
+
+        $REF("$ref"),
+        REQUIRED("required"),
+        DESCRIPTION("description"),
+        CONTENT("content");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

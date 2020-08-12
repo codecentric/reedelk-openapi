@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.OpenApiObject.Properties;
 import static java.util.stream.Collectors.toList;
 
 public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
@@ -18,10 +19,10 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
     public Map<String, Object> serialize(SerializerContext context, NavigationPath navigationPath, OpenApiObject input) {
         Map<String, Object> map = new LinkedHashMap<>();
 
-        set(map, "openapi", input.getOpenapi()); // REQUIRED
+        set(map, Properties.OPEN_API.value(), input.getOpenapi()); // REQUIRED
 
         Map<String, Object> serializedInfo = context.serialize(navigationPath.with(NavigationPath.SegmentKey.INFO), input.getInfo());
-        set(map, "info", serializedInfo); // REQUIRED
+        set(map, Properties.INFO.value(), serializedInfo); // REQUIRED
 
         List<Map<String, Object>> mappedServers = input
                 .getServers()
@@ -33,13 +34,13 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
                     return context.serialize(navPath, serverObject);
                 })
                 .collect(toList());
-        map.put("servers", mappedServers);
+        map.put(Properties.SERVERS.value(), mappedServers);
 
         Map<String, Object> serializedPaths = context.serialize(navigationPath.with(NavigationPath.SegmentKey.PATHS), input.getPaths());
-        set(map, "paths", serializedPaths); // REQUIRED
+        set(map, Properties.PATHS.value(), serializedPaths); // REQUIRED
 
         Map<String, Object> serializedComponents = context.serialize(navigationPath.with(NavigationPath.SegmentKey.COMPONENTS), input.getComponents());
-        set(map, "components", serializedComponents);
+        set(map, Properties.COMPONENTS.value(), serializedComponents);
 
 
         List<TagObject> tags = input.getTags();
@@ -53,7 +54,7 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
                         return context.serialize(navPath, tagObject);
                     })
                     .collect(toList());
-            map.put("tags", mappedTags);
+            map.put(Properties.TAGS.value(), mappedTags);
         }
         return map;
     }

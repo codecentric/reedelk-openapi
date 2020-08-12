@@ -46,4 +46,20 @@ public class ExternalDocumentationObject implements OpenApiModel {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+    public enum Properties {
+
+        DESCRIPTION("description"),
+        URL("url");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

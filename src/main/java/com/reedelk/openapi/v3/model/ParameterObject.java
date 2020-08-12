@@ -145,4 +145,29 @@ public class ParameterObject implements OpenApiModel {
                 ", allowReserved=" + allowReserved +
                 '}';
     }
+
+    public enum Properties {
+
+        NAME("name"),
+        DESCRIPTION("description"),
+        PARAMETER_LOCATION("in"),
+        STYLE("style"),
+        SCHEMA("schema"),
+        EXAMPLE("example"),
+        EXPLODE("explode"),
+        DEPRECATED("deprecated"),
+        REQUIRED("required"),
+        ALLOW_EMPTY_VALUE("allowEmptyValue"),
+        ALLOW_RESERVED("allowReserved");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

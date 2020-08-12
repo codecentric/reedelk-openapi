@@ -2,13 +2,14 @@ package com.reedelk.openapi.v3.serializer;
 
 import com.reedelk.openapi.commons.AbstractSerializer;
 import com.reedelk.openapi.commons.NavigationPath;
-import com.reedelk.openapi.commons.Properties;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.reedelk.openapi.v3.model.RequestBodyObject.Properties;
 
 public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyObject> {
 
@@ -17,14 +18,14 @@ public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyO
         Map<String, Object> map = new LinkedHashMap<>();
         if (input.get$ref() != null && input.get$ref().length() > 0) {
             // It is a reference.
-            set(map, Properties.$REF, input.get$ref());
+            set(map, Properties.$REF.value(), input.get$ref());
 
         } else {
-            set(map, "description", input.getDescription());
+            set(map, Properties.DESCRIPTION.value(), input.getDescription());
             // By specification, the content object must be present, even if it is empty.
             // Therefore we add an empty object instead.
             if (input.getContent().isEmpty()) {
-                map.put("content", new LinkedHashMap<>());
+                map.put(Properties.CONTENT.value(), new LinkedHashMap<>());
             }
 
             Map<String, Map<String,Object>> contentTypeMediaTypeMap = new LinkedHashMap<>();
@@ -36,8 +37,8 @@ public class RequestBodyObjectSerializer extends AbstractSerializer<RequestBodyO
                 Map<String, Object> serialized = context.serialize(currentNavigationPath, mediaTypeObject);
                 contentTypeMediaTypeMap.put(contentType, serialized);
             });
-            map.put("content", contentTypeMediaTypeMap);
-            set(map, "required", input.getRequired());
+            map.put(Properties.CONTENT.value(), contentTypeMediaTypeMap);
+            set(map, Properties.REQUIRED.value(), input.getRequired());
         }
         return map;
     }

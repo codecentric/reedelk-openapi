@@ -45,4 +45,19 @@ public class SchemaObject implements OpenApiModel {
                 ", schemaId='" + schemaId + '\'' +
                 '}';
     }
+
+    public enum Properties {
+
+        SCHEMA("schema");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

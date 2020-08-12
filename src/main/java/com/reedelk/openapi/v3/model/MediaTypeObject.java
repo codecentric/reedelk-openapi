@@ -46,4 +46,20 @@ public class MediaTypeObject implements OpenApiModel {
                 ", schema=" + schema +
                 '}';
     }
+
+    public enum Properties {
+
+        EXAMPLE("example"),
+        SCHEMA("schema");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

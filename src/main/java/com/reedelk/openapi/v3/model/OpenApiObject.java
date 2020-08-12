@@ -95,4 +95,24 @@ public class OpenApiObject implements OpenApiModel {
                 ", tags=" + tags +
                 '}';
     }
+
+    public enum Properties {
+
+        OPEN_API("openapi"),
+        INFO("info"),
+        COMPONENTS("components"),
+        SERVERS("servers"),
+        PATHS("paths"),
+        TAGS("tags");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

@@ -58,4 +58,19 @@ public class Schema implements OpenApiModel {
                 ", schemaData=" + schemaData +
                 '}';
     }
+
+    public enum Properties {
+
+        $REF("$ref");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
 }

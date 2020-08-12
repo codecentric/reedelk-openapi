@@ -8,22 +8,24 @@ import com.reedelk.openapi.v3.model.LicenseObject;
 
 import java.util.Map;
 
+import static com.reedelk.openapi.v3.model.InfoObject.Properties;
+
 public class InfoObjectDeserializer extends AbstractDeserializer<InfoObject> {
 
     @Override
     public InfoObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         InfoObject infoObject = new InfoObject();
-        infoObject.setTitle(getString(serialized, "title"));
-        infoObject.setDescription(getString(serialized, "description"));
-        infoObject.setTermsOfService(getString(serialized, "termsOfService"));
-        infoObject.setVersion(getString(serialized, "version"));
+        infoObject.setTitle(getString(serialized, Properties.TITLE.value()));
+        infoObject.setDescription(getString(serialized, Properties.DESCRIPTION.value()));
+        infoObject.setTermsOfService(getString(serialized, Properties.TERMS_OF_SERVICE.value()));
+        infoObject.setVersion(getString(serialized, Properties.VERSION.value()));
 
         // Contact
-        mapApiModel(serialized, "contact", ContactObject.class, context)
+        mapApiModel(serialized, Properties.CONTACT.value(), ContactObject.class, context)
                 .ifPresent(infoObject::setContact);
 
         // License
-        mapApiModel(serialized, "license", LicenseObject.class, context)
+        mapApiModel(serialized, Properties.LICENSE.value(), LicenseObject.class, context)
                 .ifPresent(infoObject::setLicense);
 
         return infoObject;
