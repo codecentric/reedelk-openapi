@@ -5,6 +5,7 @@ import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.Example;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.Schema;
+import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 
@@ -20,9 +21,19 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
 
         // Example (we keep the raw string)
         if (serialized.containsKey("example")) {
-            String exampleData = (String) serialized.get("example");
-            Example example = new Example(exampleData);
-            mediaTypeObject.setExample(example);
+            // It could be a string, or a JSON (or YAML object)
+            Object exampleData = serialized.get("example");
+            if (exampleData instanceof String) {
+                Example example = new Example((String) exampleData);
+                mediaTypeObject.setExample(example);
+            } else {
+                // TODO: This yaml instance ...should be a factory clazz.
+                // Must be a YAML or JSON.
+                Yaml yaml = new Yaml();
+                String exampleAsString = yaml.dump(exampleData);
+                Example example = new Example(exampleAsString);
+                mediaTypeObject.setExample(example);
+            }
         }
 
         return mediaTypeObject;
