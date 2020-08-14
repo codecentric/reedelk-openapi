@@ -71,6 +71,7 @@ public class NavigationPath {
     public enum SegmentKey {
 
         EXTERNAL_DOCS("externalDocs"),
+        HEADER("header"),
         HEADERS("headers"),
         HEADER_NAME("headerName"),
         CONTENT("content"),
@@ -90,20 +91,27 @@ public class NavigationPath {
         REQUEST_BODY_ID("requestBodyId"),
         REQUEST_BODIES("requestBodies"),
         REQUEST_BODY("requestBody"),
+        RESPONSE("response"),
         RESPONSES("responses"),
         STATUS_CODE("statusCode"),
         VARIABLES("variables"),
         VARIABLE_NAME("variableName"),
+        PARAMETER("parameter"),
         PARAMETERS("parameters"),
         PARAMETER_NAME("parameterName"),
         SCHEMA("schema"),
         SCHEMAS("schemas"),
-        SCHEMA_ID("schemaId");
+        SCHEMA_ID("schemaId"),
+        EXAMPLE("example");
 
         String key;
 
         SegmentKey(String key) {
             this.key = key;
+        }
+
+        public String getKey() {
+            return key;
         }
     }
 }
