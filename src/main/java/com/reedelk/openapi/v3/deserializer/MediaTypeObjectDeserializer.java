@@ -1,11 +1,11 @@
 package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
+import com.reedelk.openapi.commons.YamlDumper;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.Example;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
 import com.reedelk.openapi.v3.model.Schema;
-import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 
@@ -29,10 +29,8 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
                 Example example = new Example((String) exampleData);
                 mediaTypeObject.setExample(example);
             } else {
-                // TODO: This yaml instance ...should be a factory clazz.
                 // Must be a YAML or JSON.
-                Yaml yaml = new Yaml();
-                String exampleAsString = yaml.dump(exampleData);
+                String exampleAsString = YamlDumper.from(exampleData);
                 Example example = new Example(exampleAsString);
                 mediaTypeObject.setExample(example);
             }

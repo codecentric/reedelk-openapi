@@ -6,6 +6,9 @@ import java.util.Map;
 
 public class MapToJsonObject {
 
+    private MapToJsonObject() {
+    }
+
     @SuppressWarnings("unchecked")
     public static Object convert(Object value) {
         if (value instanceof Map) {
