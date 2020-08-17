@@ -2,6 +2,9 @@ package com.reedelk.openapi.commons;
 
 public class Utils {
 
+    private Utils() {
+    }
+
     public static boolean isBlank(final CharSequence sequence) {
         if (sequence == null) return true;
 

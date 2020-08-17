@@ -8,36 +8,36 @@ import java.util.Map;
 
 public class Deserializers {
 
-    private final Map<Class<?>, Deserializer<?>> deserializers = new HashMap<>();
+    private final Map<Class<?>, Deserializer<?>> all = new HashMap<>();
 
     public Deserializers() {
-        deserializers.put(ComponentsObject.class, new ComponentsObjectDeserializer());
-        deserializers.put(ContactObject.class, new ContactObjectDeserializer());
-        deserializers.put(ExternalDocumentationObject.class, new ExternalDocumentationObjectDeserializer());
-        deserializers.put(HeaderObject.class, new HeaderObjectDeserializer());
-        deserializers.put(InfoObject.class, new InfoObjectDeserializer());
-        deserializers.put(LicenseObject.class, new LicenseObjectDeserializer());
-        deserializers.put(MediaTypeObject.class, new MediaTypeObjectDeserializer());
-        deserializers.put(OpenApiObject.class, new OpenApiObjectDeserializer());
-        deserializers.put(OperationObject.class, new OperationObjectDeserializer());
-        deserializers.put(ParameterObject.class, new ParameterObjectDeserializer());
-        deserializers.put(PathsObject.class, new PathsObjectDeserializer());
-        deserializers.put(RequestBodyObject.class, new RequestBodyObjectDeserializer());
-        deserializers.put(ResponseObject.class, new ResponseObjectDeserializer());
-        deserializers.put(Schema.class, new SchemaDeserializer());
-        deserializers.put(ServerObject.class, new ServerObjectDeserializer());
-        deserializers.put(ServerVariableObject.class, new ServerVariableObjectDeserializer());
-        deserializers.put(TagObject.class, new TagObjectDeserializer());
+        all.put(ComponentsObject.class, new ComponentsObjectDeserializer());
+        all.put(ContactObject.class, new ContactObjectDeserializer());
+        all.put(ExternalDocumentationObject.class, new ExternalDocumentationObjectDeserializer());
+        all.put(HeaderObject.class, new HeaderObjectDeserializer());
+        all.put(InfoObject.class, new InfoObjectDeserializer());
+        all.put(LicenseObject.class, new LicenseObjectDeserializer());
+        all.put(MediaTypeObject.class, new MediaTypeObjectDeserializer());
+        all.put(OpenApiObject.class, new OpenApiObjectDeserializer());
+        all.put(OperationObject.class, new OperationObjectDeserializer());
+        all.put(ParameterObject.class, new ParameterObjectDeserializer());
+        all.put(PathsObject.class, new PathsObjectDeserializer());
+        all.put(RequestBodyObject.class, new RequestBodyObjectDeserializer());
+        all.put(ResponseObject.class, new ResponseObjectDeserializer());
+        all.put(Schema.class, new SchemaDeserializer());
+        all.put(ServerObject.class, new ServerObjectDeserializer());
+        all.put(ServerVariableObject.class, new ServerVariableObjectDeserializer());
+        all.put(TagObject.class, new TagObjectDeserializer());
     }
 
     public Deserializers(Map<Class<?>, Deserializer<?>> overridden) {
         this();
         // Apply user-overridden deserializers.
-        overridden.forEach((aClass, deserializer) -> deserializers.put(aClass, deserializer));
+        overridden.forEach(all::put);
     }
 
     @SuppressWarnings("unchecked")
     public <T> Deserializer<T> forType(Class<T> modelObjectClazz) {
-        return (Deserializer<T>) deserializers.get(modelObjectClazz);
+        return (Deserializer<T>) all.get(modelObjectClazz);
     }
 }
