@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Deserializers {
 
-    public Map<Class<?>, Deserializer<?>> deserializers = new HashMap<>();
+    private final Map<Class<?>, Deserializer<?>> deserializers = new HashMap<>();
 
     public Deserializers() {
         deserializers.put(ComponentsObject.class, new ComponentsObjectDeserializer());

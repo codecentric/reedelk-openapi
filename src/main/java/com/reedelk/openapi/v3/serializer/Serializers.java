@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Serializers {
 
-    public Map<Class<?>, Serializer<?>> serializers = new HashMap<>();
+    private Map<Class<?>, Serializer<?>> serializers = new HashMap<>();
 
     public Serializers() {
         serializers.put(ComponentsObject.class, new ComponentsObjectSerializer());
