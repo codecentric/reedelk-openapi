@@ -50,6 +50,7 @@ class ParameterObjectTest extends AbstractOpenApiSerializableTest {
         ParameterObject parameter = new ParameterObject();
         parameter.setName("myParam");
         parameter.setIn(ParameterLocation.path);
+        parameter.setRequired(true);
 
         // Expect
         assertSerializeJSON(parameter, Fixture.ParameterObject.WithInPath);

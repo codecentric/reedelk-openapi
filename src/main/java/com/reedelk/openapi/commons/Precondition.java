@@ -10,4 +10,10 @@ public class Precondition {
             throw new IllegalArgumentException(String.format("Property '%s' is MANDATORY.", propertyName));
         }
     }
+
+    public static void checkTrue(String propertyName, Boolean value) {
+        if (!value) {
+            throw new IllegalArgumentException(String.format("Property '%s' must be true.", propertyName));
+        }
+    }
 }

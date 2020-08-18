@@ -19,8 +19,9 @@ public class ParameterObjectSerializer extends AbstractSerializer<ParameterObjec
         Precondition.checkNotNull(Properties.NAME.value(), input.getName());
         Precondition.checkNotNull(Properties.PARAMETER_LOCATION.value(), input.getIn());
 
-        if (!ParameterLocation.path.equals(input.getIn())) {
+        if (ParameterLocation.path.equals(input.getIn())) {
             Precondition.checkNotNull(Properties.REQUIRED.value(), input.getRequired());
+            Precondition.checkTrue(Properties.REQUIRED.value(), input.getRequired());
         }
 
         Map<String, Object> map = new LinkedHashMap<>();

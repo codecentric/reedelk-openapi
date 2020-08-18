@@ -26,12 +26,13 @@ class OperationObjectTest extends AbstractOpenApiSerializableTest {
 
         ParameterObject parameter1 = new ParameterObject();
         parameter1.setName("param1");
-        parameter1.setRequired(true);
+        parameter1.setRequired(false);
         parameter1.setIn(ParameterLocation.query);
         parameter1.setSchema(new Schema(new JSONObject("{\"type\": \"string\"}").toMap()));
 
         ParameterObject parameter2 = new ParameterObject();
         parameter2.setName("param2");
+        parameter2.setRequired(true);
         parameter2.setIn(ParameterLocation.path);
         parameter2.setSchema(new Schema(new JSONObject("{\"type\": \"string\"}").toMap()));
 
