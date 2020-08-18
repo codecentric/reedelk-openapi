@@ -7,7 +7,7 @@
 
     <artifactId>reedelk-openapi</artifactId>
     <groupId>com.reedelk</groupId>
-    <version>1.0.1</version><!-- Follows the version of the runtime -->
+    <version>1.0.2-SNAPSHOT</version><!-- Follows the version of the runtime -->
 
     <properties>
         <json.version>20190722</json.version>
