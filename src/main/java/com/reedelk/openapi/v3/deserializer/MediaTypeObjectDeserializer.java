@@ -31,6 +31,8 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
             } else {
                 // If it is an object must have the type of the
                 // OpenAPI document: must be serialized as JSON.
+                // If it is an XML example it must be a string, therefore this case
+                // is covered in the above condition.
                 String exampleAsString = DataFormat.JSON.dump(exampleData);
                 Example example = new Example(exampleAsString);
                 mediaTypeObject.setExample(example);
