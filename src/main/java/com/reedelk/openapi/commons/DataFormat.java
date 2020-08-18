@@ -39,6 +39,7 @@ public enum DataFormat {
             }
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public String dump(Object object) {
             // If the input object is a linked has map we must create a new HashMap,
