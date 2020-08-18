@@ -1,5 +1,6 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.commons.DataFormat;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.deserializer.Deserializers;
 import com.reedelk.openapi.v3.model.OpenApiObject;
@@ -21,9 +22,11 @@ public enum OpenApiVersion {
         }
 
         @Override
-        public OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden) {
+        public OpenApiObject deserialize(Map<String, Object> openApiMap,
+                                         Map<Class<?>, Deserializer<?>> overridden,
+                                         DataFormat dataFormat) {
             Deserializers deserializers = new Deserializers(overridden);
-            DeserializerContext context =  new DeserializerContext(deserializers);
+            DeserializerContext context =  new DeserializerContext(deserializers, dataFormat);
             return context.deserialize(OpenApiObject.class, openApiMap);
         }
     };
@@ -32,6 +35,9 @@ public enum OpenApiVersion {
 
     public abstract String displayName();
 
-    public abstract OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden);
+    public abstract OpenApiObject deserialize(
+            Map<String, Object> openApiMap,
+            Map<Class<?>, Deserializer<?>> overridden,
+            DataFormat openApiFormat);
 
 }

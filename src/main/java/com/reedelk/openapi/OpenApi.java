@@ -1,5 +1,6 @@
 package com.reedelk.openapi;
 
+import com.reedelk.openapi.commons.DataFormat;
 import com.reedelk.openapi.commons.MapToJsonObject;
 import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.commons.Utils;
@@ -51,6 +52,7 @@ public class OpenApi {
     static class OpenApiDeserializer {
 
         OpenApiObject from(String jsonOrYaml, Map<Class<?>, Deserializer<?>> overridden) {
+            DataFormat openApiFormat = DataFormat.JSON.is(jsonOrYaml) ? DataFormat.JSON : DataFormat.YAML;
             Yaml yaml = new Yaml();
             Map<String,Object> openApiMap = yaml.load(jsonOrYaml);
 
@@ -67,7 +69,7 @@ public class OpenApi {
                                     .map(OpenApiVersion::displayName)
                                     .collect(Collectors.joining(","))));
 
-            return VERSION.deserialize(openApiMap, overridden);
+            return VERSION.deserialize(openApiMap, overridden, openApiFormat);
         }
     }
 

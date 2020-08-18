@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
-import com.reedelk.openapi.commons.YamlDumper;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.Example;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
@@ -29,8 +28,9 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
                 Example example = new Example((String) exampleData);
                 mediaTypeObject.setExample(example);
             } else {
-                // Must be a YAML or JSON.
-                String exampleAsString = YamlDumper.from(exampleData);
+                // If it is an object must have the type of the
+                // OpenAPI document: must be either YAML or JSON.
+                String exampleAsString = context.getDataFormat().dump(exampleData);
                 Example example = new Example(exampleAsString);
                 mediaTypeObject.setExample(example);
             }
