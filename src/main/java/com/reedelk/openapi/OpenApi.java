@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OpenApi {
 
@@ -61,7 +62,10 @@ public class OpenApi {
             OpenApiVersion VERSION = Arrays.stream(OpenApiVersion.values())
                     .filter(version -> version.isSupported(openApiVersion))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Open API version " + openApiVersion + ", not supported"));
+                    .orElseThrow(() -> new IllegalArgumentException("Open API version " + openApiVersion + ", not supported. Supported versions: " +
+                            Arrays.stream(OpenApiVersion.values())
+                                    .map(OpenApiVersion::displayName)
+                                    .collect(Collectors.joining(","))));
 
             return VERSION.deserialize(openApiMap, overridden);
         }

@@ -16,6 +16,11 @@ public enum OpenApiVersion {
         }
 
         @Override
+        public String displayName() {
+            return "3.0.x";
+        }
+
+        @Override
         public OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden) {
             Deserializers deserializers = new Deserializers(overridden);
             DeserializerContext context =  new DeserializerContext(deserializers);
@@ -24,6 +29,8 @@ public enum OpenApiVersion {
     };
 
     abstract boolean isSupported(String openapi);
+
+    public abstract String displayName();
 
     public abstract OpenApiObject deserialize(Map<String, Object> openApiMap, Map<Class<?>, Deserializer<?>> overridden);
 
