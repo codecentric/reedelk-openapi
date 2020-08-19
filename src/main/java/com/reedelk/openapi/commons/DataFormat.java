@@ -1,10 +1,10 @@
 package com.reedelk.openapi.commons;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum DataFormat {
@@ -34,20 +34,24 @@ public enum DataFormat {
             try {
                 new JSONObject(dataAsString);
                 return true;
-            } catch (Exception exception) {
-                return false;
+            } catch (Exception ignore) {
+                // not a JSON object
             }
+            try {
+                new JSONArray(dataAsString);
+                return true;
+            } catch (Exception ignore) {
+                // not a JSON array
+            }
+            return false;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public String dump(Object object) {
-            // If the input object is a linked has map we must create a new HashMap,
-            // otherwise the JSON object does not serialize correctly.
-            if (object instanceof LinkedHashMap) {
-                Map<Object, Object> map = new HashMap<>();
-                ((Map<Object, Object>) object).forEach(map::put);
-                return new JSONObject(map).toString(2);
+            if (object instanceof List) {
+                return new JSONArray((List<?>) object).toString(2);
+            } else if (object instanceof Map) {
+                return new JSONObject((Map<?,?>) object).toString(2);
             } else {
                 return new JSONObject(object).toString(2);
             }
