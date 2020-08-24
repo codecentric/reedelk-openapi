@@ -9,7 +9,7 @@ public class MediaTypeObject implements OpenApiModel {
 
     private Schema schema;
     private Example example;
-    private Map<String, Example> examples;//TODO: This is a map.
+    private Map<String, Example> examples;
 
     public Example getExample() {
         return example;
