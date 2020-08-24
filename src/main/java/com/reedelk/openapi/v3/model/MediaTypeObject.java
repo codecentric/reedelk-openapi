@@ -2,14 +2,14 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MediaTypeObject implements OpenApiModel {
 
     private Schema schema;
     private Example example;
-    private List<Example> examples;
+    private Map<String, Example> examples;//TODO: This is a map.
 
     public Example getExample() {
         return example;
@@ -27,14 +27,13 @@ public class MediaTypeObject implements OpenApiModel {
         this.schema = schema;
     }
 
-    public List<Example> getExamples() {
+    public Map<String, Example> getExamples() {
         return examples;
     }
 
-    public void setExamples(List<Example> examples) {
+    public void setExamples(Map<String, Example> examples) {
         this.examples = examples;
     }
-
 
     @Override
     public boolean equals(Object object) {
