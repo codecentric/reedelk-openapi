@@ -4,6 +4,7 @@ import com.reedelk.openapi.OpenApiModel;
 
 public class ExampleObject implements OpenApiModel {
 
+    private String exampleRef;
     private String summary;
     private String description;
     private String externalValue;
@@ -39,6 +40,14 @@ public class ExampleObject implements OpenApiModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getExampleRef() {
+        return exampleRef;
+    }
+
+    public void setExampleRef(String exampleRef) {
+        this.exampleRef = exampleRef;
     }
 
     public enum Properties {
