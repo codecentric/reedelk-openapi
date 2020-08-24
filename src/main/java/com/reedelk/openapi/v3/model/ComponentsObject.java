@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class ComponentsObject implements OpenApiModel {
 
+    private Map<String, ExampleObject> examples = new LinkedHashMap<>();
     private Map<String, SchemaObject> schemas = new LinkedHashMap<>();
     private Map<String, RequestBodyObject> requestBodies = new LinkedHashMap<>();
 
@@ -27,24 +28,34 @@ public class ComponentsObject implements OpenApiModel {
         this.requestBodies = requestBodies;
     }
 
+    public Map<String, ExampleObject> getExamples() {
+        return examples;
+    }
+
+    public void setExamples(Map<String, ExampleObject> examples) {
+        this.examples = examples;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComponentsObject that = (ComponentsObject) o;
-        return Objects.equals(schemas, that.schemas) &&
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        ComponentsObject that = (ComponentsObject) object;
+        return Objects.equals(examples, that.examples) &&
+                Objects.equals(schemas, that.schemas) &&
                 Objects.equals(requestBodies, that.requestBodies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(schemas, requestBodies);
+        return Objects.hash(examples, schemas, requestBodies);
     }
 
     @Override
     public String toString() {
         return "ComponentsObject{" +
-                "schemas=" + schemas +
+                "examples=" + examples +
+                ", schemas=" + schemas +
                 ", requestBodies=" + requestBodies +
                 '}';
     }
@@ -52,6 +63,7 @@ public class ComponentsObject implements OpenApiModel {
     public enum Properties {
 
         SCHEMAS("schemas"),
+        EXAMPLES("examples"),
         REQUEST_BODIES("requestBodies");
 
         private final String value;
