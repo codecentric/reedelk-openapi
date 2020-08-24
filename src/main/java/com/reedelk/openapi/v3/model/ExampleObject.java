@@ -2,54 +2,51 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
-import java.util.Objects;
-
 public class ExampleObject implements OpenApiModel {
 
-    private Example example;
-    private String exampleId;
+    private String summary;
+    private String description;
+    private String externalValue;
+    private String value;
 
-    public Example getExample() {
-        return example;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setExample(Example example) {
-        this.example = example;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
-    public String getExampleId() {
-        return exampleId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setExampleId(String exampleId) {
-        this.exampleId = exampleId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        ExampleObject that = (ExampleObject) object;
-        return Objects.equals(example, that.example) &&
-                Objects.equals(exampleId, that.exampleId);
+    public String getExternalValue() {
+        return externalValue;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(example, exampleId);
+    public void setExternalValue(String externalValue) {
+        this.externalValue = externalValue;
     }
 
-    @Override
-    public String toString() {
-        return "ExampleObject{" +
-                "example=" + example +
-                ", exampleId='" + exampleId + '\'' +
-                '}';
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public enum Properties {
 
-        SCHEMA("example");
+        SUMMARY("summary"),
+        DESCRIPTION("description"),
+        EXTERNAL_VALUE("externalValue"),
+        VALUE("value");
 
         private final String value;
 

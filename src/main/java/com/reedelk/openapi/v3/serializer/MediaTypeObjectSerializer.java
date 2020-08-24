@@ -25,6 +25,16 @@ public class MediaTypeObjectSerializer extends AbstractSerializer<MediaTypeObjec
         if (input.getExample() != null && input.getExample().data() != null) {
             map.put(Properties.EXAMPLE.value(), input.getExample().data());
         }
+
+        if (input.getExamples() != null && !input.getExamples().isEmpty()) {
+            NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.EXAMPLES);
+            Map<String,Object> serializedExamples = new LinkedHashMap<>();
+            input.getExamples().forEach((exampleId, exampleObject) -> {
+                Map<String, Object> serializedExample = context.serialize(currentNavigationPath, exampleObject);
+                serializedExamples.put(exampleId, serializedExample);
+            });
+            map.put(Properties.EXAMPLES.value(), serializedExamples);
+        }
         return map;
     }
 }

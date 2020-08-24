@@ -102,7 +102,8 @@ public class NavigationPath {
         SCHEMA("schema"),
         SCHEMAS("schemas"),
         SCHEMA_ID("schemaId"),
-        EXAMPLE("example");
+        EXAMPLE("example"),
+        EXAMPLES("examples");
 
         String key;
 

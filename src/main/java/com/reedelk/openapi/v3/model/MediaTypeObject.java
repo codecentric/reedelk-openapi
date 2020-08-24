@@ -9,7 +9,7 @@ public class MediaTypeObject implements OpenApiModel {
 
     private Schema schema;
     private Example example;
-    private Map<String, Example> examples;
+    private Map<String, ExampleObject> examples;
 
     public Example getExample() {
         return example;
@@ -27,11 +27,11 @@ public class MediaTypeObject implements OpenApiModel {
         this.schema = schema;
     }
 
-    public Map<String, Example> getExamples() {
+    public Map<String, ExampleObject> getExamples() {
         return examples;
     }
 
-    public void setExamples(Map<String, Example> examples) {
+    public void setExamples(Map<String, ExampleObject> examples) {
         this.examples = examples;
     }
 
