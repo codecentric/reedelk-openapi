@@ -2,12 +2,14 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MediaTypeObject implements OpenApiModel {
 
-    private Example example;
     private Schema schema;
+    private Example example;
+    private List<Example> examples;
 
     public Example getExample() {
         return example;
@@ -25,30 +27,42 @@ public class MediaTypeObject implements OpenApiModel {
         this.schema = schema;
     }
 
+    public List<Example> getExamples() {
+        return examples;
+    }
+
+    public void setExamples(List<Example> examples) {
+        this.examples = examples;
+    }
+
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MediaTypeObject that = (MediaTypeObject) o;
-        return Objects.equals(example, that.example) &&
-                Objects.equals(schema, that.schema);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        MediaTypeObject that = (MediaTypeObject) object;
+        return Objects.equals(schema, that.schema) &&
+                Objects.equals(example, that.example) &&
+                Objects.equals(examples, that.examples);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(example, schema);
+        return Objects.hash(schema, example, examples);
     }
 
     @Override
     public String toString() {
         return "MediaTypeObject{" +
-                "example=" + example +
-                ", schema=" + schema +
+                "schema=" + schema +
+                ", example=" + example +
+                ", examples=" + examples +
                 '}';
     }
 
     public enum Properties {
 
+        EXAMPLES("examples"),
         EXAMPLE("example"),
         SCHEMA("schema");
 
