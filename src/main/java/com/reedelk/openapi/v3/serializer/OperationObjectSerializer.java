@@ -82,6 +82,8 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
                     //    }
                     //  ]
                     //}
+                    // Therefore for for optional OAuth 2 we need to set empty security object.
+                    // This is why we check for not empty requirement name.
                     if (requirementName != null) {
                         List<String> scopes = securityRequirementObject.getScopes();
                         security.put(requirementName, scopes == null ? new ArrayList<>() : scopes);
