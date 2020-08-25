@@ -28,6 +28,7 @@ public class Deserializers {
         all.put(RequestBodyObject.class, new RequestBodyObjectDeserializer());
         all.put(ResponseObject.class, new ResponseObjectDeserializer());
         all.put(SecuritySchemeObject.class, new SecuritySchemeObjectDeserializer());
+        all.put(SecurityRequirementObject.class, new SecurityRequirementObjectDeserializer());
         all.put(Schema.class, new SchemaDeserializer());
         all.put(ServerObject.class, new ServerObjectDeserializer());
         all.put(ServerVariableObject.class, new ServerVariableObjectDeserializer());

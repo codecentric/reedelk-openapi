@@ -29,6 +29,7 @@ public class Serializers {
         all.put(ResponseObject.class, new ResponseObjectSerializer());
         all.put(Schema.class, new SchemaSerializer());
         all.put(SecuritySchemeObject.class, new SecuritySchemeObjectSerializer());
+        all.put(SecurityRequirementObject.class, new SecurityRequirementObjectSerializer());
         all.put(ServerObject.class, new ServerObjectSerializer());
         all.put(ServerVariableObject.class, new ServerVariableObjectSerializer());
         all.put(TagObject.class, new TagObjectSerializer());

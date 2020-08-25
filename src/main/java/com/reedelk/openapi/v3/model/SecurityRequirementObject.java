@@ -2,12 +2,13 @@ package com.reedelk.openapi.v3.model;
 
 import com.reedelk.openapi.OpenApiModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class SecurityRequirementObject implements OpenApiModel {
 
-    private List<String> scopes;
+    private List<String> scopes = new ArrayList<>();
 
     public List<String> getScopes() {
         return scopes;
@@ -36,4 +37,20 @@ public class SecurityRequirementObject implements OpenApiModel {
                 "scopes=" + scopes +
                 '}';
     }
+
+    public enum Properties {
+
+        SCOPES("scopes");
+
+        private final String value;
+
+        Properties(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+    }
+
 }

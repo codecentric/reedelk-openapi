@@ -65,17 +65,27 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
 
         // Security Requirements
         if (input.getSecurity() != null && !input.getSecurity().isEmpty()) {
-            List<Map<String, Map<String, Object>>> serializedSecurity = new ArrayList<>();
+            List<Map<String, Object>> serializedSecurity = new ArrayList<>();
             map.put(Properties.SECURITY.value(), serializedSecurity);
             input.getSecurity().forEach(securityNameAndRequirement -> {
-                Map<String, Map<String, Object>> security = new HashMap<>();
+                Map<String, Object> security = new HashMap<>();
                 securityNameAndRequirement.forEach((requirementName, securityRequirementObject) -> {
-                    NavigationPath currentNavigationPath = navigationPath
-                            .with(NavigationPath.SegmentKey.SECURITY_REQUIREMENT)
-                            .with(NavigationPath.SegmentKey.SECURITY_REQUIREMENT_ID, requirementName);
-                    Map<String, Object> serializedSecurityRequirement =
-                            context.serialize(currentNavigationPath, securityRequirementObject);
-                    security.put(requirementName, serializedSecurityRequirement);
+                    // Optional OAuth2 security as would be defined in an OpenAPI Object or an Operation Object:
+                    // {
+                    //  "security": [
+                    //    {},
+                    //    {
+                    //      "petstore_auth": [
+                    //        "write:pets",
+                    //        "read:pets"
+                    //      ]
+                    //    }
+                    //  ]
+                    //}
+                    if (requirementName != null) {
+                        List<String> scopes = securityRequirementObject.getScopes();
+                        security.put(requirementName, scopes == null ? new ArrayList<>() : scopes);
+                    }
                 });
                 serializedSecurity.add(security);
             });
