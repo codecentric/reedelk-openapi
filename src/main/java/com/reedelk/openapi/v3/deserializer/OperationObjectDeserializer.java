@@ -40,7 +40,8 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         // Parameters
         if (serialized.containsKey(Properties.PARAMETERS.value())) {
             List<ParameterObject> parameterObjectList = new ArrayList<>();
-            List<Map<String,Object>> parametersList = (List<Map<String, Object>>) serialized.get(Properties.PARAMETERS.value());
+            List<Map<String,Object>> parametersList =
+                    (List<Map<String, Object>>) serialized.get(Properties.PARAMETERS.value());
             parametersList.forEach(parameterMap -> {
                 ParameterObject parameterObject = context.deserialize(ParameterObject.class, parameterMap);
                 parameterObjectList.add(parameterObject);
@@ -52,6 +53,7 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         List<String> tags = (List<String>) serialized.get(Properties.TAGS.value());
         operationObject.setTags(tags);
 
+        List<Map<String, Object>> security = (List<Map<String, Object>>) serialized.get(Properties.SECURITY.value());
         // TODO: Security
         return operationObject;
     }

@@ -19,6 +19,8 @@ public class Deserializers {
         all.put(InfoObject.class, new InfoObjectDeserializer());
         all.put(LicenseObject.class, new LicenseObjectDeserializer());
         all.put(MediaTypeObject.class, new MediaTypeObjectDeserializer());
+        all.put(OAuthFlowObject.class, new OAuthFlowObjectDeserializer());
+        all.put(OAuthFlowsObject.class, new OAuthFlowsObjectDeserializer());
         all.put(OpenApiObject.class, new OpenApiObjectDeserializer());
         all.put(OperationObject.class, new OperationObjectDeserializer());
         all.put(ParameterObject.class, new ParameterObjectDeserializer());
