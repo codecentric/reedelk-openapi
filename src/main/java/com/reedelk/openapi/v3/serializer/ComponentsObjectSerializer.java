@@ -4,6 +4,7 @@ import com.reedelk.openapi.commons.AbstractSerializer;
 import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.v3.SerializerContext;
 import com.reedelk.openapi.v3.model.ComponentsObject;
+import com.reedelk.openapi.v3.model.ExampleObject;
 import com.reedelk.openapi.v3.model.RequestBodyObject;
 import com.reedelk.openapi.v3.model.SchemaObject;
 
@@ -44,6 +45,20 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 requestBodies.put(requestBodyId, serializedRequestBody);
             });
             map.put(Properties.REQUEST_BODIES.value(), requestBodies);
+        }
+
+        // Examples
+        Map<String, ExampleObject> examplesMap = input.getExamples();
+        if (examplesMap != null && !examplesMap.isEmpty()) {
+            Map<String, Object> examples = new LinkedHashMap<>();
+            examplesMap.forEach((exampleId, exampleObject) -> {
+                NavigationPath currentNavigationPath = navigationPath
+                        .with(NavigationPath.SegmentKey.EXAMPLES)
+                        .with(NavigationPath.SegmentKey.EXAMPLE_ID, exampleId);
+                Map<String, Object> serializedExample = context.serialize(currentNavigationPath, exampleObject);
+                examples.put(exampleId, serializedExample);
+            });
+            map.put(Properties.EXAMPLES.value(), examples);
         }
 
         return map;

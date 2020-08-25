@@ -52,6 +52,7 @@ public class ExampleObject implements OpenApiModel {
 
     public enum Properties {
 
+        $REF("$ref"),
         SUMMARY("summary"),
         DESCRIPTION("description"),
         EXTERNAL_VALUE("externalValue"),
