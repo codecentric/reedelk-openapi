@@ -55,9 +55,10 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         mapListApiModel(Properties.SECURITY.value(), serialized, source -> {
             Map<String, SecurityRequirementObject> mapped = new LinkedHashMap<>();
             source.forEach((securityRequirementId, object) -> {
-                SecurityRequirementObject deserialize =
-                        context.deserialize(SecurityRequirementObject.class, (Map<String, Object>) object);
-                mapped.put(securityRequirementId, deserialize);
+                List<String> scopes = (List<String>) source.get(securityRequirementId);
+                SecurityRequirementObject securityRequirementObject = new SecurityRequirementObject();
+                securityRequirementObject.setScopes(scopes);
+                mapped.put(securityRequirementId, securityRequirementObject);
             });
             return mapped;
         }).ifPresent(operationObject::setSecurity);
