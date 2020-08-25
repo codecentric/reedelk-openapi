@@ -1,7 +1,6 @@
 package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
-import com.reedelk.openapi.commons.DataFormat;
 import com.reedelk.openapi.v3.DeserializerContext;
 import com.reedelk.openapi.v3.model.Example;
 import com.reedelk.openapi.v3.model.MediaTypeObject;
@@ -25,18 +24,9 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
         if (serialized.containsKey(Properties.EXAMPLE.value())) {
             // It could be a string, or a JSON (or YAML object)
             Object exampleData = serialized.get(Properties.EXAMPLE.value());
-            if (exampleData instanceof String) {
-                Example example = new Example((String) exampleData);
-                mediaTypeObject.setExample(example);
-            } else {
-                // If it is an object must have the type of the
-                // OpenAPI document: must be serialized as JSON.
-                // If it is an XML example it must be a string, therefore this case
-                // is covered in the above condition.
-                String exampleAsString = DataFormat.JSON.dump(exampleData);
-                Example example = new Example(exampleAsString);
-                mediaTypeObject.setExample(example);
-            }
+            String exampleDataAsString = deserializeExampleDataAsString(exampleData);
+            Example example = new Example(exampleDataAsString);
+            mediaTypeObject.setExample(example);
         }
 
         // TODO: Deserialize examples

@@ -74,4 +74,16 @@ public abstract class AbstractDeserializer<T> implements Deserializer<T> {
     protected interface ValueMapper<U> {
         U map(Map<String, Object> source);
     }
+
+    protected String deserializeExampleDataAsString(Object exampleData) {
+        if (exampleData instanceof String) {
+            return (String) exampleData;
+        } else {
+            // If it is an object must have the type of the
+            // OpenAPI document: must be serialized as JSON.
+            // If it is an XML example it must be a string, therefore this case
+            // is covered in the above condition.
+            return DataFormat.JSON.dump(exampleData);
+        }
+    }
 }

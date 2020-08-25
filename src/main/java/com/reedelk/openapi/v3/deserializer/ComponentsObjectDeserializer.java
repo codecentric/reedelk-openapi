@@ -2,10 +2,7 @@ package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
 import com.reedelk.openapi.v3.DeserializerContext;
-import com.reedelk.openapi.v3.model.ComponentsObject;
-import com.reedelk.openapi.v3.model.RequestBodyObject;
-import com.reedelk.openapi.v3.model.Schema;
-import com.reedelk.openapi.v3.model.SchemaObject;
+import com.reedelk.openapi.v3.model.*;
 
 import java.util.Map;
 
@@ -31,7 +28,15 @@ public class ComponentsObjectDeserializer extends AbstractDeserializer<Component
             return schemaObjectObject;
         }).ifPresent(componentsObject::setSchemas);
 
-        // TODO: Deserialize examples
+        // Examples
+        mapKeyApiModel(Properties.EXAMPLES.value(), serialized,
+                (key, source) -> context.deserialize(ExampleObject.class, source))
+                .ifPresent(componentsObject::setExamples);
+
+        // Security Schemes
+        mapKeyApiModel(Properties.SECURITY_SCHEMES.value(), serialized,
+                (key, source) -> context.deserialize(SecuritySchemeObject.class, source))
+                .ifPresent(componentsObject::setSecuritySchemes);
 
         return componentsObject;
     }
