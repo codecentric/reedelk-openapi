@@ -3,10 +3,7 @@ package com.reedelk.openapi.v3.serializer;
 import com.reedelk.openapi.commons.AbstractSerializer;
 import com.reedelk.openapi.commons.NavigationPath;
 import com.reedelk.openapi.v3.SerializerContext;
-import com.reedelk.openapi.v3.model.ComponentsObject;
-import com.reedelk.openapi.v3.model.ExampleObject;
-import com.reedelk.openapi.v3.model.RequestBodyObject;
-import com.reedelk.openapi.v3.model.SchemaObject;
+import com.reedelk.openapi.v3.model.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,6 +56,20 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 examples.put(exampleId, serializedExample);
             });
             map.put(Properties.EXAMPLES.value(), examples);
+        }
+
+        // Security Schemes
+        Map<String, SecuritySchemeObject> securitySchemesMap = input.getSecuritySchemes();
+        if (securitySchemesMap != null && !securitySchemesMap.isEmpty()) {
+            Map<String, Object> securitySchemes = new LinkedHashMap<>();
+            securitySchemesMap.forEach((securitySchemeId, securitySchemeObject) -> {
+                NavigationPath currentNavigationPath = navigationPath
+                        .with(NavigationPath.SegmentKey.SECURITY_SCHEMES)
+                        .with(NavigationPath.SegmentKey.SECURITY_SCHEME_ID, securitySchemeId);
+                Map<String, Object> serializedSecurityScheme = context.serialize(currentNavigationPath, securitySchemeObject);
+                securitySchemes.put(securitySchemeId, serializedSecurityScheme);
+            });
+            map.put(Properties.SECURITY_SCHEMES.value(), securitySchemes);
         }
 
         return map;

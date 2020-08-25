@@ -24,6 +24,7 @@ public class Serializers {
         all.put(PathsObject.class, new PathsObjectSerializer());
         all.put(RequestBodyObject.class, new RequestBodyObjectSerializer());
         all.put(ResponseObject.class, new ResponseObjectSerializer());
+        all.put(SecuritySchemeObject.class, new SecuritySchemeObjectSerializer());
         all.put(Schema.class, new SchemaSerializer());
         all.put(ExampleObject.class, new ExampleObjectSerializer());
         all.put(ServerObject.class, new ServerObjectSerializer());

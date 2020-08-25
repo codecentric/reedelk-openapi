@@ -121,7 +121,7 @@ public class SecuritySchemeObject implements OpenApiModel {
         IN("in"),
         SCHEME("scheme"),
         BEARER_FORMAT("bearerFormat"),
-        FLOWS_("flows"),
+        FLOWS("flows"),
         OPEN_ID_CONNECT_URL("openIdConnectUrl");
 
         private final String value;

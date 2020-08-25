@@ -11,6 +11,7 @@ public class ComponentsObject implements OpenApiModel {
     private Map<String, ExampleObject> examples = new LinkedHashMap<>();
     private Map<String, SchemaObject> schemas = new LinkedHashMap<>();
     private Map<String, RequestBodyObject> requestBodies = new LinkedHashMap<>();
+    private Map<String, SecuritySchemeObject> securitySchemes = new LinkedHashMap<>();
 
     public Map<String, SchemaObject> getSchemas() {
         return schemas;
@@ -34,6 +35,14 @@ public class ComponentsObject implements OpenApiModel {
 
     public void setExamples(Map<String, ExampleObject> examples) {
         this.examples = examples;
+    }
+
+    public Map<String, SecuritySchemeObject> getSecuritySchemes() {
+        return securitySchemes;
+    }
+
+    public void setSecuritySchemes(Map<String, SecuritySchemeObject> securitySchemes) {
+        this.securitySchemes = securitySchemes;
     }
 
     @Override
@@ -64,7 +73,8 @@ public class ComponentsObject implements OpenApiModel {
 
         SCHEMAS("schemas"),
         EXAMPLES("examples"),
-        REQUEST_BODIES("requestBodies");
+        REQUEST_BODIES("requestBodies"),
+        SECURITY_SCHEMES("securitySchemes");
 
         private final String value;
 
