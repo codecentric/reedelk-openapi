@@ -2,12 +2,10 @@ package com.reedelk.openapi.v3.deserializer;
 
 import com.reedelk.openapi.commons.AbstractDeserializer;
 import com.reedelk.openapi.v3.DeserializerContext;
-import com.reedelk.openapi.v3.model.OperationObject;
-import com.reedelk.openapi.v3.model.ParameterObject;
-import com.reedelk.openapi.v3.model.RequestBodyObject;
-import com.reedelk.openapi.v3.model.ResponseObject;
+import com.reedelk.openapi.v3.model.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +51,17 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         List<String> tags = (List<String>) serialized.get(Properties.TAGS.value());
         operationObject.setTags(tags);
 
-        List<Map<String, Object>> security = (List<Map<String, Object>>) serialized.get(Properties.SECURITY.value());
-        // TODO: Security
+        // Security
+        mapListApiModel(Properties.SECURITY.value(), serialized, source -> {
+            Map<String, SecurityRequirementObject> mapped = new LinkedHashMap<>();
+            source.forEach((securityRequirementId, object) -> {
+                SecurityRequirementObject deserialize =
+                        context.deserialize(SecurityRequirementObject.class, (Map<String, Object>) object);
+                mapped.put(securityRequirementId, deserialize);
+            });
+            return mapped;
+        }).ifPresent(operationObject::setSecurity);
+
         return operationObject;
     }
 }
