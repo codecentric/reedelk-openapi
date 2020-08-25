@@ -7,10 +7,7 @@ import com.reedelk.openapi.v3.model.OperationObject;
 import com.reedelk.openapi.v3.model.ParameterObject;
 import com.reedelk.openapi.v3.model.ResponseObject;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.reedelk.openapi.v3.model.OperationObject.Properties;
 import static java.util.stream.Collectors.toList;
@@ -25,12 +22,14 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         set(map, Properties.DESCRIPTION.value(), input.getDescription());
         set(map, Properties.OPERATION_ID.value(), input.getOperationId());
 
+        // Request Body
         if (input.getRequestBody() != null) {
             NavigationPath currentNavigationPath = navigationPath.with(NavigationPath.SegmentKey.REQUEST_BODY);
             Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, input.getRequestBody());
             set(map, Properties.REQUEST_BODY.value(), serializedRequestBody);
         }
 
+        // Responses
         Map<String, ResponseObject> responses = input.getResponses() == null ? new HashMap<>() : input.getResponses(); // MANDATORY
         Map<String, Map<String, Object>> serializedResponses = new LinkedHashMap<>();
         responses.forEach((statusCode, responseObject) -> {
@@ -43,6 +42,7 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         map.put(Properties.RESPONSES.value(), serializedResponses);
 
 
+        // Parameters
         List<ParameterObject> parameters = input.getParameters();
         if (parameters != null && !parameters.isEmpty()) {
             List<Map<String, Object>> serializedParameters = parameters
@@ -57,11 +57,30 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
             map.put(Properties.PARAMETERS.value(), serializedParameters);
         }
 
+        // Tags
         if (input.getTags() != null && !input.getTags().isEmpty()) {
             map.put(Properties.TAGS.value(), input.getTags());
         }
 
-        // TODO: Security
+
+        // Security Requirements
+        if (input.getSecurity() != null && !input.getSecurity().isEmpty()) {
+            List<Map<String, Map<String, Object>>> serializedSecurity = new ArrayList<>();
+            map.put(Properties.SECURITY.value(), serializedSecurity);
+            input.getSecurity().forEach(securityNameAndRequirement -> {
+                Map<String, Map<String, Object>> security = new HashMap<>();
+                securityNameAndRequirement.forEach((requirementName, securityRequirementObject) -> {
+                    NavigationPath currentNavigationPath = navigationPath
+                            .with(NavigationPath.SegmentKey.SECURITY_REQUIREMENT)
+                            .with(NavigationPath.SegmentKey.SECURITY_REQUIREMENT_ID, requirementName);
+                    Map<String, Object> serializedSecurityRequirement =
+                            context.serialize(currentNavigationPath, securityRequirementObject);
+                    security.put(requirementName, serializedSecurityRequirement);
+                });
+                serializedSecurity.add(security);
+            });
+        }
+
         return map;
     }
 }

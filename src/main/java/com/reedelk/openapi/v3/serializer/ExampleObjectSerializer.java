@@ -22,7 +22,6 @@ public class ExampleObjectSerializer extends AbstractSerializer<ExampleObject> {
             set(serialized, Properties.SUMMARY.value(), input.getSummary());
             set(serialized, Properties.DESCRIPTION.value(), input.getDescription());
             set(serialized, Properties.EXTERNAL_VALUE.value(), input.getExternalValue());
-
         }
         return serialized;
     }

@@ -105,6 +105,8 @@ public class NavigationPath {
         EXAMPLE("example"),
         EXAMPLES("examples"),
         EXAMPLE_ID("exampleId"),
+        SECURITY_REQUIREMENT("securityRequirement"),
+        SECURITY_REQUIREMENT_ID("securityRequirementId"),
         SECURITY_SCHEMES("securitySchemes"),
         SECURITY_SCHEME_ID("securitySchemeId");
 
