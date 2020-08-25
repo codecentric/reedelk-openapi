@@ -60,6 +60,8 @@ public class OperationObjectSerializer extends AbstractSerializer<OperationObjec
         if (input.getTags() != null && !input.getTags().isEmpty()) {
             map.put(Properties.TAGS.value(), input.getTags());
         }
+
+        // TODO: Security
         return map;
     }
 }

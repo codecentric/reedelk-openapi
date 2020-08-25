@@ -52,6 +52,7 @@ public class OperationObjectDeserializer extends AbstractDeserializer<OperationO
         List<String> tags = (List<String>) serialized.get(Properties.TAGS.value());
         operationObject.setTags(tags);
 
+        // TODO: Security
         return operationObject;
     }
 }

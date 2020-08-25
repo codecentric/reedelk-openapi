@@ -13,7 +13,16 @@ public class OperationObject implements OpenApiModel {
     private RequestBodyObject requestBody;
     private Map<String, ResponseObject> responses = new LinkedHashMap<>();
     private List<ParameterObject> parameters = new ArrayList<>();
+    private List<Map<String,SecurityRequirementObject>> security = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
+
+    public Boolean getDeprecated() {
+        return deprecated;
+    }
+
+    public void setDeprecated(Boolean deprecated) {
+        this.deprecated = deprecated;
+    }
 
     public String getSummary() {
         return summary;
@@ -55,20 +64,20 @@ public class OperationObject implements OpenApiModel {
         this.responses = responses;
     }
 
-    public Boolean getDeprecated() {
-        return deprecated;
-    }
-
-    public void setDeprecated(Boolean deprecated) {
-        this.deprecated = deprecated;
-    }
-
     public List<ParameterObject> getParameters() {
         return parameters;
     }
 
     public void setParameters(List<ParameterObject> parameters) {
         this.parameters = parameters;
+    }
+
+    public List<Map<String, SecurityRequirementObject>> getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(List<Map<String, SecurityRequirementObject>> security) {
+        this.security = security;
     }
 
     public List<String> getTags() {
@@ -80,10 +89,10 @@ public class OperationObject implements OpenApiModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OperationObject that = (OperationObject) o;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        OperationObject that = (OperationObject) object;
         return Objects.equals(deprecated, that.deprecated) &&
                 Objects.equals(summary, that.summary) &&
                 Objects.equals(description, that.description) &&
@@ -91,12 +100,13 @@ public class OperationObject implements OpenApiModel {
                 Objects.equals(requestBody, that.requestBody) &&
                 Objects.equals(responses, that.responses) &&
                 Objects.equals(parameters, that.parameters) &&
+                Objects.equals(security, that.security) &&
                 Objects.equals(tags, that.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deprecated, summary, description, operationId, requestBody, responses, parameters, tags);
+        return Objects.hash(deprecated, summary, description, operationId, requestBody, responses, parameters, security, tags);
     }
 
     @Override
@@ -109,6 +119,7 @@ public class OperationObject implements OpenApiModel {
                 ", requestBody=" + requestBody +
                 ", responses=" + responses +
                 ", parameters=" + parameters +
+                ", security=" + security +
                 ", tags=" + tags +
                 '}';
     }
@@ -122,6 +133,7 @@ public class OperationObject implements OpenApiModel {
         REQUEST_BODY("requestBody"),
         RESPONSES("responses"),
         PARAMETERS("parameters"),
+        SECURITY("security"),
         TAGS("tags");
 
         private final String value;

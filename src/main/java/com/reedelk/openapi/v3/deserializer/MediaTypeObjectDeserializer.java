@@ -39,6 +39,8 @@ public class MediaTypeObjectDeserializer extends AbstractDeserializer<MediaTypeO
             }
         }
 
+        // TODO: Deserialize examples
+
         return mediaTypeObject;
     }
 }

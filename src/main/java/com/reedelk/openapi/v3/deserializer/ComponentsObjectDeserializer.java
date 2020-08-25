@@ -31,6 +31,8 @@ public class ComponentsObjectDeserializer extends AbstractDeserializer<Component
             return schemaObjectObject;
         }).ifPresent(componentsObject::setSchemas);
 
+        // TODO: Deserialize examples
+
         return componentsObject;
     }
 }
