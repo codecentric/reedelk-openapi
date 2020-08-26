@@ -446,6 +446,34 @@ public class Fixture {
             public String path() {
                 return "endtoend/petstore.yaml";
             }
+        },
+
+        WITH_AUTH_JSON() {
+            @Override
+            public String path() {
+                return "endtoend/openapi_with_auth.json";
+            }
+        },
+
+        WITH_AUTH_YAML() {
+            @Override
+            public String path() {
+                return "endtoend/openapi_with_auth.yaml";
+            }
+        },
+
+        BOOKINGS_API_JSON() {
+            @Override
+            public String path() {
+                return "endtoend/bookings_api.json";
+            }
+        },
+
+        BOOKINGS_API_YAML() {
+            @Override
+            public String path() {
+                return "endtoend/bookings_api.yaml";
+            }
         }
     }
 

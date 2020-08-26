@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Bookings API
+  description: API for Bookings
+  version: 0.1.0
+servers:
+  - url: http://localhost
+paths:
+  "/bookings":
+    get:
+      summary: Returns a list of bookings.
+      description: A list of bookings.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Booking"
+              example: |-
+                [
+                  {
+                    "book_ref": "00004A",
+                    "book_date": "2016-10-13T18:57:00.000Z",
+                    "total_amount": 29000
+                  },
+                  {
+                    "book_ref": "00006A",
+                    "book_date": "2016-11-05T02:02:00.000Z",
+                    "total_amount": 106100
+                  }
+                ]
+        '404':
+          description: Error
+    post:
+      summary: Creates new booking.
+      description: A new booking is created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Booking"
+            example: |-
+              {
+                "book_ref": "12345A",
+                "book_date": "2020-08-26T07:51:00.000Z",
+                "total_amount": 10000
+              }
+      responses:
+        '201':
+          description: Booking created
+        '404':
+          description: Error
+  "/bookings/{booking_ref}":
+    get:
+      summary: Returns a booking by booking_ref.
+      description: An unique booking by booking_ref.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Booking"
+              examples:
+                bookingGETExample:
+                  "$ref": "#/components/examples/bookingGetExample"
+        '404':
+          description: Error
+    put:
+      summary: Updates an existing booking.
+      description: An existing booking will be updated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Booking"
+            examples:
+              bookingPUTExample:
+                "$ref": "#/components/examples/bookingPutExample"
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Error
+components:
+  schemas:
+    Booking:
+      properties:
+        book_ref:
+          type: string
+        book_date:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: double
+  examples:
+    bookingGetExample:
+      value: |-
+        {
+          "book_ref": "00006A",
+          "book_date": "2016-11-05T02:02:00.000Z",
+          "total_amount": 106100
+        }
+    bookingPutExample:
+      value: |-
+        {
+          "book_ref": "00006A",
+          "book_date": "2016-11-05T02:02:00.000Z",
+          "total_amount": 10600
+        }

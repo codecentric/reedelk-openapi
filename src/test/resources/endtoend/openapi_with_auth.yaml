@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: My API
+  version: 1.0.0
+servers:
+  - description: Default Server
+    url: 'http://0.0.0.0:8282/api'
+paths:
+  /message:
+    post:
+      responses:
+        '200':
+          description: Hello
+          content:
+            application/json:
+              examples:
+                bookingPUTExample:
+                  $ref: '#/components/examples/bookingPutExample'
+  '/message/{name}':
+    get:
+      responses:
+        '200':
+          description: Test successful response
+          content:
+            '200':
+              examples:
+                bookingPUTExample:
+                  $ref: '#/components/examples/bookingPutExample'
+                bookingGETExample:
+                  $ref: '#/components/examples/bookingGetExample'
+      parameters:
+        - name: MyTest
+          schema:
+            type: string
+          style: form
+          in: query
+        - name: asdfsadf
+          schema:
+            type: string
+          style: form
+          in: query
+        - name: name
+          schema:
+            type: string
+          style: simple
+          in: path
+          required: true
+      security:
+        - {}
+        - api_key:
+            - 'write:pets'
+            - 'read:pets'
+components:
+  examples:
+    bookingPutExample:
+      value: |-
+        {
+          "book_ref": "00006A",
+          "book_date": "2016-11-05T02:02:00.000Z",
+          "total_amount": 10600
+        }
+    bookingGetExample:
+      value: |-
+        {
+          "book_ref": "00006A",
+          "book_date": "2016-11-05T02:02:00.000Z",
+          "total_amount": 106100
+        }
+  securitySchemes:
+    api_key:
+      type: apiKey
+      description: test
+      name: asdf
+      in: header
