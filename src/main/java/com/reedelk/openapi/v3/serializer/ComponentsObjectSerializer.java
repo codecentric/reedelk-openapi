@@ -8,7 +8,7 @@ import com.reedelk.openapi.v3.model.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.reedelk.openapi.v3.model.ComponentsObject.Properties;
+import static com.reedelk.openapi.v3.model.ComponentsObject.Properties.*;
 
 public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObject> {
 
@@ -18,48 +18,24 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
 
         // Schemas
         Map<String, SchemaObject> schemasMap = input.getSchemas();
-        if (schemasMap != null && !schemasMap.isEmpty()) {
-            Map<String, Object> schemas = new LinkedHashMap<>();
-            schemasMap.forEach((schemaId, schemaObject) -> {
-                NavigationPath currentNavigationPath = navigationPath
-                        .with(NavigationPath.SegmentKey.SCHEMAS)
-                        .with(NavigationPath.SegmentKey.SCHEMA_ID, schemaId);
-                Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, schemaObject.getSchema());
-                schemas.put(schemaId, serializedSchema);
-            });
-            map.put(Properties.SCHEMAS.value(), schemas);
-        }
+        serializeSchemas(context, navigationPath, map, schemasMap);
 
         // Request bodies
         Map<String, RequestBodyObject> requestBodiesMap = input.getRequestBodies();
-        if (requestBodiesMap != null && !requestBodiesMap.isEmpty()) {
-            Map<String, Object> requestBodies = new LinkedHashMap<>();
-            requestBodiesMap.forEach((requestBodyId, requestBodyObject) -> {
-                NavigationPath currentNavigationPath = navigationPath
-                        .with(NavigationPath.SegmentKey.REQUEST_BODIES)
-                        .with(NavigationPath.SegmentKey.REQUEST_BODY_ID, requestBodyId);
-                Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, requestBodyObject);
-                requestBodies.put(requestBodyId, serializedRequestBody);
-            });
-            map.put(Properties.REQUEST_BODIES.value(), requestBodies);
-        }
+        serializeRequestBodies(context, navigationPath, map, requestBodiesMap);
 
         // Examples
         Map<String, ExampleObject> examplesMap = input.getExamples();
-        if (examplesMap != null && !examplesMap.isEmpty()) {
-            Map<String, Object> examples = new LinkedHashMap<>();
-            examplesMap.forEach((exampleId, exampleObject) -> {
-                NavigationPath currentNavigationPath = navigationPath
-                        .with(NavigationPath.SegmentKey.EXAMPLES)
-                        .with(NavigationPath.SegmentKey.EXAMPLE_ID, exampleId);
-                Map<String, Object> serializedExample = context.serialize(currentNavigationPath, exampleObject);
-                examples.put(exampleId, serializedExample);
-            });
-            map.put(Properties.EXAMPLES.value(), examples);
-        }
+        serializeExamples(context, navigationPath, map, examplesMap);
 
         // Security Schemes
         Map<String, SecuritySchemeObject> securitySchemesMap = input.getSecuritySchemes();
+        serializeSecuritySchemas(context, navigationPath, map, securitySchemesMap);
+
+        return map;
+    }
+
+    protected void serializeSecuritySchemas(SerializerContext context, NavigationPath navigationPath, Map<String, Object> map, Map<String, SecuritySchemeObject> securitySchemesMap) {
         if (securitySchemesMap != null && !securitySchemesMap.isEmpty()) {
             Map<String, Object> securitySchemes = new LinkedHashMap<>();
             securitySchemesMap.forEach((securitySchemeId, securitySchemeObject) -> {
@@ -69,9 +45,49 @@ public class ComponentsObjectSerializer extends AbstractSerializer<ComponentsObj
                 Map<String, Object> serializedSecurityScheme = context.serialize(currentNavigationPath, securitySchemeObject);
                 securitySchemes.put(securitySchemeId, serializedSecurityScheme);
             });
-            map.put(Properties.SECURITY_SCHEMES.value(), securitySchemes);
+            map.put(SECURITY_SCHEMES.value(), securitySchemes);
         }
+    }
 
-        return map;
+    protected void serializeExamples(SerializerContext context, NavigationPath navigationPath, Map<String, Object> map, Map<String, ExampleObject> examplesMap) {
+        if (examplesMap != null && !examplesMap.isEmpty()) {
+            Map<String, Object> examples = new LinkedHashMap<>();
+            examplesMap.forEach((exampleId, exampleObject) -> {
+                NavigationPath currentNavigationPath = navigationPath
+                        .with(NavigationPath.SegmentKey.EXAMPLES)
+                        .with(NavigationPath.SegmentKey.EXAMPLE_ID, exampleId);
+                Map<String, Object> serializedExample = context.serialize(currentNavigationPath, exampleObject);
+                examples.put(exampleId, serializedExample);
+            });
+            map.put(EXAMPLES.value(), examples);
+        }
+    }
+
+    protected void serializeRequestBodies(SerializerContext context, NavigationPath navigationPath, Map<String, Object> map, Map<String, RequestBodyObject> requestBodiesMap) {
+        if (requestBodiesMap != null && !requestBodiesMap.isEmpty()) {
+            Map<String, Object> requestBodies = new LinkedHashMap<>();
+            requestBodiesMap.forEach((requestBodyId, requestBodyObject) -> {
+                NavigationPath currentNavigationPath = navigationPath
+                        .with(NavigationPath.SegmentKey.REQUEST_BODIES)
+                        .with(NavigationPath.SegmentKey.REQUEST_BODY_ID, requestBodyId);
+                Map<String, Object> serializedRequestBody = context.serialize(currentNavigationPath, requestBodyObject);
+                requestBodies.put(requestBodyId, serializedRequestBody);
+            });
+            map.put(REQUEST_BODIES.value(), requestBodies);
+        }
+    }
+
+    protected void serializeSchemas(SerializerContext context, NavigationPath navigationPath, Map<String, Object> map, Map<String, SchemaObject> schemasMap) {
+        if (schemasMap != null && !schemasMap.isEmpty()) {
+            Map<String, Object> schemas = new LinkedHashMap<>();
+            schemasMap.forEach((schemaId, schemaObject) -> {
+                NavigationPath currentNavigationPath = navigationPath
+                        .with(NavigationPath.SegmentKey.SCHEMAS)
+                        .with(NavigationPath.SegmentKey.SCHEMA_ID, schemaId);
+                Map<String, Object> serializedSchema = context.serialize(currentNavigationPath, schemaObject.getSchema());
+                schemas.put(schemaId, serializedSchema);
+            });
+            map.put(SCHEMAS.value(), schemas);
+        }
     }
 }
