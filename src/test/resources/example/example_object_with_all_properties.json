@@ -1,0 +1,6 @@
+{
+  "value": "Hello World!",
+  "summary": "My summary",
+  "description": "My description",
+  "externalValue": "http://example.org/examples/address-example.xml"
+}

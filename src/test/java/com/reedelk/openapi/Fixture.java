@@ -368,6 +368,16 @@ public class Fixture {
         }
     }
 
+    public enum ExampleObject implements Provider {
+
+        WithAllProperties() {
+            @Override
+            public String path() {
+                return "example/example_object_with_all_properties.json";
+            }
+        }
+    }
+
     public enum Schemas implements Provider {
 
         Pet() {
