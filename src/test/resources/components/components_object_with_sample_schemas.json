@@ -6,5 +6,30 @@
     "MyInteger": {
       "type": "integer"
     }
+  },
+  "requestBodies": {
+    "RequestBody1": {
+      "description": "My request body",
+      "content": {
+        "application/json": {
+          "example": "{\"name\": \"Mark\"}"
+        }
+      },
+      "required": true
+    }
+  },
+  "examples": {
+    "Example1": {
+      "value": "{\"name\": \"John\"}",
+      "summary": "My summary",
+      "description": "My description",
+      "externalValue": "My external value"
+    }
+  },
+  "securitySchemes": {
+    "api_key": {
+      "type": "apiKey",
+      "in": "query"
+    }
   }
 }
