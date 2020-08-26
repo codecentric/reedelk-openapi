@@ -40,8 +40,9 @@ public class OpenApiObjectSerializer extends AbstractSerializer<OpenApiObject> {
         set(map, Properties.PATHS.value(), serializedPaths); // REQUIRED
 
         Map<String, Object> serializedComponents = context.serialize(navigationPath.with(NavigationPath.SegmentKey.COMPONENTS), input.getComponents());
-        set(map, Properties.COMPONENTS.value(), serializedComponents);
-
+        if (serializedComponents != null && !serializedComponents.isEmpty()) {
+            set(map, Properties.COMPONENTS.value(), serializedComponents);
+        }
 
         List<TagObject> tags = input.getTags();
         if (tags != null && !tags.isEmpty()) {
