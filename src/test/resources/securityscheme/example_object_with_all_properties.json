@@ -1,0 +1,14 @@
+{
+  "type": "apiKey",
+  "description": "My description",
+  "name": "my_auth",
+  "in": "header",
+  "scheme": "basic",
+  "bearerFormat": "JWT",
+  "flows": {
+    "implicit": {
+      "refreshUrl": "http://refresh.url"
+    }
+  },
+  "openIdConnectUrl": "http://openid.connection/url"
+}
