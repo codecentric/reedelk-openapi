@@ -2,20 +2,38 @@ package com.reedelk.openapi.v3;
 
 import com.reedelk.openapi.Fixture;
 import com.reedelk.openapi.v3.model.LicenseObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class LicenseObjectTest extends AbstractOpenApiSerializableTest {
 
+    private LicenseObject license;
+
+    @BeforeEach
+    void setUp() {
+        license = new LicenseObject();
+        license.setName("Apache 2.0");
+        license.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+    }
+
     @Test
     void shouldCorrectlySerializeLicenseWithAllProperties() {
         // Given
-        LicenseObject license = new LicenseObject();
-        license.setName("Apache 2.0");
-        license.setUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
+        LicenseObject theLicense = license;
 
         // Expect
-        assertSerializeJSON(license, Fixture.LicenseObject.WithAllPropertiesJson);
-        assertSerializeYAML(license, Fixture.LicenseObject.WithAllPropertiesYaml);
+        assertSerializeJSON(theLicense, Fixture.LicenseObject.WithAllPropertiesJson);
+        assertSerializeYAML(theLicense, Fixture.LicenseObject.WithAllPropertiesYaml);
+    }
+
+    @Test
+    void shouldCorrectlyDeserializeLicenseWithAllProperties() {
+        // Given
+        LicenseObject theLicense = license;
+
+        // Expect
+        assertDeserializeJSON(theLicense, Fixture.LicenseObject.WithAllPropertiesJson);
+        assertDeserializeYAML(theLicense, Fixture.LicenseObject.WithAllPropertiesYaml);
     }
 
     @Test

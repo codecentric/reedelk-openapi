@@ -378,6 +378,16 @@ public class Fixture {
         }
     }
 
+    public enum OAuthFlowObject implements Provider {
+
+        WithAllProperties() {
+            @Override
+            public String path() {
+                return "oauthflow/example_object_with_all_properties.json";
+            }
+        }
+    }
+
     public enum Schemas implements Provider {
 
         Pet() {

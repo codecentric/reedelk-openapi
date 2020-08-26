@@ -35,5 +35,4 @@ public class ExampleObjectTest extends AbstractOpenApiSerializableTest {
         // Expect
         assertDeserializeJSON(theExample, Fixture.ExampleObject.WithAllProperties);
     }
-
 }

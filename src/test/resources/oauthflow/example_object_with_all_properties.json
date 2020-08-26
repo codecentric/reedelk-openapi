@@ -1,0 +1,9 @@
+{
+  "authorizationUrl": "http://my.auth.url/auth",
+  "tokenUrl": "http://my.token.url/token",
+  "refreshUrl": "http://my.refresh.url/refresh",
+  "scopes": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}
