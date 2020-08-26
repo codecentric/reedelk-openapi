@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 
 public class OpenApi {
 
+    private OpenApi() {
+    }
+
     public static String toJson(OpenApiModel openApiModel) {
         return new OpenApiSerializer().toJson(openApiModel, new HashMap<>());
     }
