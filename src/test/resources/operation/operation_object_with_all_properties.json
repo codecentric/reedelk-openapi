@@ -19,13 +19,17 @@
   "parameters": [
     {
       "name": "param1",
-      "schema": {"type": "string"},
+      "schema": {
+        "type": "string"
+      },
       "in": "query",
       "required": false
     },
     {
       "name": "param2",
-      "schema": {"type": "string"},
+      "schema": {
+        "type": "string"
+      },
       "in": "path",
       "required": true
     }
@@ -33,5 +37,13 @@
   "tags": [
     "tag1",
     "tag2"
+  ],
+  "security": [
+    {
+      "petstore_auth": [
+        "write:pets",
+        "read:pets"
+      ]
+    }
   ]
 }
