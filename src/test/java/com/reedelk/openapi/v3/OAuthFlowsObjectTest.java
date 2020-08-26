@@ -28,6 +28,15 @@ public class OAuthFlowsObjectTest extends AbstractOpenApiSerializableTest {
         assertSerializeJSON(theAuthFlowsObject, Fixture.OAuthFlowsObject.WithAllProperties);
     }
 
+    @Test
+    void shouldCorrectlyDeserializeObjectWithAllProperties() {
+        // Given
+        OAuthFlowsObject theAuthFlowsObject = authFlowsObject;
+
+        // Expect
+        assertDeserializeJSON(theAuthFlowsObject, Fixture.OAuthFlowsObject.WithAllProperties);
+    }
+
     private OAuthFlowObject createOAuthFlow(String url) {
         OAuthFlowObject object = new OAuthFlowObject();
         object.setTokenUrl(url);

@@ -14,13 +14,13 @@ public class OAuthFlowsObjectDeserializer extends AbstractDeserializer<OAuthFlow
     @Override
     public OAuthFlowsObject deserialize(DeserializerContext context, Map<String, Object> serialized) {
         OAuthFlowsObject flowsObject = new OAuthFlowsObject();
-        mapApiModel(serialized, Properties.IMPLICIT.name(), OAuthFlowObject.class, context)
+        mapApiModel(serialized, Properties.IMPLICIT.value(), OAuthFlowObject.class, context)
                 .ifPresent(flowsObject::setImplicit);
-        mapApiModel(serialized, Properties.PASSWORD.name(), OAuthFlowObject.class, context)
+        mapApiModel(serialized, Properties.PASSWORD.value(), OAuthFlowObject.class, context)
                 .ifPresent(flowsObject::setPassword);
-        mapApiModel(serialized, Properties.CLIENT_CREDENTIALS.name(), OAuthFlowObject.class, context)
+        mapApiModel(serialized, Properties.CLIENT_CREDENTIALS.value(), OAuthFlowObject.class, context)
                 .ifPresent(flowsObject::setClientCredentials);
-        mapApiModel(serialized, Properties.AUTHORIZATION_CODE.name(), OAuthFlowObject.class, context)
+        mapApiModel(serialized, Properties.AUTHORIZATION_CODE.value(), OAuthFlowObject.class, context)
                 .ifPresent(flowsObject::setAuthorizationCode);
         return flowsObject;
     }
