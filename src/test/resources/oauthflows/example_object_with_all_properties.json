@@ -1,0 +1,22 @@
+{
+  "implicit": {
+    "authorizationUrl": "http://my.auth.url/auth",
+    "tokenUrl": "implicit",
+    "refreshUrl": "http://my.refresh.url/refresh"
+  },
+  "password": {
+    "authorizationUrl": "http://my.auth.url/auth",
+    "tokenUrl": "password",
+    "refreshUrl": "http://my.refresh.url/refresh"
+  },
+  "clientCredentials": {
+    "authorizationUrl": "http://my.auth.url/auth",
+    "tokenUrl": "credentials",
+    "refreshUrl": "http://my.refresh.url/refresh"
+  },
+  "authorizationCode": {
+    "authorizationUrl": "http://my.auth.url/auth",
+    "tokenUrl": "authorization",
+    "refreshUrl": "http://my.refresh.url/refresh"
+  }
+}
