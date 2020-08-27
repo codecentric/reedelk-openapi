@@ -18,7 +18,7 @@ public class SecuritySchemeObjectSerializer extends AbstractSerializer<SecurityS
         set(serialized, Properties.TYPE.value(), input.getType().name());
         set(serialized, Properties.DESCRIPTION.value(), input.getDescription());
         set(serialized, Properties.NAME.value(), input.getName());
-        set(serialized, Properties.IN.value(), input.getIn().name());
+        if (input.getIn() != null) set(serialized, Properties.IN.value(), input.getIn().name());
         set(serialized, Properties.SCHEME.value(), input.getScheme());
         set(serialized, Properties.BEARER_FORMAT.value(), input.getBearerFormat());
         if (input.getFlows() != null) {
