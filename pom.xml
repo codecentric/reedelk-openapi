@@ -61,7 +61,7 @@
 
     <properties>
         <json.version>20190722</json.version>
-        <snakeyaml.version>1.26</snakeyaml.version>
+        <snakeyaml.version>1.32</snakeyaml.version>
         <jacoco.version>0.8.2</jacoco.version>
         <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
